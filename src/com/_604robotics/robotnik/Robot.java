@@ -1,6 +1,7 @@
 package com._604robotics.robotnik;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -143,39 +144,6 @@ public abstract class Robot extends SampleRobot {
     }
 
     private void printBanner () {
-        System.out.println(
-            "\n\n\n" +
-            "                       ..            .`\n" +
-            "                   .:oyhho.        .ohhy+:\n" +
-            "                 +yhhhhhhhhoossssoohhhhhhhhy/\n" +
-            "                 ohhhhhhhhhhhhhhhhhhhhhhhhhh+\n" +
-            "      :/.        :hhhhhhhhhhhhhhhhhhhhhhhhhh-        ./-\n" +
-            "       yhy+-    /hhhhhhhhhhhhhhhhhhhhhhhhhhhy:    -+yhs\n" +
-            "       .hhhhho:shhhhhy/.``./yhhhhy/.``./yhhhhho:ohhhhy`\n" +
-            "     `.-shhhhhhhhhhhh`      .hhhh`      .hhhhhhhhhhhho-.`\n" +
-            "  /shhhhhhhhhhhhhhhhy       `hhhy       `hhhhhhhhhhhhhhhhys/\n" +
-            "   ./yhhhhhhhhhhhhhhhs-    -shhhhs-    -shhhhhhhhhhhhhhhy/`\n" +
-            "      :hhhhhhhhhhhhhhhhhyyhhhhhhhhhhyyhhhhhhhhhhhhhhhhh:\n" +
-            "     /hhhhhhhhhhhhhhhhyyhyhhhhhhhhhhyhyyhhhhhhhhhhhhhhhy:\n" +
-            "   -yhhhyysshhh+  ho`  `ho:hhhhhhhh-sh   `sh  +hhhosyyhhhs-\n" +
-            " .  ``      shhy- h+   `ho .shhhhs. sh    oh -hhh+      ``.\n" +
-            "            :hhhhoh+   `ho   `ys`   sh    ohohhhh.\n" +
-            "             +hhhhhs`  `ho    ys    sh   .shhhhh:\n" +
-            "              +hhhhhhs/:ho    ys    sh-/shhhhhh/\n" +
-            "               :yhhhhhhhhhs+/:yy:/+shhhhhhhhhy-\n" +
-            "                `+hhhhhhhhhhhhhhhhhhhhhhhhhy/\n" +
-            "                  `:shhhhhhhhyyyhhhhhhhhho-\n" +
-            "                     `:+syhhh:  /hhhyo/-\n" +
-            "                          `.-`  `..\n" +
-            "\n" +
-            "                      _           _         _ _\n" +
-            "                     | |         | |       (_) |\n" +
-            "            _ __ ___ | |__   ___ | |_ _ __  _| | __\n" +
-            "           | '__/ _ \\| '_ \\ / _ \\| __| '_ \\| | |/ /\n" +
-            "           | | | (_) | |_) | (_) | |_| | | | |   <\n" +
-            "           |_|  \\___/|_.__/ \\___/ \\__|_| |_|_|_|\\_\\\n" +
-            "           framework\n" +
-            "\n\n"
-        );
+        System.out.println(Base64.getDecoder().decode("DQoNCg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgYDo6YDotICAgICAgICAgICAgICA6LS06LWANCiAgICAgICAgICAgICAgICAgICAgICAgYDo6Oi0gICAgLi8uICAgICAgICAgIDovYCAgIGAtOjotYA0KICAgICAgICAgICAgICAgICAgICAgLzotICAgICAgICAgIDotLS0uLi4tLS0vLiAgICAgICAgIGAtOjoNCiAgICAgICAgICAgICAgICAgICAgICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGAvDQogICAgICBgLSAgICAgICAgICAgICA6LiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA6YCAgICAgICAgICAgIGAtDQogICAgICBgbzo6OmAgICAgICAgICAuLyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICArICAgICAgICAgIC4vOjpvDQogICAgICAgLTogYDo6Oi4gICAgIC8vICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuLy0gICAgIC06Oi0gICtgDQogICAgICAgIC8uICAgIC06Oi0tK2AgICAgICAgYDotLS0tOmAgICAgICAgIGA6LS0tLTpgICAgICAgIC0rYDo6Oi4gICAgLToNCiAgICAgICAgIG8gICAgICAgYC0gICAgICAgIC86ICAgICBgOi8gICAgIGArLSAgICAgYC86ICAgICAgIGA6YCAgICAgIGArDQogICAgYC4tLTovLiAgICAgICAgICAgICAgIC9gICAgICAgICAtOiAgICArYCAgICAgICAgOi0gICAgICAgICAgICAgICA6LS0tLS4NCmBvOi0uYCAgICAgICAgICAgICAgICAgICAgLyAgICAgICAgIGAvICAgICsgICAgICAgICAuOiAgICAgICAgICAgICAgICAgICAgYC0tOisNCiBgOi8uICAgICAgICAgICAgICAgICAgICAgYCtgICAgICAgLitgICAgIC4rYCAgICAgIC4rICAgICAgICAgICAgICAgICAgICAgIC0vOmANCiAgICAtLzpgICAgICAgICAgICAgICAgICAgICA6Oi0tLS06OiAgICAgICAgOjotLS06Oi0gICAgICAgICAgICAgICAgICAgIC4vLy4NCiAgICAgIGBzLiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgOm8NCiAgICAgLStgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC4rLg0KICAgYC8tICAgICAgICAgICAgIC4tLS4gLi0tLS0tLyA6eWAgICAgICAgICAgLnkgICstLi0tOmAgLS0tYCAgICAgICAgICAgICA6L2ANCiAgK28tOi0tLS0uLS4tLyAgIGBvYCAvIDpgICAgIC8gOjorYCAgICAgICAgLSsvICAvICAgIDpgIC8gLW8gICAtOi0uLS4tLS0tLS1vOg0KICBgYCAgICAgICAgICA6LiAgICArLS8gOmAgICAgLyA6OiAvL2AgICAgLi86IC8gIC8gICAgOmAgLzovICAgICsgICAgICAgICAgIGBgDQogICAgICAgICAgICAgICBvICAgICA6KyA6YCAgICAvIDo6ICAgLS8gYCstICAgLyAgLyAgICA6YCBvLiAgICBgLw0KICAgICAgICAgICAgICAgLTogICAgICAgOi4gICAgLyA6OiAgICAvIGA6ICAgIC8gIC8gICAgOmAgICAgICAgbw0KICAgICAgICAgICAgICAgIC8tICAgICAgYDo6OmAgLyA6OiAgICAvIGA6ICAgIC8gIC8gYDovOiAgICAgICArLg0KICAgICAgICAgICAgICAgICA6OiAgICAgICAgYDo6LyA6OiAgICAvIGA6ICAgIC8gIC86LSAgICAgICAgYG8uDQogICAgICAgICAgICAgICAgICAtK2AgICAgICAgICAgIGAtLS0tLSsgYC8tLS0tLSAgICAgICAgICAgIC4rYA0KICAgICAgICAgICAgICAgICAgIGAvOiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYCs6DQogICAgICAgICAgICAgICAgICAgICAuLzpgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLi86DQogICAgICAgICAgICAgICAgICAgICAgIGA6Oi0gICAgICAgICAgIC0tLi0gICAgICAgICAgYDovLQ0KICAgICAgICAgICAgICAgICAgICAgICAgICBgOjo6LWAgICAgIC06ICArYCAgICAgLjo6Oi0NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGAtLS0tLSA6ICAgLi5gLS0tLS4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAuLScnLS4NCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLicgLi0uICApDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLyAuJyAgLyAvDQogICAgICAgICAgICAgICAgICAgICAgICAgICBfICAgICAgICAgICBfICAgICAgICAgXyBfICAoXy8gICAvIC8NCiAgICAgICAgICAgICAgICAgXyBfXyBfX18gfCB8X18gICBfX18gfCB8XyBfIF9fIChfKSB8IF9fICAgIC8gLw0KICAgICAgICAgICAgICAgIHwgJ19fLyBfIFx8ICdfIFwgLyBfIFx8IF9ffCAnXyBcfCB8IHwvIC8gICAvIC8NCiAgICAgICAgICAgICAgICB8IHwgfCAoXykgfCB8XykgfCAoXykgfCB8X3wgfCB8IHwgfCAgIDwgICAuICcNCiAgICAgICAgICAgICAgICB8X3wgIFxfX18vfF8uX18vIFxfX18vIFxfX3xffCB8X3xffF98XF9cIC8gLyAgICBfLi0nKQ0KICAgICAgICAgICAgICAgIGZyYW1ld29yayAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC4nICcgIF8uJy4tJycNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC8gIC8uLSdfLicNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLyAgICBfLicNCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgKCBfLi0nDQoNCg=="));
     }
 }
