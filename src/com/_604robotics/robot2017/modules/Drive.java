@@ -18,36 +18,42 @@ public class Drive extends Module {
     
     public final Output<Integer> leftClicks = addOutput("leftClicks", encoderLeft::get);
     public final Output<Integer> rightClicks = addOutput("rightClicks", encoderRight::get);
+
+    private class Idle extends Action {
+        public Idle () {
+            super(Drive.this, Idle.class);
+        }
+
+        @Override
+        public void run () {
+            robotDrive.stopMotor();
+        }
+    }
+
+    public final Action idle = new Idle();
     
     public class TankDrive extends Action {
         public final Input<Double> leftPower = addInput("leftPower", 0d);
         public final Input<Double> rightPower = addInput("rightPower", 0d);
 
-        private TankDrive (Drive parent) {
-            super(parent, TankDrive.class.getSimpleName());
+        public TankDrive () {
+            super(Drive.this, TankDrive.class);
+        }
+
+        public TankDrive (double initialLeftPower, double initialRightPower) {
+            this();
+            leftPower.set(initialLeftPower);
+            rightPower.set(initialRightPower);
         }
 
         @Override
         public void run () {
-            SmartDashboard.putNumber("Left Power", leftPower.get());
-            SmartDashboard.putNumber("Right Power", rightPower.get());
             robotDrive.tankDrive(leftPower.get(), rightPower.get());
         }
     }
 
-    public TankDrive tankDrive () {
-        return new TankDrive(this);
-    }
-    
-    public TankDrive tankDrive (double initialLeftPower, double initialRightPower) {
-        final TankDrive tankDrive = tankDrive();
-        tankDrive.leftPower.set(initialLeftPower);
-        tankDrive.rightPower.set(initialRightPower);
-        return tankDrive;
-    }
-
     public Drive () {
-        super(Drive.class.getSimpleName());
-        setDefaultAction(tankDrive());
+        super(Drive.class);
+        setDefaultAction(idle);
     }
 }

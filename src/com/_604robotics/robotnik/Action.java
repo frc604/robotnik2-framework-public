@@ -12,16 +12,26 @@ public abstract class Action {
     @SuppressWarnings("rawtypes")
     private final List<Input> inputs = new ArrayList<>();
     private String inputListValue = "";
+
+    private boolean running = false;
     
     public Action (Module parent, String name) {
         this.parent = parent;
         this.name = name;
     }
-    
+
+    public Action (Module parent, Class klass) {
+        this(parent, klass.getSimpleName());
+    }
+
     public String getName () {
         return name;
     }
-    
+
+    public boolean isRunning () {
+        return running;
+    }
+
     protected <T> Input<T> addInput (String name, T initialValue) {
         return addInput(new Input<T>(name, initialValue));
     }
@@ -52,6 +62,16 @@ public abstract class Action {
         for (@SuppressWarnings("rawtypes") Input input : inputs) {
             activeActionInputsTable.putValue(input.getName(), input.get());
         }
+    }
+
+    void initiate () {
+        running = true;
+        begin();
+    }
+
+    void terminate () {
+        running = false;
+        end();
     }
     
     protected void begin () {}

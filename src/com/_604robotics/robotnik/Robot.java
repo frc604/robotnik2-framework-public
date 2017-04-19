@@ -20,10 +20,12 @@ public abstract class Robot extends SampleRobot {
     private final List<Module> modules = new ArrayList<>();
     private final IterationTimer iterationTimer;
 
+    private final List<Controller> systems = new ArrayList<>();
+
     private Controller autonomousMode;
     private Controller teleopMode;
-    private Controller testMode; 
-    
+    private Controller testMode;
+
     public Robot () {
         this(DEFAULT_REPORT_INTERVAL);
     }
@@ -44,36 +46,9 @@ public abstract class Robot extends SampleRobot {
                 .map(Module::getName)
                 .collect(Collectors.joining(",")));
     }
-    
-    void begin () {
-        for (Module module : modules) {
-            Reliability.swallowThrowables(module::begin,
-                    "Error in begin() of module " + module.getName());
-        }
-    }
-    
-    void update () {
-        for (Module module : modules) {
-            module.update();
-        }
-    }
-    
-    void reset () {
-        for (Module module : modules) {
-            module.reset();
-        }
-    }
-    
-    void execute () {
-        for (Module module : modules) {
-            module.execute();
-        }
-    }
-    
-    void terminate () {
-        for (Module module : modules) {
-            module.terminate();
-        }
+
+    protected void addSystem (Controller system) {
+        systems.add(system);
     }
 	
 	protected void setAutonomousMode (Controller autonomousMode) {
@@ -116,28 +91,62 @@ public abstract class Robot extends SampleRobot {
     private void loop (String name, Controller mode, Supplier<Boolean> active) {
         logger.info(name + " mode begin");
 
-        if (mode == null) {
-            while (active.get()) {
-                update();
-            }
-        } else {
-            begin();
-            mode.begin();
+        for (Module module : modules) {
+            Reliability.swallowThrowables(module::begin, "Error in begin() of module " + module.getName());
+        }
+
+        for (Controller system : systems) {
+            Reliability.swallowThrowables(system::begin, "Error in begin() of system");
+        }
+
+        if (mode != null) {
+            Reliability.swallowThrowables(mode::begin, "Error in begin() of " + name + " mode");
             iterationTimer.start();
+        }
 
-            while (active.get()) {
-                update();
-                reset();
-                Reliability.swallowThrowables(mode::run, "Error in run() of " + name + " mode");
-                execute();
-                
-                iterationTimer.sample(
-                        loopTime -> logger.info("Loop time: " + loopTime*1000 + " ms"));
+        while (active.get()) {
+            for (Module module : modules) {
+                module.prepare();
             }
 
+            for (Controller system : systems) {
+                Reliability.swallowThrowables(system::run, "Error in run() of system");
+            }
+
+            if (mode != null) {
+                Reliability.swallowThrowables(mode::run, "Error in run() of " + name + " mode");
+            }
+
+            for (Module module : modules) {
+                module.update();
+                Reliability.swallowThrowables(module::run, "Error in run() of module " + module.getName());
+
+                if (mode != null) {
+                    module.execute();
+                }
+            }
+
+            if (mode != null) {
+                iterationTimer.sample(
+                        loopTime -> logger.info("Loop time: " + loopTime * 1000 + " ms"));
+            }
+        }
+
+        if (mode != null) {
             iterationTimer.stop();
-            mode.end();
-            terminate();
+            Reliability.swallowThrowables(mode::end, "Error in end() of " + name + " mode");
+        }
+
+        for (Controller system : systems) {
+            Reliability.swallowThrowables(system::end, "Error in end() of system");
+        }
+
+        for (Module module : modules) {
+            Reliability.swallowThrowables(module::end, "Error in end() of module " + module.getName());
+
+            if (mode != null) {
+                module.terminate();
+            }
         }
         
         logger.info(name + " mode end");

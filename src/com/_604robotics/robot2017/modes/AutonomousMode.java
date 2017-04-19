@@ -1,15 +1,13 @@
 package com._604robotics.robot2017.modes;
 
 import com._604robotics.robot2017.Robot2017;
-import com._604robotics.robot2017.modules.Drive;
-import com._604robotics.robotnik.StatefulController;
-
-import edu.wpi.first.wpilibj.Timer;
+import com._604robotics.robotnik.prefabs.controllers.StatefulController;
 
 public class AutonomousMode extends StatefulController {
     public AutonomousMode (Robot2017 robot) {
         super(AutonomousMode.class.getSimpleName());
 
+        /*
         final State driveForwardState = new State("driveForwardState") {
             private final Drive.TankDrive driveForward = robot.drive.tankDrive(0.5, 0.5);
             private final Timer timer = new Timer();
@@ -36,6 +34,6 @@ public class AutonomousMode extends StatefulController {
             }
         };
 
-        setInitialState(driveForwardState);
+        setInitialState(driveForwardState);*/
     }
 }

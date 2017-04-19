@@ -4,6 +4,7 @@ public class Input<T> {
     private final String name;
 
     private T value;
+    private boolean updated = false;
     
     public Input (String name, T initialValue) {
         this.name = name;
@@ -20,5 +21,14 @@ public class Input<T> {
 
     public void set (T value) {
         this.value = value;
+        updated = true;
+    }
+
+    public boolean isUpdated () {
+        return updated;
+    }
+
+    void clearUpdated () {
+        updated = false;
     }
 }

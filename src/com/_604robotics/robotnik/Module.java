@@ -14,23 +14,24 @@ public abstract class Module {
 
     private final ITable outputsTable;
     private final TableIndex outputsTableIndex;
-    
+
     private final ITable activeActionTable;
     private final ITable activeActionInputsTable;
 
     private final String name;
-    
+
     private Action defaultAction;
-    private Action lastAction;
+    private Action runningAction;
     private Action activeAction;
 
     @SuppressWarnings("rawtypes")
     private final List<Input> inputs = new ArrayList<>();
     @SuppressWarnings("rawtypes")
     private final List<OutputProxy> outputs = new ArrayList<>();
-    
+
     protected void begin () {}
-    protected void end () {} 
+    protected void run () {}
+    protected void end () {}
 
     public Module (String name) {
         this.name = name;
@@ -48,38 +49,46 @@ public abstract class Module {
         activeActionTable = table.getSubTable("activeAction");
         activeActionTable.putString("name", "");
         activeActionTable.putString("inputList", "");
-        
+
         activeActionInputsTable = activeActionTable.getSubTable("inputs");
     }
-    
+
+    public Module (Class klass) {
+        this(klass.getSimpleName());
+    }
+
     public String getName () {
         return name;
     }
-    
+
+    public Action getRunningAction () {
+        return runningAction;
+    }
+
     protected void setDefaultAction (Action action) {
         this.defaultAction = action;
     }
-    
+
     protected <T> Input<T> addInput (String name, T initialValue) {
         return addInput(new Input<T>(name, initialValue));
     }
-    
+
     protected <T> Input<T> addInput (Input<T> input) {
         inputs.add(input);
         inputsTableIndex.add("Input", input.getName());
         return input;
     }
-    
+
     protected <T> Output<T> addOutput (String name, Output<T> output) {
         final OutputProxy<T> proxy = new OutputProxy<>(name, output);
         outputs.add(proxy);
         outputsTableIndex.add("Output", name);
         return proxy;
     }
-    
-    void update () {
+
+    void prepare () {
         for (@SuppressWarnings("rawtypes") Input input : inputs) {
-            inputsTable.putValue(input.getName(), input.get());
+            input.clearUpdated();
         }
 
         for (@SuppressWarnings("rawtypes") OutputProxy output : outputs) {
@@ -87,31 +96,35 @@ public abstract class Module {
                     "Error updating output " + output.getName() + " of module " + getName());
             outputsTable.putValue(output.getName(), output.get());
         }
-    }
-    
-    void reset () {
+
         activeAction = defaultAction;
     }
 
     void activate (Action action) {
         activeAction = action;
     }
-    
+
+    void update () {
+        for (@SuppressWarnings("rawtypes") Input input : inputs) {
+            inputsTable.putValue(input.getName(), input.get());
+        }
+    }
+
     void execute () {
-        if (activeAction != lastAction) {
-            if (lastAction != null) {
-                Reliability.swallowThrowables(lastAction::end,
-                        "Error in end() of action " + lastAction.getName() + " of module " + getName());
+        if (activeAction != runningAction) {
+            if (runningAction != null) {
+                Reliability.swallowThrowables(runningAction::terminate,
+                        "Error in end() of action " + runningAction.getName() + " of module " + getName());
             }
 
-            lastAction = activeAction;
+            runningAction = activeAction;
 
             if (activeAction == null) {
                 activeActionTable.putString("name", "");
                 activeActionTable.putString("inputList", "");
             } else {
                 activeAction.updateActiveAction(activeActionTable);
-                Reliability.swallowThrowables(activeAction::begin,
+                Reliability.swallowThrowables(activeAction::initiate,
                         "Error in begin() of action " + activeAction.getName() + " of module " + getName());
             }
         }
@@ -124,17 +137,14 @@ public abstract class Module {
     }
     
     void terminate () {
-        if (lastAction != null) {
-            Reliability.swallowThrowables(lastAction::end,
-                    "Error in end() of action " + lastAction.getName() + " of module " + getName());
+        if (runningAction != null) {
+            Reliability.swallowThrowables(runningAction::terminate,
+                    "Error in end() of action " + runningAction.getName() + " of module " + getName());
         }
-        lastAction = null;
+        runningAction = null;
 
         activeActionTable.putString("name", "");
         activeActionTable.putString("inputList", "");
-
-        Reliability.swallowThrowables(this::end,
-                "Error in end() of module " + getName());
     }
     
     private static class OutputProxy<T> implements Output<T> {

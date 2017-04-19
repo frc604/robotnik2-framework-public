@@ -1,4 +1,7 @@
-package com._604robotics.robotnik;
+package com._604robotics.robotnik.prefabs.controllers;
+
+import com._604robotics.robotnik.Controller;
+import com._604robotics.robotnik.Logger;
 
 public abstract class StatefulController extends Controller {
     private final Logger logger;
