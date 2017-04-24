@@ -38,8 +38,8 @@ public class TeleopMode extends Controller {
         }
 
         public void run () {
-            if (driver.buttons.LT.get()) {
-                climb.power.set(driver.triggers.Left.get());
+            if (driver.buttons.lt.get()) {
+                climb.power.set(driver.triggers.left.get());
                 climb.activate();
             }
         }
@@ -49,7 +49,7 @@ public class TeleopMode extends Controller {
         private final Toggle lightToggle = new Toggle(false);
 
         public void run () {
-            lightToggle.update(driver.buttons.RT.get());
+            lightToggle.update(driver.buttons.rt.get());
             if (lightToggle.get()) {
                 robot.signalLight.on.activate();
             }
@@ -65,10 +65,10 @@ public class TeleopMode extends Controller {
         private IntakeState intakeState = IntakeState.IDLE;
 
         public void run () {
-            if (driver.buttons.Y.get()) {
+            if (driver.buttons.y.get()) {
                 extend = false;
             }
-            if (driver.buttons.X.get() || driver.buttons.B.get() || driver.buttons.A.get()) {
+            if (driver.buttons.x.get() || driver.buttons.b.get() || driver.buttons.a.get()) {
                 extend = true;
             }
 
@@ -76,13 +76,13 @@ public class TeleopMode extends Controller {
                 robot.flipFlop.extend.activate();
             }
 
-            if (driver.buttons.Y.get()) {
+            if (driver.buttons.y.get()) {
                 intakeState = IntakeState.IDLE;
             }
-            if (driver.buttons.X.get()) {
+            if (driver.buttons.x.get()) {
                 intakeState = IntakeState.FORWARD;
             }
-            if (driver.buttons.B.get()) {
+            if (driver.buttons.b.get()) {
                 intakeState = IntakeState.REVERSE;
             }
 

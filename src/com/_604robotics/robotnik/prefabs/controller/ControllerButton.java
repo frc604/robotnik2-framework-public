@@ -18,7 +18,7 @@ public class ControllerButton {
         this.joystick = joystick;
         this.button = button;
     }
-    
+
     public boolean get () {
         return this.joystick.getRawButton(this.button);
     }

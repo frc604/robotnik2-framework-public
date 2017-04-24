@@ -9,7 +9,7 @@ public class AnalogUltrasonic extends AnalogInput implements Ultrasonic {
     private static final int DEFAULT_SAMPLES = 64;
     private static final double INCHES_PER_VOLT = 42.56;
     private static final double OPERATING_RANGE = 150.0;
-    
+
     /**
      * Creates an analog ultrasonic sensor.
      * @param port Analog port of the sensor.
@@ -36,7 +36,7 @@ public class AnalogUltrasonic extends AnalogInput implements Ultrasonic {
         for (int f = 0; f < samples; f++) {
             total += super.getValue();
         }
-        
+
         total /= samples;
         return total;
     }
@@ -59,7 +59,7 @@ public class AnalogUltrasonic extends AnalogInput implements Ultrasonic {
         for (int f = 0; f < samples; f++) {
             total += super.getVoltage();
         }
-        
+
         total /= samples;
         return total;
     }
@@ -73,7 +73,7 @@ public class AnalogUltrasonic extends AnalogInput implements Ultrasonic {
     public double getDistance (int samples) {
         return this.getVoltage(samples) * INCHES_PER_VOLT;
     }
-    
+
     @Override
     public boolean inRange () {
         return this.getDistance(1) < OPERATING_RANGE;

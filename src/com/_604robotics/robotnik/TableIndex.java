@@ -9,10 +9,10 @@ class TableIndex {
     public TableIndex (ITable table, String key) {
         this.table = table;
         this.key = key;
-        
+
         table.putString(key, "");
     }
-    
+
     public void add (String type, String name) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException(type + " names may not be empty");
@@ -20,7 +20,7 @@ class TableIndex {
         if (name.contains(",")) {
             throw new IllegalArgumentException(type + " names may not contain commas");
         }
-        
+
         final String oldList = table.getString(key, "");
         table.putString(key, oldList.isEmpty() ? name : oldList + "," + name);
     }

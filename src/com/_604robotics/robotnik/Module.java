@@ -1,10 +1,10 @@
 package com._604robotics.robotnik;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Module {
     private final ITable table;
@@ -131,14 +131,14 @@ public abstract class Module {
                         "Error in begin() of action " + activeAction.getName() + " of module " + getName());
             }
         }
-        
+
         if (activeAction != null) {
             activeAction.updateInputs(activeActionInputsTable);
             Reliability.swallowThrowables(activeAction::run,
                     "Error in run() of action " + activeAction.getName() + " of module " + getName());
         }
     }
-    
+
     void terminate () {
         if (runningAction != null) {
             Reliability.swallowThrowables(runningAction::terminate,
@@ -149,5 +149,4 @@ public abstract class Module {
         activeActionTable.putString("name", "");
         activeActionTable.putString("inputList", "");
     }
-
 }

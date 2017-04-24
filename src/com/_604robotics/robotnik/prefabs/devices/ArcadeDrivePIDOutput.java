@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
  */
 public class ArcadeDrivePIDOutput {
     private final RobotDrive drive;
-    
+
     private double movePower = 0D;
     private double rotatePower = 0D;
 
@@ -33,7 +33,7 @@ public class ArcadeDrivePIDOutput {
             update();
         }
     };
-    
+
     /**
      * Creates an arcade drive PID output.
      * @param drive Robot drive to use.
@@ -41,7 +41,7 @@ public class ArcadeDrivePIDOutput {
     public ArcadeDrivePIDOutput (RobotDrive drive) {
         this.drive = drive;
     }
-    
+
     private synchronized void update () {
         this.drive.arcadeDrive(this.movePower, this.rotatePower);
     }

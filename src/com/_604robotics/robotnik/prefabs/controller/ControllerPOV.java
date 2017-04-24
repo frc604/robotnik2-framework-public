@@ -18,7 +18,7 @@ public class ControllerPOV {
         this.joystick = joystick;
         this.port = port;
     }
-    
+
     public double get () {
         return this.joystick.getPOV(this.port);
     }

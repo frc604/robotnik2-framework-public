@@ -10,89 +10,89 @@ public class WheelControllerButtons {
     /**
      * Left Pad.
      */
-    public final ControllerButton LeftPad;
-    
+    public final ControllerButton leftPad;
+
     /**
      * Right Pad.
      */
-    public final ControllerButton RightPad;
-    
+    public final ControllerButton rightPad;
+
     /**
      * Triangle.
      */
-    public final ControllerButton Triangle;
-    
+    public final ControllerButton triangle;
+
     /**
      * Square.
      */
-    public final ControllerButton Square;
-    
+    public final ControllerButton square;
+
     /**
      * Circle.
      */
-    public final ControllerButton Circle;
-    
+    public final ControllerButton circle;
+
     /**
      * Cross.
      */
-    public final ControllerButton Cross;
-    
+    public final ControllerButton cross;
+
     /**
      * L2.
      */
-    public final ControllerButton L2;
-    
+    public final ControllerButton l2;
+
     /**
      * R2.
      */
-    public final ControllerButton R2;
-    
+    public final ControllerButton r2;
+
     /**
      * L3.
      */
-    public final ControllerButton L3;
-    
+    public final ControllerButton l3;
+
     /**
      * R3.
      */
-    public final ControllerButton R3;
-    
+    public final ControllerButton r3;
+
     /**
      * Home.
      */
-    public final ControllerButton Home;
-    
+    public final ControllerButton home;
+
     /**
      * ST.
      */
-    public final ControllerButton ST;
-    
+    public final ControllerButton st;
+
     /**
      * SE.
      */
-    public final ControllerButton SE;
+    public final ControllerButton se;
 
     /**
      * Creates wheel controller buttons.
      * @param joystick Wheel controller containing the buttons.
      */
     public WheelControllerButtons (Joystick joystick) {
-        this.LeftPad  = new ControllerButton(joystick, 5);
-        this.RightPad = new ControllerButton(joystick, 6);
-        
-        this.Triangle = new ControllerButton(joystick, 4);
-        this.Square   = new ControllerButton(joystick, 1);
-        this.Circle   = new ControllerButton(joystick, 3);
-        this.Cross    = new ControllerButton(joystick, 2);
-        
-        this.L2 = new ControllerButton(joystick, 7);
-        this.R2 = new ControllerButton(joystick, 8);
-        
-        this.L3 = new ControllerButton(joystick, 11);
-        this.R3 = new ControllerButton(joystick, 12);
-        
-        this.Home = new ControllerButton(joystick, 13);
-        this.ST   = new ControllerButton(joystick, 10);
-        this.SE   = new ControllerButton(joystick, 9);
+        this.leftPad = new ControllerButton(joystick, 5);
+        this.rightPad = new ControllerButton(joystick, 6);
+
+        this.triangle = new ControllerButton(joystick, 4);
+        this.square = new ControllerButton(joystick, 1);
+        this.circle = new ControllerButton(joystick, 3);
+        this.cross = new ControllerButton(joystick, 2);
+
+        this.l2 = new ControllerButton(joystick, 7);
+        this.r2 = new ControllerButton(joystick, 8);
+
+        this.l3 = new ControllerButton(joystick, 11);
+        this.r3 = new ControllerButton(joystick, 12);
+
+        this.home = new ControllerButton(joystick, 13);
+        this.st = new ControllerButton(joystick, 10);
+        this.se = new ControllerButton(joystick, 9);
     }
 }

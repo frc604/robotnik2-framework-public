@@ -23,7 +23,7 @@ public class ControllerPOVButton {
         this.directionTop = direction;
         this.directionBottom = direction;
     }
-    
+
     /**
      * Creates a controller POV button.
      * @param joystick Joystick containing the POV.
@@ -32,18 +32,19 @@ public class ControllerPOVButton {
      * @param topAngle Maximum angle to check for.
      */
     public ControllerPOVButton (Joystick joystick, int port, int bottomAngle, int topAngle) {
-    	this.joystick = joystick;
+        this.joystick = joystick;
         this.port = port;
         this.directionTop = topAngle;
         this.directionBottom = bottomAngle;
     }
-    
+
     public boolean get () {
-    	if (this.directionTop > this.directionBottom) {
-    		return this.joystick.getPOV(this.port) <= this.directionTop && this.joystick.getPOV(this.port) >= this.directionBottom;
-    	} else {
-    		return (this.joystick.getPOV(this.port) <= this.directionTop && this.joystick.getPOV(this.port) >= 0) ||
-    		        (this.joystick.getPOV(this.port) <= 360 && this.joystick.getPOV(this.port) >= this.directionBottom);
-    	}
+        if (this.directionTop > this.directionBottom) {
+            return this.joystick.getPOV(this.port) <= this.directionTop &&
+                    this.joystick.getPOV(this.port) >= this.directionBottom;
+        } else {
+            return (this.joystick.getPOV(this.port) <= this.directionTop && this.joystick.getPOV(this.port) >= 0) ||
+                    (this.joystick.getPOV(this.port) <= 360 && this.joystick.getPOV(this.port) >= this.directionBottom);
+        }
     }
 }

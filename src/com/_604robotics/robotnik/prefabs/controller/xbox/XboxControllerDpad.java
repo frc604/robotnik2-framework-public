@@ -11,28 +11,28 @@ public class XboxControllerDpad {
     /**
      * Pad POV-hat.
      */
-    public final ControllerPOV pad;
-    
+    public final ControllerPOV pov;
+
     /**
      * Up.
      */
-    public final ControllerPOVButton Up;
-    
+    public final ControllerPOVButton up;
+
     /**
      * Down.
      */
-    public final ControllerPOVButton Down;
-    
+    public final ControllerPOVButton down;
+
     /**
      * Left.
      */
-    public final ControllerPOVButton Left;
-    
+    public final ControllerPOVButton left;
+
     /**
      * Right.
      */
-    public final ControllerPOVButton Right;
-    
+    public final ControllerPOVButton right;
+
     /**
      * Pressed.
      */
@@ -45,28 +45,29 @@ public class XboxControllerDpad {
         /**
          * Up.
          */
-        public final ControllerPOVButton Up;
-        
+        public final ControllerPOVButton up;
+
         /**
          * Down.
          */
-        public final ControllerPOVButton Down;
-        
+        public final ControllerPOVButton down;
+
         /**
          * Left.
          */
-        public final ControllerPOVButton Left;
-        
+        public final ControllerPOVButton left;
+
         /**
          * Right.
          */
-        public final ControllerPOVButton Right;
+        public final ControllerPOVButton right;
 
-        public XboxControllerDpadImprecise (ControllerPOVButton up, ControllerPOVButton down, ControllerPOVButton left, ControllerPOVButton right) {
-            this.Up = up;
-            this.Down = down;
-            this.Left = left;
-            this.Right = right;
+        public XboxControllerDpadImprecise (ControllerPOVButton up, ControllerPOVButton down, ControllerPOVButton left,
+                                            ControllerPOVButton right) {
+            this.up = up;
+            this.down = down;
+            this.left = left;
+            this.right = right;
         }
     }
 
@@ -80,17 +81,17 @@ public class XboxControllerDpad {
      * @param joystick Xbox controller containing the D-pad.
      */
     public XboxControllerDpad (Joystick joystick){
-        this.pad = new ControllerPOV(joystick, 0);
-        this.Up = new ControllerPOVButton(joystick, 0, 0);
-        this.Down = new ControllerPOVButton(joystick, 0, 180);
-        this.Left = new ControllerPOVButton(joystick, 0, 270);
-        this.Right = new ControllerPOVButton(joystick, 0, 90);
+        this.pov = new ControllerPOV(joystick, 0);
+        this.up = new ControllerPOVButton(joystick, 0, 0);
+        this.down = new ControllerPOVButton(joystick, 0, 180);
+        this.left = new ControllerPOVButton(joystick, 0, 270);
+        this.right = new ControllerPOVButton(joystick, 0, 90);
         this.pressed = new ControllerPOVButton(joystick, 0, 0, 360);
         this.imprecise = new XboxControllerDpadImprecise(
-                    new ControllerPOVButton(joystick, 0, 315, 45),
-                    new ControllerPOVButton(joystick, 0, 135, 225),
-                    new ControllerPOVButton(joystick, 0, 45, 135),
-                    new ControllerPOVButton(joystick, 0, 225, 315)
-                );
+                new ControllerPOVButton(joystick, 0, 315, 45),
+                new ControllerPOVButton(joystick, 0, 135, 225),
+                new ControllerPOVButton(joystick, 0, 45, 135),
+                new ControllerPOVButton(joystick, 0, 225, 315)
+        );
     }
 }

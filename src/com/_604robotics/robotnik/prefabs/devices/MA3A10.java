@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  */
 public class MA3A10 implements PIDSource {
     private static final double MAX_VOLTAGE = 5;
-    
+
     private final AnalogInput input;
     private double zero = 0D;
-    
+
     /**
      * Creates a MA3A10.
      * @param port Port of the encoder.
@@ -20,14 +20,14 @@ public class MA3A10 implements PIDSource {
     public MA3A10 (int port) {
         this.input = new AnalogInput(port);
     }
-    
+
     /**
      * Sets the zero of the encoder to its current value.
      */
     public void setZero () {
         this.setZero(this.getVoltage());
     }
-    
+
     /**
      * Sets the zero of an encoder.
      * @param zero Zero value to set.
@@ -35,7 +35,7 @@ public class MA3A10 implements PIDSource {
     public void setZero (double zero) {
         this.zero = zero;
     }
-    
+
     /**
      * Sets the zero of the encoder to an angle.
      * @param zeroAngle Zero angle to set.
@@ -43,7 +43,7 @@ public class MA3A10 implements PIDSource {
     public void setZeroAngle (double zeroAngle) {
         this.setZero(zeroAngle / 360 * MAX_VOLTAGE);
     }
-    
+
     /**
      * Gets the (raw, non-zeroed) voltage value of the encoder.
      * @return The (raw, non-zeroed) voltage value of the encoder.
@@ -51,7 +51,7 @@ public class MA3A10 implements PIDSource {
     public double getRawVoltage () {
         return this.input.getVoltage();
     }
-    
+
     /**
      * Gets the (zeroed) voltage value of the encoder.
      * @return The (zeroed) voltage value of the encoder.
@@ -63,7 +63,7 @@ public class MA3A10 implements PIDSource {
         }
         return voltage;
     }
-    
+
     /**
      * Gets the (zeroed) angle of the encoder.
      * @return The (zeroed) angle of the encoder.
@@ -71,7 +71,7 @@ public class MA3A10 implements PIDSource {
     public double getAngle () {
         return this.getVoltage() / MAX_VOLTAGE * 360;
     }
-    
+
     /**
      * Gets the (raw, non-zeroed) angle value of the encoder.
      * @return The (raw, non-zeroed) angle of the encoder.

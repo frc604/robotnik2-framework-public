@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
  */
 public class TankDrivePIDOutput {
     private final RobotDrive drive;
-    
+
     private double leftPower = 0D;
     private double rightPower = 0D;
 
@@ -33,7 +33,7 @@ public class TankDrivePIDOutput {
             update();
         }
     };
-    
+
     /**
      * Creates a tank drive PID output.
      * @param drive Robot drive to use.
@@ -41,7 +41,7 @@ public class TankDrivePIDOutput {
     public TankDrivePIDOutput (RobotDrive drive) {
         this.drive = drive;
     }
-    
+
     private synchronized void update () {
         this.drive.tankDrive(this.leftPower, this.rightPower);
     }

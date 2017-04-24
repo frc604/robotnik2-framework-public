@@ -1,20 +1,20 @@
 package com._604robotics.robotnik;
 
+import edu.wpi.first.wpilibj.SampleRobot;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.tables.ITable;
+
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.tables.ITable;
-
 public abstract class Robot extends SampleRobot {
     public static double DEFAULT_REPORT_INTERVAL = 5;
-    
+
     private static final Logger logger = new Logger(Robot.class);
-    
+
     private final ITable table = NetworkTable.getTable("robotnik");
 
     private final List<Module> modules = new ArrayList<>();
@@ -29,7 +29,7 @@ public abstract class Robot extends SampleRobot {
     public Robot () {
         this(DEFAULT_REPORT_INTERVAL);
     }
-    
+
     public Robot (double reportInterval) {
         iterationTimer = new IterationTimer(reportInterval);
         updateModuleList();
@@ -40,7 +40,7 @@ public abstract class Robot extends SampleRobot {
         updateModuleList();
         return module;
     }
-    
+
     private void updateModuleList () {
         table.putString("moduleList", modules.stream()
                 .map(Module::getName)
@@ -50,44 +50,44 @@ public abstract class Robot extends SampleRobot {
     protected void addSystem (Controller system) {
         systems.add(system);
     }
-	
-	protected void setAutonomousMode (Controller autonomousMode) {
-	    this.autonomousMode = autonomousMode;
-	}
-	
-	protected void setTeleopMode (Controller teleopMode) {
-	    this.teleopMode = teleopMode;
-	}
-	
-	protected void setTestMode (Controller testMode) {
-	    this.testMode = testMode;
-	}
-	
-	@Override
-    protected void robotInit () {
-	    printBanner();
+
+    protected void setAutonomousMode (Controller autonomousMode) {
+        this.autonomousMode = autonomousMode;
+    }
+
+    protected void setTeleopMode (Controller teleopMode) {
+        this.teleopMode = teleopMode;
+    }
+
+    protected void setTestMode (Controller testMode) {
+        this.testMode = testMode;
     }
 
     @Override
-	public void autonomous () {
-	    loop("Autonomous", autonomousMode, () -> isEnabled() && isAutonomous());
-	}
+    protected void robotInit () {
+        printBanner();
+    }
 
-	@Override
-	public void operatorControl () {
-	    loop("Teleop", teleopMode, () -> isEnabled() && isOperatorControl());
-	}
+    @Override
+    public void autonomous () {
+        loop("Autonomous", autonomousMode, () -> isEnabled() && isAutonomous());
+    }
 
-	@Override
-	public void test () {
-	    loop("Test", testMode, () -> isEnabled() && isTest());
-	}
+    @Override
+    public void operatorControl () {
+        loop("Teleop", teleopMode, () -> isEnabled() && isOperatorControl());
+    }
+
+    @Override
+    public void test () {
+        loop("Test", testMode, () -> isEnabled() && isTest());
+    }
 
     @Override
     protected void disabled () {
         loop("Disabled", null, this::isDisabled);
     }
-    
+
     private void loop (String name, Controller mode, Supplier<Boolean> active) {
         logger.info(name + " mode begin");
 
@@ -148,7 +148,7 @@ public abstract class Robot extends SampleRobot {
                 module.terminate();
             }
         }
-        
+
         logger.info(name + " mode end");
     }
 

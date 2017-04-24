@@ -11,7 +11,7 @@ public class WheelController {
      * The wheel's buttons.
      */
     public final WheelControllerButtons buttons;
-    
+
     /**
      * The wheel's axis.
      */
@@ -23,7 +23,7 @@ public class WheelController {
      */
     public WheelController (int port) {
         final Joystick joystick = new Joystick(port);
-        
+
         this.buttons = new WheelControllerButtons(joystick);
         this.axis = new ControllerAxis(joystick, 1);
     }

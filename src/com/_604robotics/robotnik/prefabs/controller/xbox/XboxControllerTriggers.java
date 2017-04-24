@@ -10,13 +10,13 @@ public class XboxControllerTriggers {
     /**
      * Left.
      */
-    public final ControllerAxis Left;
-    
+    public final ControllerAxis left;
+
     /**
      * Right.
      */
-    public final ControllerAxis Right;
-    
+    public final ControllerAxis right;
+
     /**
      * Creates Xbox controller triggers.
      * @param joystick Xbox controller containing the triggers.
@@ -24,7 +24,7 @@ public class XboxControllerTriggers {
      * @param right Right trigger ID.
      */
     public XboxControllerTriggers (Joystick joystick, int left, int right) {
-        this.Left = new ControllerAxis(joystick, left);
-        this.Right = new ControllerAxis(joystick, right);
+        this.left = new ControllerAxis(joystick, left);
+        this.right = new ControllerAxis(joystick, right);
     }
 }

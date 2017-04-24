@@ -11,17 +11,17 @@ public class JoystickController {
      * The joystick's buttons.
      */
     public final JoystickControllerButtons buttons;
-    
+
     /**
      * The joystick's X axis.
      */
     public final ControllerAxis axisX;
-    
+
     /**
      * The joystick's Y axis.
      */
     public final ControllerAxis axisY;
-    
+
     /**
      * The joystick's adjust axis.
      */
@@ -33,11 +33,11 @@ public class JoystickController {
      */
     public JoystickController (int port) {
         final Joystick joystick = new Joystick(port);
-        
-        this.buttons = new JoystickControllerButtons(joystick);
-        
-        this.axisX = new ControllerAxis(joystick, 0);
-        this.axisY = new ControllerAxis(joystick, 1);
-        this.axisAdjust = new ControllerAxis(joystick, 2);
+
+        buttons = new JoystickControllerButtons(joystick);
+
+        axisX = new ControllerAxis(joystick, 0);
+        axisY = new ControllerAxis(joystick, 1);
+        axisAdjust = new ControllerAxis(joystick, 2);
     }
 }

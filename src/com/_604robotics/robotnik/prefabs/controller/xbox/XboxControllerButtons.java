@@ -11,80 +11,81 @@ public class XboxControllerButtons {
     /**
      * A.
      */
-    public final ControllerButton A;
-    
+    public final ControllerButton a;
+
     /**
      * B.
      */
-    public final ControllerButton B;
-    
+    public final ControllerButton b;
+
     /**
      * X.
      */
-    public final ControllerButton X;
-    
+    public final ControllerButton x;
+
     /**
      * Y.
      */
-    public final ControllerButton Y;
-    
+    public final ControllerButton y;
+
     /**
      * LB.
      */
-    public final ControllerButton LB;
-    
+    public final ControllerButton lb;
+
     /**
      * RB.
      */
-    public final ControllerButton RB;
-    
+    public final ControllerButton rb;
+
     /**
      * Back.
      */
-    public final ControllerButton Back;
-    
+    public final ControllerButton back;
+
     /**
      * Left Stick.
      */
-    public final ControllerButton LeftStick;
-    
+    public final ControllerButton leftStick;
+
     /**
      * Right Stick.
      */
-    public final ControllerButton RightStick;
-    
+    public final ControllerButton rightStick;
+
     /**
      * LT.
      */
-    public final ControllerAxisButton LT;
-    
+    public final ControllerAxisButton lt;
+
     /**
      * RT.
      */
-    public final ControllerAxisButton RT;
-    
+    public final ControllerAxisButton rt;
+
     /**
      * Start.
      */
-    public final ControllerButton Start;
+    public final ControllerButton start;
+
     /**
      * Creates Xbox controller buttons.
      * @param joystick Xbox controller containing the buttons.
      */
     public XboxControllerButtons (Joystick joystick) {
-        this.A    = new ControllerButton(joystick, 1);
-        this.B    = new ControllerButton(joystick, 2);
-        this.X    = new ControllerButton(joystick, 3);
-        this.Y    = new ControllerButton(joystick, 4);
-        this.LB   = new ControllerButton(joystick, 5);
-        this.RB   = new ControllerButton(joystick, 6);
-        this.Back = new ControllerButton(joystick, 7);
-        this.Start  = new ControllerButton(joystick, 8);
-        
-        this.LeftStick  = new ControllerButton(joystick,  9);
-        this.RightStick = new ControllerButton(joystick, 10);
-        
-        this.LT = new ControllerAxisButton(joystick, 2, 1);
-        this.RT = new ControllerAxisButton(joystick, 3, 1);
+        this.a = new ControllerButton(joystick, 1);
+        this.b = new ControllerButton(joystick, 2);
+        this.x = new ControllerButton(joystick, 3);
+        this.y = new ControllerButton(joystick, 4);
+        this.lb = new ControllerButton(joystick, 5);
+        this.rb = new ControllerButton(joystick, 6);
+        this.back = new ControllerButton(joystick, 7);
+        this.start = new ControllerButton(joystick, 8);
+
+        this.leftStick = new ControllerButton(joystick,  9);
+        this.rightStick = new ControllerButton(joystick, 10);
+
+        this.lt = new ControllerAxisButton(joystick, 2, 1);
+        this.rt = new ControllerAxisButton(joystick, 3, 1);
     }
 }

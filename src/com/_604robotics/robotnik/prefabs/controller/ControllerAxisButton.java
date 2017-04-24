@@ -19,10 +19,10 @@ public class ControllerAxisButton {
     public ControllerAxisButton (Joystick joystick, int axis, int direction) {
         this.joystick = joystick;
         this.axis = axis;
-        
+
         this.direction = direction;
     }
-    
+
     public boolean get () {
         return Math.round(this.joystick.getRawAxis(this.axis)) == this.direction;
     }

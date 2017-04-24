@@ -21,10 +21,10 @@ public class ControllerAxis {
         this.joystick = joystick;
         this.axis = axis;
     }
-    
+
     public double get () {
         final double value = this.joystick.getRawAxis(this.axis) * this.factor;
-        
+
         return Math.abs(value) < this.deadband ? 0D : value;
     }
 
@@ -43,7 +43,7 @@ public class ControllerAxis {
     public void setFactor (double factor) {
         this.factor = factor;
     }
-    
+
     /**
      * Inverts the multiplication factor of the axis.
      */

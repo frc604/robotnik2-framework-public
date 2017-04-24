@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
  */
 public class MultiOutput implements PIDOutput {
     private final PIDOutput[] outputs;
-    
+
     /**
      * Creates a multi output.
      * @param outputs PID outputs to output to.
@@ -15,7 +15,7 @@ public class MultiOutput implements PIDOutput {
     public MultiOutput (PIDOutput... outputs) {
         this.outputs = outputs;
     }
-    
+
     /**
      * Sets the value of the PID outputs.
      * @param value Value to set.
@@ -25,7 +25,7 @@ public class MultiOutput implements PIDOutput {
             this.outputs[i].pidWrite(value);
         }
     }
-    
+
     /**
      * Stops all motors.
      */

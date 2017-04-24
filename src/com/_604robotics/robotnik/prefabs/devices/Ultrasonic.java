@@ -16,7 +16,7 @@ public interface Ultrasonic {
      * @return The distance, in inches.
      */
     public double getDistance (int samples);
-    
+
     /**
      * Determines if the sensor is within its operating range.
      * @return Whether or not the sensor is within its operating range.

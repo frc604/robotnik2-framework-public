@@ -5,24 +5,22 @@ import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
-
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive extends Module {
     private final RobotDrive robotDrive = new RobotDrive(1, 2);
 
     private final Encoder encoderLeft = new Encoder(Ports.ENCODER_LEFT_A,
-    												Ports.ENCODER_LEFT_B, 
-    												false,
-    												CounterBase.EncodingType.k4X);
+            Ports.ENCODER_LEFT_B,
+            false,
+            CounterBase.EncodingType.k4X);
     private final Encoder encoderRight = new Encoder(Ports.ENCODER_RIGHT_A,
-    												Ports.ENCODER_RIGHT_B,
-    												true,
-    												CounterBase.EncodingType.k4X);
-    
+            Ports.ENCODER_RIGHT_B,
+            true,
+            CounterBase.EncodingType.k4X);
+
     public final Output<Integer> leftClicks = addOutput("leftClicks", encoderLeft::get);
     public final Output<Integer> rightClicks = addOutput("rightClicks", encoderRight::get);
 
@@ -38,7 +36,7 @@ public class Drive extends Module {
     }
 
     public final Action idle = new Idle();
-    
+
     public class TankDrive extends Action {
         public final Input<Double> leftPower = addInput("leftPower", 0d);
         public final Input<Double> rightPower = addInput("rightPower", 0d);
@@ -58,7 +56,7 @@ public class Drive extends Module {
             robotDrive.tankDrive(leftPower.get(), rightPower.get());
         }
     }
-    
+
     public class ArcadeDrive extends Action {
         public final Input<Double> movePower = addInput("movePower", 0d);
         public final Input<Double> rotatePower = addInput("rotatePower", 0d);

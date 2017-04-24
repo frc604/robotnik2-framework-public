@@ -15,11 +15,11 @@ public class Robot2017 extends Robot {
     public final FlipFlop flipFlop = addModule(new FlipFlop());
     public final Intake intake = addModule(new Intake());
 
-	public Robot2017 () {
-	    addSystem(new DashboardSystem(this));
-	    addSystem(new PickupSystem(this));
+    public Robot2017 () {
+        addSystem(new DashboardSystem(this));
+        addSystem(new PickupSystem(this));
 
-	    setAutonomousMode(new AutonomousMode(this));
-	    setTeleopMode(new TeleopMode(this));
-	}
+        setAutonomousMode(new AutonomousMode(this));
+        setTeleopMode(new TeleopMode(this));
+    }
 }

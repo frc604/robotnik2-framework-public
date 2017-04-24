@@ -3,7 +3,7 @@ package com._604robotics.robotnik.prefabs.devices;
 /**
  * A pair of ultrasonic sensors.
  */
-public class UltrasonicPair implements Ultrasonic {    
+public class UltrasonicPair implements Ultrasonic {
     private Ultrasonic left;
     private Ultrasonic right;
     private double separation;
@@ -93,7 +93,7 @@ public class UltrasonicPair implements Ultrasonic {
             return "straight";
         }
     }
-    
+
     /**
      * Gets the distance read by the left sensor using 64 samples.
      * @return The distance read by the left sensor.
@@ -101,7 +101,7 @@ public class UltrasonicPair implements Ultrasonic {
     public double getLeftDistance () {
         return this.left.getDistance();
     }
-    
+
     /**
      * Gets the distance read by the left sensor.
      * @param samples Number of samples to take.
@@ -110,7 +110,7 @@ public class UltrasonicPair implements Ultrasonic {
     public double getLeftDistance (int samples) {
         return this.left.getDistance(samples);
     }
-    
+
     /**
      * Gets the distance read by the right sensor using 64 samples.
      * @return The distance read by the right sensor.
@@ -118,7 +118,7 @@ public class UltrasonicPair implements Ultrasonic {
     public double getRightDistance () {
         return this.right.getDistance();
     }
-    
+
     /**
      * Gets the distance read by the right sensor.
      * @param samples Number of samples to take.
@@ -127,7 +127,7 @@ public class UltrasonicPair implements Ultrasonic {
     public double getRightDistance (int samples) {
         return this.right.getDistance(samples);
     }
-    
+
     @Override
     public double getDistance () {
         double leftDistance = this.left.getDistance();
@@ -141,7 +141,7 @@ public class UltrasonicPair implements Ultrasonic {
         double rightDistance = this.right.getDistance(samples);
         return Math.min(leftDistance, rightDistance);
     }
-    
+
     @Override
     public boolean inRange () {
         return this.left.inRange() && this.right.inRange();

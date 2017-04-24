@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class Action {
     private final Module parent;
     private final String name;
-    
+
     @SuppressWarnings("rawtypes")
     private final List<Input> inputs = new ArrayList<>();
     private String inputListValue = "";
@@ -18,7 +18,7 @@ public abstract class Action {
     private String outputListValue = "";
 
     private boolean running = false;
-    
+
     public Action (Module parent, String name) {
         this.parent = parent;
         this.name = name;
@@ -67,13 +67,13 @@ public abstract class Action {
     public void activate () {
         parent.activate(this);
     }
-    
+
     void updateActiveAction (ITable activeActionTable) {
         activeActionTable.putString("name", getName());
         activeActionTable.putString("inputList", inputListValue);
         activeActionTable.putString("outputList", outputListValue);
     }
-    
+
     void updateInputs (ITable activeActionInputsTable) {
         for (@SuppressWarnings("rawtypes") Input input : inputs) {
             activeActionInputsTable.putValue(input.getName(), input.get());
@@ -97,7 +97,7 @@ public abstract class Action {
         running = false;
         end();
     }
-    
+
     protected void begin () {}
     protected void run () {}
     protected void end () {}
