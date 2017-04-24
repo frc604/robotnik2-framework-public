@@ -1,15 +1,23 @@
 package com._604robotics.robotnik.prefabs.flow;
 
 public class Pulse {
-    private boolean pulseActive = false;
     private boolean lastInput = false;
 
-    public boolean get () {
-        return pulseActive;
+    private boolean risingEdge = false;
+    private boolean fallingEdge = false;
+
+    public boolean isRisingEdge () {
+        return risingEdge;
+    }
+
+    public boolean isFallingEdge () {
+        return fallingEdge;
     }
 
     public void update (boolean input) {
-        pulseActive = !lastInput && input;
+        risingEdge = !lastInput && input;
+        fallingEdge = lastInput && !input;
+
         lastInput = input;
     }
 }

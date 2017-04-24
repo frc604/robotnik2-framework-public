@@ -8,17 +8,33 @@ public class PulseToggle {
         state = initialState;
     }
 
-    public boolean on () {
-        return state && pulse.get();
+    public boolean isInOnState () {
+        return state;
     }
 
-    public boolean off () {
-        return !state && pulse.get();
+    public boolean isInOffState () {
+        return !state;
+    }
+
+    public boolean isEnteringOnState () {
+        return state && pulse.isRisingEdge();
+    }
+
+    public boolean isEnteringOffState () {
+        return !state && pulse.isRisingEdge();
+    }
+
+    public boolean isLeavingOnState () {
+        return state && pulse.isFallingEdge();
+    }
+
+    public boolean isLeavingOffState () {
+        return !state && pulse.isFallingEdge();
     }
 
     public void update (boolean input) {
         pulse.update(input);
-        if (pulse.get()) {
+        if (pulse.isRisingEdge()) {
             state = !state;
         }
     }

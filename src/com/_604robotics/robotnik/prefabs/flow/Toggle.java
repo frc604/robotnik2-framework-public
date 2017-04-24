@@ -14,7 +14,7 @@ public class Toggle {
 
     public void update (boolean input) {
         pulse.update(input);
-        if (pulse.get()) {
+        if (pulse.isRisingEdge()) {
             state = !state;
         }
     }
