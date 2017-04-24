@@ -12,7 +12,7 @@ public class PickupSystem extends Controller {
 
     @Override
     protected void run () {
-        if (robot.flipFlop.retract.isRunning() && !robot.flipFlop.retracted.get()) {
+        if (robot.flipFlop.retract.isRunning() && !robot.flipFlop.retract.completed.get()) {
             robot.intake.suck.activate();
         }
     }

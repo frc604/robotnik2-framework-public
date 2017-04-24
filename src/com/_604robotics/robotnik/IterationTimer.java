@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import edu.wpi.first.wpilibj.Timer;
 
-public class IterationTimer {
+class IterationTimer {
     private final Timer timer = new Timer();
     private final double reportInterval;
     private long iterationCount;

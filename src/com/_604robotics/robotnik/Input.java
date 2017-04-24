@@ -6,7 +6,7 @@ public class Input<T> {
     private T value;
     private boolean updated = false;
     
-    public Input (String name, T initialValue) {
+    Input (String name, T initialValue) {
         this.name = name;
         value = initialValue;
     }

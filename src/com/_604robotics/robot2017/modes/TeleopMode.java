@@ -22,7 +22,7 @@ public class TeleopMode extends Controller {
         signalLightController = new SignalLightController();
         pickupController = new PickupController();
     }
-    
+
     @Override
     public void run () {
         climberController.run();

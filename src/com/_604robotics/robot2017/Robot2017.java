@@ -4,6 +4,7 @@ import com._604robotics.robot2017.modes.AutonomousMode;
 import com._604robotics.robot2017.modes.TeleopMode;
 import com._604robotics.robot2017.modules.*;
 import com._604robotics.robot2017.systems.DashboardSystem;
+import com._604robotics.robot2017.systems.PickupSystem;
 import com._604robotics.robotnik.Robot;
 
 public class Robot2017 extends Robot {
@@ -16,6 +17,7 @@ public class Robot2017 extends Robot {
 
 	public Robot2017 () {
 	    addSystem(new DashboardSystem(this));
+	    addSystem(new PickupSystem(this));
 
 	    setAutonomousMode(new AutonomousMode(this));
 	    setTeleopMode(new TeleopMode(this));

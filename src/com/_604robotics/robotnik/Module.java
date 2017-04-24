@@ -17,6 +17,7 @@ public abstract class Module {
 
     private final ITable activeActionTable;
     private final ITable activeActionInputsTable;
+    private final ITable activeActionOutputsTable;
 
     private final String name;
 
@@ -51,6 +52,7 @@ public abstract class Module {
         activeActionTable.putString("inputList", "");
 
         activeActionInputsTable = activeActionTable.getSubTable("inputs");
+        activeActionOutputsTable = activeActionTable.getSubTable("outputs");
     }
 
     public Module (Class klass) {
@@ -70,10 +72,7 @@ public abstract class Module {
     }
 
     protected <T> Input<T> addInput (String name, T initialValue) {
-        return addInput(new Input<T>(name, initialValue));
-    }
-
-    protected <T> Input<T> addInput (Input<T> input) {
+        final Input<T> input = new Input<>(name, initialValue);
         inputs.add(input);
         inputsTableIndex.add("Input", input.getName());
         return input;
@@ -95,6 +94,10 @@ public abstract class Module {
             Reliability.swallowThrowables(output::update,
                     "Error updating output " + output.getName() + " of module " + getName());
             outputsTable.putValue(output.getName(), output.get());
+        }
+
+        if (runningAction != null) {
+            runningAction.updateOutputs(activeActionOutputsTable);
         }
 
         activeAction = defaultAction;
@@ -146,33 +149,5 @@ public abstract class Module {
         activeActionTable.putString("name", "");
         activeActionTable.putString("inputList", "");
     }
-    
-    private static class OutputProxy<T> implements Output<T> {
-        private final String name;
-        private final Output<T> source;
 
-        private T value;
-
-        public OutputProxy (String name, Output<T> source) {
-            if (name.contains(",")) {
-                throw new IllegalArgumentException("Output names may not contain commas");
-            }
-
-            this.name = name;
-            this.source = source;
-        }
-        
-        public String getName (){
-            return name;
-        }
-
-        @Override
-        public T get () {
-            return value;
-        }
-        
-        private void update () {
-            value = source.get();
-        }
-    }
 }

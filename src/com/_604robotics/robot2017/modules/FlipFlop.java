@@ -13,38 +13,60 @@ public class FlipFlop extends Module {
     private final DoubleSolenoid piston =
             new DoubleSolenoid(Ports.FLIP_FLOP_EXTEND_SOLENOID, Ports.FLIP_FLOP_RETRACT_SOLENOID);
 
-    private final Timer timer = new Timer();
-    private boolean startup = true;
-
     public final Input<Double> transitionTime = addInput("transitionTime", Calibration.FLIP_FLOP_TRANSITION_TIME);
 
-    private class Actuate extends Action {
-        private final DoubleSolenoid.Value direction;
+    private boolean startup = true;
 
-        public Actuate (String name, DoubleSolenoid.Value direction) {
-            super(FlipFlop.this, name);
-            this.direction = direction;
+    public class Retract extends Action {
+        private final Timer timer = new Timer();
+
+        public final Output<Boolean> completed =
+                addOutput("completed", () -> startup || timer.get() >= transitionTime.get());
+
+        private Retract () {
+            super(FlipFlop.this, Retract.class);
         }
 
         @Override
         protected void begin () {
-            timer.reset();
-            piston.set(direction);
+            timer.start();
+            piston.set(DoubleSolenoid.Value.kReverse);
         }
 
         @Override
         protected void end () {
+            timer.stop();
+            timer.reset();
+
             startup = false;
         }
     }
 
-    public final Action retract = new Actuate("Retract", DoubleSolenoid.Value.kReverse);
-    public final Action extend = new Actuate("Extend", DoubleSolenoid.Value.kForward);
+    public final Retract retract = new Retract();
 
-    public final Output<Boolean> retracted =
-            addOutput("retracted", () -> retract.isRunning() && (startup || timer.get() >= transitionTime.get()));
-    public final Output<Boolean> extended =
-            addOutput("extended", () -> extend.isRunning() && timer.get() >= transitionTime.get());
+    public class Extend extends Action {
+        private final Timer timer = new Timer();
+
+        public final Output<Boolean> completed = addOutput("completed", () -> timer.get() >= transitionTime.get());
+
+        private Extend () {
+            super(FlipFlop.this, Extend.class);
+        }
+
+        @Override
+        protected void begin () {
+            timer.start();
+            piston.set(DoubleSolenoid.Value.kForward);
+        }
+
+        @Override
+        protected void end () {
+            timer.stop();
+            timer.reset();
+        }
+    }
+
+    public final Extend extend = new Extend();
 
     public FlipFlop () {
         super(FlipFlop.class);
