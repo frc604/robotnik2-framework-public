@@ -87,9 +87,11 @@ public class TeleopMode extends Controller {
             }
 
             switch (intakeState) {
-                case IDLE:
                 case FORWARD:
-
+                    // TODO: Fill me in!
+                    break;
+                case REVERSE:
+                    // TODO: Fill me in!
                     break;
             }
         }

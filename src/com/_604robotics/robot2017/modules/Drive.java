@@ -38,17 +38,17 @@ public class Drive extends Module {
     public final Action idle = new Idle();
 
     public class TankDrive extends Action {
-        public final Input<Double> leftPower = addInput("leftPower", 0d);
-        public final Input<Double> rightPower = addInput("rightPower", 0d);
+        public final Input<Double> leftPower;
+        public final Input<Double> rightPower;
 
         public TankDrive () {
-            super(Drive.this, TankDrive.class);
+            this(0, 0);
         }
 
-        public TankDrive (double initialLeftPower, double initialRightPower) {
-            this();
-            leftPower.set(initialLeftPower);
-            rightPower.set(initialRightPower);
+        public TankDrive (double defaultLeftPower, double defaultRightPower) {
+            super(Drive.this, TankDrive.class);
+            leftPower = addInput("leftPower", defaultLeftPower);
+            rightPower = addInput("rightPower", defaultRightPower);
         }
 
         @Override
@@ -58,17 +58,17 @@ public class Drive extends Module {
     }
 
     public class ArcadeDrive extends Action {
-        public final Input<Double> movePower = addInput("movePower", 0d);
-        public final Input<Double> rotatePower = addInput("rotatePower", 0d);
+        public final Input<Double> movePower;
+        public final Input<Double> rotatePower;
 
         public ArcadeDrive () {
-            super(Drive.this, ArcadeDrive.class);
+            this(0, 0);
         }
 
-        public ArcadeDrive (double initialLeftPower, double initialRightPower) {
-            this();
-            movePower.set(initialLeftPower);
-            rotatePower.set(initialRightPower);
+        public ArcadeDrive (double defaultLeftPower, double defaultRightPower) {
+            super(Drive.this, ArcadeDrive.class);
+            movePower = addInput("movePower", 0d);
+            rotatePower = addInput("rotatePower", 0d);
         }
 
         @Override

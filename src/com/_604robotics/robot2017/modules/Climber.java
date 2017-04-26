@@ -23,15 +23,15 @@ public class Climber extends Module {
     public final Action idle = new Idle();
 
     public class Climb extends Action {
-        public final Input<Double> power = addInput("power", 0d);
+        public final Input<Double> power;
 
         public Climb () {
-            super(Climber.this, Climb.class);
+            this(0);
         }
 
-        public Climb (double initialPower) {
-            this();
-            power.set(initialPower);
+        public Climb (double defaultPower) {
+            super(Climber.this, Climb.class);
+            power = addInput("power", defaultPower);
         }
 
         @Override

@@ -84,7 +84,7 @@ public class DashboardModule extends Module {
     @Override
     protected void run () {
         for (Pair<Input, InputType> input : inputs) {
-            if (input.getKey().isUpdated()) {
+            if (input.getKey().isFresh()) {
                 switch (input.getValue()) {
                     case BOOLEAN:
                         SmartDashboard.putBoolean(input.getKey().getName(), (Boolean) input.getKey().get());

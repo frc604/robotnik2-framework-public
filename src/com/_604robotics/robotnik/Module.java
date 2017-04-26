@@ -30,6 +30,8 @@ public abstract class Module {
     @SuppressWarnings("rawtypes")
     private final List<OutputProxy> outputs = new ArrayList<>();
 
+    private long epoch = 0;
+
     protected void begin () {}
     protected void run () {}
     protected void end () {}
@@ -71,8 +73,8 @@ public abstract class Module {
         this.defaultAction = action;
     }
 
-    protected <T> Input<T> addInput (String name, T initialValue) {
-        final Input<T> input = new Input<>(name, initialValue);
+    protected <T> Input<T> addInput (String name, T defaultValue) {
+        final Input<T> input = new Input<>(this, name, defaultValue);
         inputs.add(input);
         inputsTableIndex.add("Input", input.getName());
         return input;
@@ -85,10 +87,12 @@ public abstract class Module {
         return proxy;
     }
 
+    long getEpoch () {
+        return epoch;
+    }
+
     void prepare () {
-        for (@SuppressWarnings("rawtypes") Input input : inputs) {
-            input.clearUpdated();
-        }
+        ++epoch;
 
         for (@SuppressWarnings("rawtypes") OutputProxy output : outputs) {
             Reliability.swallowThrowables(output::update,

@@ -1,14 +1,18 @@
 package com._604robotics.robotnik;
 
 public class Input<T> {
+    private final Module parent;
+
     private final String name;
 
+    private final T defaultValue;
     private T value;
-    private boolean updated = false;
+    private long valueEpoch = -1;
 
-    Input (String name, T initialValue) {
+    Input (Module parent, String name, T defaultValue) {
+        this.parent = parent;
         this.name = name;
-        value = initialValue;
+        this.defaultValue = defaultValue;
     }
 
     public String getName () {
@@ -16,19 +20,20 @@ public class Input<T> {
     }
 
     public T get () {
-        return value;
+        if (valueEpoch == parent.getEpoch()) {
+            return value;
+        } else {
+            return defaultValue;
+        }
     }
 
     public void set (T value) {
         this.value = value;
-        updated = true;
+        valueEpoch = parent.getEpoch();
     }
 
-    public boolean isUpdated () {
-        return updated;
-    }
-
-    void clearUpdated () {
-        updated = false;
+    public boolean isFresh () {
+        final long currentEpoch = parent.getEpoch();
+        return valueEpoch == currentEpoch || valueEpoch == currentEpoch - 1;
     }
 }
