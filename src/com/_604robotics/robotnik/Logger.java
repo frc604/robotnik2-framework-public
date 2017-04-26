@@ -1,13 +1,13 @@
 package com._604robotics.robotnik;
 
+import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 public class Logger {
-    private static Timer bootTimer = new Timer();
+    private static SmartTimer bootTimer = new SmartTimer();
 
     static {
         bootTimer.start();

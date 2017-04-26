@@ -1,11 +1,11 @@
 package com._604robotics.robotnik;
 
-import edu.wpi.first.wpilibj.Timer;
+import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 
 import java.util.function.Consumer;
 
 class IterationTimer {
-    private final Timer timer = new Timer();
+    private final SmartTimer timer = new SmartTimer();
     private final double reportInterval;
     private long iterationCount;
 
@@ -18,9 +18,7 @@ class IterationTimer {
     }
 
     public void stop () {
-        timer.stop();
-        timer.reset();
-
+        timer.stopAndReset();
         iterationCount = 0;
     }
 
@@ -31,10 +29,9 @@ class IterationTimer {
 
         ++iterationCount;
 
-        if (timer.get() >= reportInterval) {
+        timer.runEvery(reportInterval, () -> {
             report.accept(timer.get() / (double) iterationCount);
             iterationCount = 0;
-            timer.reset();
-        }
+        });
     }
 }

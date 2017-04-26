@@ -6,8 +6,8 @@ import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
+import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Timer;
 
 public class FlipFlop extends Module {
     private final DoubleSolenoid piston =
@@ -18,7 +18,7 @@ public class FlipFlop extends Module {
     private boolean startup = true;
 
     public class Retract extends Action {
-        private final Timer timer = new Timer();
+        private final SmartTimer timer = new SmartTimer();
 
         public final Output<Boolean> completed =
                 addOutput("completed", () -> startup || timer.get() >= transitionTime.get());
@@ -35,9 +35,7 @@ public class FlipFlop extends Module {
 
         @Override
         protected void end () {
-            timer.stop();
-            timer.reset();
-
+            timer.stopAndReset();
             startup = false;
         }
     }
@@ -45,7 +43,7 @@ public class FlipFlop extends Module {
     public final Retract retract = new Retract();
 
     public class Extend extends Action {
-        private final Timer timer = new Timer();
+        private final SmartTimer timer = new SmartTimer();
 
         public final Output<Boolean> completed = addOutput("completed", () -> timer.get() >= transitionTime.get());
 
@@ -61,8 +59,7 @@ public class FlipFlop extends Module {
 
         @Override
         protected void end () {
-            timer.stop();
-            timer.reset();
+            timer.stopAndReset();
         }
     }
 
