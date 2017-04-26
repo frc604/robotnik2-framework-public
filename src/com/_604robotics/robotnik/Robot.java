@@ -142,11 +142,11 @@ public abstract class Robot extends SampleRobot {
         }
 
         for (Module module : modules) {
-            Reliability.swallowThrowables(module::end, "Error in end() of module " + module.getName());
-
             if (mode != null) {
                 module.terminate();
             }
+
+            Reliability.swallowThrowables(module::end, "Error in end() of module " + module.getName());
         }
 
         logger.info(name + " mode end");
