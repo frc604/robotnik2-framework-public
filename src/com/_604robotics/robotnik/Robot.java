@@ -119,11 +119,12 @@ public abstract class Robot extends SampleRobot {
 
             for (Module module : modules) {
                 module.update();
-                Reliability.swallowThrowables(module::run, "Error in run() of module " + module.getName());
 
                 if (mode != null) {
                     module.execute();
                 }
+
+                Reliability.swallowThrowables(module::run, "Error in run() of module " + module.getName());
             }
 
             if (mode != null) {
