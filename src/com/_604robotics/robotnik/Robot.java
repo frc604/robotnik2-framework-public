@@ -95,13 +95,13 @@ public abstract class Robot extends SampleRobot {
             Reliability.swallowThrowables(module::begin, "Error in begin() of module " + module.getName());
         }
 
-        for (Controller system : systems) {
-            Reliability.swallowThrowables(system::begin, "Error in begin() of system");
-        }
-
         if (mode != null) {
             Reliability.swallowThrowables(mode::begin, "Error in begin() of " + name + " mode");
             iterationTimer.start();
+        }
+
+        for (Controller system : systems) {
+            Reliability.swallowThrowables(system::begin, "Error in begin() of system");
         }
 
         while (active.get()) {
@@ -109,12 +109,12 @@ public abstract class Robot extends SampleRobot {
                 module.prepare();
             }
 
-            for (Controller system : systems) {
-                Reliability.swallowThrowables(system::run, "Error in run() of system");
-            }
-
             if (mode != null) {
                 Reliability.swallowThrowables(mode::run, "Error in run() of " + name + " mode");
+            }
+
+            for (Controller system : systems) {
+                Reliability.swallowThrowables(system::run, "Error in run() of system");
             }
 
             for (Module module : modules) {
