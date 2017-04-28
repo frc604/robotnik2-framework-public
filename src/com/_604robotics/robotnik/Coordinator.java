@@ -32,6 +32,6 @@ public abstract class Coordinator {
     }
 
     protected void begin () {}
-    protected boolean run () { return false; }
+    protected boolean run () { return true; }
     protected void end () {}
 }
