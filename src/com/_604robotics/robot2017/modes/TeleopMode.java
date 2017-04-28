@@ -93,6 +93,9 @@ public class TeleopMode extends Controller {
                 case REVERSE:
                     // TODO: Fill me in!
                     break;
+                case REVERSE:
+                    // TODO: Fill me in!
+                    break;
             }
         }
     }
