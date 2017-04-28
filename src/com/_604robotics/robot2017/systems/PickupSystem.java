@@ -1,9 +1,9 @@
 package com._604robotics.robot2017.systems;
 
 import com._604robotics.robot2017.Robot2017;
-import com._604robotics.robotnik.Controller;
+import com._604robotics.robotnik.Coordinator;
 
-public class PickupSystem extends Controller {
+public class PickupSystem extends Coordinator {
     private final Robot2017 robot;
 
     public PickupSystem (Robot2017 robot) {
@@ -11,9 +11,10 @@ public class PickupSystem extends Controller {
     }
 
     @Override
-    public void run () {
+    public boolean run () {
         if (robot.flipFlop.retract.isRunning() && !robot.flipFlop.retract.completed.get()) {
             robot.intake.suck.activate();
         }
+        return true;
     }
 }
