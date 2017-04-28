@@ -13,25 +13,29 @@ public abstract class StatefulController extends Controller {
         logger = new Logger(StatefulController.class, name);
     }
 
+    public StatefulController (Class klass) {
+        logger = new Logger(StatefulController.class, klass);
+    }
+
     protected void setInitialState (State initialState) {
         this.initialState = initialState;
     }
 
     @Override
-    protected void begin () {
+    public void begin () {
         logger.info("Begin");
         setState(initialState);
     }
 
     @Override
-    protected void run () {
+    public void run () {
         if (state != null) {
             setState(state.run());
         }
     }
 
     @Override
-    protected void end () {
+    public void end () {
         stopState();
         logger.info("End");
     }

@@ -11,7 +11,7 @@ public class DashboardSystem extends Controller {
     }
 
     @Override
-    protected void run () {
+    public void run () {
         robot.intake.power.set(robot.dashboard.intakePower.get());
 
         robot.flipFlop.transitionTime.set(robot.dashboard.flipFlopTransitionTime.get());

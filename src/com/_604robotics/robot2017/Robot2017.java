@@ -16,10 +16,10 @@ public class Robot2017 extends Robot {
     public final Intake intake = addModule(new Intake());
 
     public Robot2017 () {
-        addSystem(new DashboardSystem(this));
-        addSystem(new PickupSystem(this));
-
         setAutonomousMode(new AutonomousMode(this));
         setTeleopMode(new TeleopMode(this));
+
+        addSystem(new DashboardSystem(this));
+        addSystem(new PickupSystem(this));
     }
 }

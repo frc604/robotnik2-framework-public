@@ -31,6 +31,10 @@ public class Logger {
         this(c.getSimpleName(), name);
     }
 
+    public Logger (@SuppressWarnings("rawtypes") Class c, Class c2) {
+        this(c.getSimpleName(), c2.getSimpleName());
+    }
+
     public void log (String level, String message) {
         System.out.println(
                 "* [Boot Time: " + bootTimer.get() +

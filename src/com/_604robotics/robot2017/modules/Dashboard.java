@@ -22,10 +22,11 @@ public class Dashboard extends DashboardModule {
 
     public enum AutonMode {
         OFF,
-        FAIL_SAFE,
-        LEFT,
         MIDDLE,
-        RIGHT
+        BLUE_LEFT,
+        BLUE_RIGHT,
+        RED_LEFT,
+        RED_RIGHT
     }
 
     public final Output<AutonMode> autonMode = addDashboardOutput("autonMode", AutonMode.OFF, AutonMode.class);
@@ -34,6 +35,40 @@ public class Dashboard extends DashboardModule {
 
     public final Output<Double> flipFlopTransitionTime =
             addDashboardOutput("flipFlopTransitionTime", Calibration.FLIP_FLOP_TRANSITION_TIME);
+
+    public final Output<Double> middleAutonDriveForwardLeftPower =
+            addDashboardOutput("middleAutonDriveForwardLeftPower", Calibration.MIDDLE_AUTON_DRIVE_FORWARD_LEFT_POWER);
+    public final Output<Double> middleAutonDriveForwardRightPower =
+            addDashboardOutput("middleAutonDriveForwardRightPower", Calibration.MIDDLE_AUTON_DRIVE_FORWARD_RIGHT_POWER);
+    public final Output<Double> middleAutonDriveForwardTime =
+            addDashboardOutput("middleAutonDriveForwardTime", Calibration.MIDDLE_AUTON_DRIVE_FORWARD_TIME);
+
+    public final Output<Double> sideAutonDriveToPegLeftPower =
+            addDashboardOutput("sideAutonDriveToPegLeftPower", Calibration.SIDE_AUTON_DRIVE_TO_PEG_LEFT_POWER);
+    public final Output<Double> sideAutonDriveToPegRightPower =
+            addDashboardOutput("sideAutonDriveToPegRightPower", Calibration.SIDE_AUTON_DRIVE_TO_PEG_RIGHT_POWER);
+    public final Output<Double> sideAutonDriveToPegTime =
+            addDashboardOutput("sideAutonDriveToPegTime", Calibration.SIDE_AUTON_DRIVE_TO_PEG_TIME);
+
+    public final Output<Double> blueLeftAutonDriveForwardClicks =
+            addDashboardOutput("blueLeftAutonDriveForwardClicks", Calibration.BLUE_LEFT_AUTON_DRIVE_FORWARD_CLICKS);
+    public final Output<Double> blueLeftAutonTurnToFacePegAngle =
+            addDashboardOutput("blueLeftAutonTurnToFacePegAngle", Calibration.BLUE_LEFT_AUTON_TURN_TO_FACE_PEG_ANGLE);
+
+    public final Output<Double> blueRightAutonDriveForwardClicks =
+            addDashboardOutput("blueRightAutonDriveForwardClicks", Calibration.BLUE_RIGHT_AUTON_DRIVE_FORWARD_CLICKS);
+    public final Output<Double> blueRightAutonTurnToFacePegAngle =
+            addDashboardOutput("blueRightAutonTurnToFacePegAngle", Calibration.BLUE_RIGHT_AUTON_TURN_TO_FACE_PEG_ANGLE);
+
+    public final Output<Double> redLeftAutonDriveForwardClicks =
+            addDashboardOutput("redLeftAutonDriveForwardClicks", Calibration.RED_LEFT_AUTON_DRIVE_FORWARD_CLICKS);
+    public final Output<Double> redLeftAutonTurnToFacePegAngle =
+            addDashboardOutput("redLeftAutonTurnToFacePegAngle", Calibration.RED_LEFT_AUTON_TURN_TO_FACE_PEG_ANGLE);
+
+    public final Output<Double> redRightAutonDriveForwardClicks =
+            addDashboardOutput("redRightAutonDriveForwardClicks", Calibration.RED_RIGHT_AUTON_DRIVE_FORWARD_CLICKS);
+    public final Output<Double> redRightAutonTurnToFacePegAngle =
+            addDashboardOutput("redRightAutonTurnToFacePegAngle", Calibration.RED_RIGHT_AUTON_TURN_TO_FACE_PEG_ANGLE);
 
     public Dashboard () {
         super(Dashboard.class);
