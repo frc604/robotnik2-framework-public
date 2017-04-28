@@ -3,6 +3,7 @@ package com._604robotics.robotnik;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -20,11 +21,11 @@ public abstract class Robot extends SampleRobot {
     private final List<Module> modules = new ArrayList<>();
     private final IterationTimer iterationTimer;
 
-    private final List<Controller> systems = new ArrayList<>();
+    private final List<Pair<String, Coordinator>> systems = new ArrayList<>();
 
-    private Controller autonomousMode;
-    private Controller teleopMode;
-    private Controller testMode;
+    private Coordinator autonomousMode;
+    private Coordinator teleopMode;
+    private Coordinator testMode;
 
     public Robot () {
         this(DEFAULT_REPORT_INTERVAL);
@@ -47,19 +48,23 @@ public abstract class Robot extends SampleRobot {
                 .collect(Collectors.joining(",")));
     }
 
-    protected void addSystem (Controller system) {
-        systems.add(system);
+    protected void addSystem (String name, Coordinator system) {
+        systems.add(new Pair<>(name, system));
     }
 
-    protected void setAutonomousMode (Controller autonomousMode) {
+    protected void addSystem (Class klass, Coordinator system) {
+        addSystem(klass.getSimpleName(), system);
+    }
+
+    protected void setAutonomousMode (Coordinator autonomousMode) {
         this.autonomousMode = autonomousMode;
     }
 
-    protected void setTeleopMode (Controller teleopMode) {
+    protected void setTeleopMode (Coordinator teleopMode) {
         this.teleopMode = teleopMode;
     }
 
-    protected void setTestMode (Controller testMode) {
+    protected void setTestMode (Coordinator testMode) {
         this.testMode = testMode;
     }
 
@@ -88,7 +93,7 @@ public abstract class Robot extends SampleRobot {
         loop("Disabled", null, this::isDisabled);
     }
 
-    private void loop (String name, Controller mode, Supplier<Boolean> active) {
+    private void loop (String name, Coordinator mode, Supplier<Boolean> active) {
         logger.info(name + " mode begin");
 
         for (Module module : modules) {
@@ -96,12 +101,12 @@ public abstract class Robot extends SampleRobot {
         }
 
         if (mode != null) {
-            Reliability.swallowThrowables(mode::begin, "Error in begin() of " + name + " mode");
+            Reliability.swallowThrowables(mode::start, "Error starting " + name + " mode");
             iterationTimer.start();
         }
 
-        for (Controller system : systems) {
-            Reliability.swallowThrowables(system::begin, "Error in begin() of system");
+        for (Pair<String, Coordinator> system : systems) {
+            Reliability.swallowThrowables(system.getValue()::start, "Error starting system " + system.getKey());
         }
 
         while (active.get()) {
@@ -110,11 +115,11 @@ public abstract class Robot extends SampleRobot {
             }
 
             if (mode != null) {
-                Reliability.swallowThrowables(mode::run, "Error in run() of " + name + " mode");
+                Reliability.swallowThrowables(mode::execute, "Error executing " + name + " mode");
             }
 
-            for (Controller system : systems) {
-                Reliability.swallowThrowables(system::run, "Error in run() of system");
+            for (Pair<String, Coordinator> system : systems) {
+                Reliability.swallowThrowables(system.getValue()::execute, "Error executing system " + system.getKey());
             }
 
             for (Module module : modules) {
@@ -135,11 +140,11 @@ public abstract class Robot extends SampleRobot {
 
         if (mode != null) {
             iterationTimer.stop();
-            Reliability.swallowThrowables(mode::end, "Error in end() of " + name + " mode");
+            Reliability.swallowThrowables(mode::stop, "Error stopping " + name + " mode");
         }
 
-        for (Controller system : systems) {
-            Reliability.swallowThrowables(system::end, "Error in end() of system");
+        for (Pair<String, Coordinator> system : systems) {
+            Reliability.swallowThrowables(system.getValue()::stop, "Error stopping system " + system.getKey());
         }
 
         for (Module module : modules) {

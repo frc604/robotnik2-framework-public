@@ -19,7 +19,7 @@ public class Robot2017 extends Robot {
         setAutonomousMode(new AutonomousMode(this));
         setTeleopMode(new TeleopMode(this));
 
-        addSystem(new DashboardSystem(this));
-        addSystem(new PickupSystem(this));
+        addSystem(DashboardSystem.class, new DashboardSystem(this));
+        addSystem(PickupSystem.class, new PickupSystem(this));
     }
 }
