@@ -41,12 +41,14 @@ public abstract class StatefulCoordinator extends Coordinator {
     @Override
     public boolean run () {
         final Pair<String, Coordinator> currentState = getCurrentState();
-        if (currentState != null) {
-            if (!currentState.getValue().execute()) {
-                exitState();
-                ++stateIndex;
-                return enterState();
-            }
+        if (currentState == null) {
+            return false;
+        }
+
+        if (!currentState.getValue().execute()) {
+            exitState();
+            ++stateIndex;
+            return enterState();
         }
         return true;
     }
