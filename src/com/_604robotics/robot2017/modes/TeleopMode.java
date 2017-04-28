@@ -2,38 +2,39 @@ package com._604robotics.robot2017.modes;
 
 import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robot2017.modules.Climber;
-import com._604robotics.robotnik.Controller;
+import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
 import com._604robotics.robotnik.prefabs.flow.Toggle;
 
-public class TeleopMode extends Controller {
+public class TeleopMode extends Coordinator {
     public static final XboxController driver = new XboxController(0);
 
     private final Robot2017 robot;
 
-    private final ClimberController climberController;
-    private final SignalLightController signalLightController;
-    private final PickupController pickupController;
+    private final ClimberManager climberManager;
+    private final SignalLightManager signalLightManager;
+    private final PickupManager pickupManager;
 
     public TeleopMode (Robot2017 robot) {
         this.robot = robot;
 
-        climberController = new ClimberController();
-        signalLightController = new SignalLightController();
-        pickupController = new PickupController();
+        climberManager = new ClimberManager();
+        signalLightManager = new SignalLightManager();
+        pickupManager = new PickupManager();
     }
 
     @Override
-    public void run () {
-        climberController.run();
-        signalLightController.run();
-        pickupController.run();
+    public boolean run () {
+        climberManager.run();
+        signalLightManager.run();
+        pickupManager.run();
+        return true;
     }
 
-    private class ClimberController {
+    private class ClimberManager {
         private final Climber.Climb climb;
 
-        public ClimberController () {
+        public ClimberManager () {
             climb = robot.climber.new Climb();
         }
 
@@ -45,7 +46,7 @@ public class TeleopMode extends Controller {
         }
     }
 
-    private class SignalLightController {
+    private class SignalLightManager {
         private final Toggle lightToggle = new Toggle(false);
 
         public void run () {
@@ -60,7 +61,7 @@ public class TeleopMode extends Controller {
         IDLE, FORWARD, REVERSE
     }
 
-    private class PickupController {
+    private class PickupManager {
         private boolean extend = false;
         private IntakeState intakeState = IntakeState.IDLE;
 

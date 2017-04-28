@@ -1,51 +1,50 @@
 package com._604robotics.robot2017.modes;
 
 import com._604robotics.robot2017.Robot2017;
-import com._604robotics.robot2017.modules.Drive;
-import com._604robotics.robotnik.Controller;
-import com._604robotics.robotnik.prefabs.controllers.StatefulController;
-import com._604robotics.robotnik.prefabs.flow.SmartTimer;
+import com._604robotics.robot2017.macros.TimedDriveMacro;
+import com._604robotics.robotnik.Coordinator;
+import com._604robotics.robotnik.prefabs.coordinators.StatefulCoordinator;
 
-public class AutonomousMode extends Controller {
+public class AutonomousMode extends Coordinator {
     private final Robot2017 robot;
 
-    private final Controller middleAutonModeController;
+    private final Coordinator middleAutonModeMacro;
 
-    private final Controller blueLeftAutonModeController;
-    private final Controller blueRightAutonModeController;
+    private final Coordinator blueLeftAutonModeMacro;
+    private final Coordinator blueRightAutonModeMacro;
 
-    private final Controller redLeftAutonModeController;
-    private final Controller redRightAutonModeController;
+    private final Coordinator redLeftAutonModeMacro;
+    private final Coordinator redRightAutonModeMacro;
 
-    private Controller selectedModeController;
+    private Coordinator selectedModeMacro;
 
     public AutonomousMode (Robot2017 robot) {
         this.robot = robot;
 
-        middleAutonModeController = new MiddleAutonModeController();
+        middleAutonModeMacro = new MiddleAutonModeMacro();
 
-        blueLeftAutonModeController = new SideAutonModeController("BlueLeftAutonModeController") {
+        blueLeftAutonModeMacro = new SideAutonModeMacro("BlueLeftAutonModeMacro") {
             @Override
             protected double getDriveForwardClicks () { return robot.dashboard.blueLeftAutonDriveForwardClicks.get(); }
             @Override
             protected double getTurnToFacePegAngle () { return robot.dashboard.blueLeftAutonTurnToFacePegAngle.get(); }
         };
 
-        blueRightAutonModeController = new SideAutonModeController("BlueRightAutonModeController") {
+        blueRightAutonModeMacro = new SideAutonModeMacro("BlueRightAutonModeMacro") {
             @Override
             protected double getDriveForwardClicks () { return robot.dashboard.blueRightAutonDriveForwardClicks.get(); }
             @Override
             protected double getTurnToFacePegAngle () { return robot.dashboard.blueRightAutonTurnToFacePegAngle.get(); }
         };
 
-        redLeftAutonModeController = new SideAutonModeController("RedLeftAutonModeController") {
+        redLeftAutonModeMacro = new SideAutonModeMacro("RedLeftAutonModeMacro") {
             @Override
             protected double getDriveForwardClicks () { return robot.dashboard.redLeftAutonDriveForwardClicks.get(); }
             @Override
             protected double getTurnToFacePegAngle () { return robot.dashboard.redLeftAutonTurnToFacePegAngle.get(); }
         };
 
-        redRightAutonModeController = new SideAutonModeController("RedRightAutonModeController") {
+        redRightAutonModeMacro = new SideAutonModeMacro("RedRightAutonModeMacro") {
             @Override
             protected double getDriveForwardClicks () { return robot.dashboard.redRightAutonDriveForwardClicks.get(); }
             @Override
@@ -57,123 +56,84 @@ public class AutonomousMode extends Controller {
     public void begin () {
         switch (robot.dashboard.autonMode.get()) {
             case MIDDLE:
-                selectedModeController = middleAutonModeController;
+                selectedModeMacro = middleAutonModeMacro;
                 break;
             case BLUE_LEFT:
-                selectedModeController = blueLeftAutonModeController;
+                selectedModeMacro = blueLeftAutonModeMacro;
                 break;
             case BLUE_RIGHT:
-                selectedModeController = blueRightAutonModeController;
+                selectedModeMacro = blueRightAutonModeMacro;
                 break;
             case RED_LEFT:
-                selectedModeController = redLeftAutonModeController;
+                selectedModeMacro = redLeftAutonModeMacro;
                 break;
             case RED_RIGHT:
-                selectedModeController = redRightAutonModeController;
+                selectedModeMacro = redRightAutonModeMacro;
                 break;
             default:
-                selectedModeController = null;
+                selectedModeMacro = null;
                 break;
         }
 
-        if (selectedModeController != null) {
-            selectedModeController.begin();
+        if (selectedModeMacro != null) {
+            selectedModeMacro.start();
         }
     }
 
     @Override
-    public void run () {
-        if (selectedModeController != null) {
-            selectedModeController.run();
+    public boolean run () {
+        if (selectedModeMacro == null) {
+            return false;
         }
+
+        return selectedModeMacro.execute();
     }
 
     @Override
     public void end () {
-        if (selectedModeController != null) {
-            selectedModeController.end();
+        if (selectedModeMacro != null) {
+            selectedModeMacro.stop();
         }
     }
 
-    private class MiddleAutonModeController extends StatefulController {
-        public MiddleAutonModeController () {
-            super(MiddleAutonModeController.class);
+    private class MiddleAutonModeMacro extends StatefulCoordinator {
+        public MiddleAutonModeMacro () {
+            super(MiddleAutonModeMacro.class);
 
-            final State driveForwardState = new TimedDriveState("driveForwardState") {
+            addState("driveForward", new TimedDriveMacro(robot) {
                 @Override
                 protected double getLeftPower () { return robot.dashboard.middleAutonDriveForwardLeftPower.get(); }
                 @Override
                 protected double getRightPower () { return robot.dashboard.middleAutonDriveForwardRightPower.get(); }
                 @Override
                 protected double getTime () { return robot.dashboard.middleAutonDriveForwardTime.get(); }
-                @Override
-                protected State getNextState () { return null; }
-            };
-
-            setInitialState(driveForwardState);
+            });
         }
     }
 
-    private abstract class SideAutonModeController extends StatefulController {
-        public SideAutonModeController (String name) {
+    private abstract class SideAutonModeMacro extends StatefulCoordinator {
+        public SideAutonModeMacro (String name) {
             super(name);
 
-            final State driveForwardState = new State("driveForwardState") {
+            addState("driveForward", new Coordinator() {
                 // TODO: Fill me in!
-            };
+            });
 
-            final State turnToFacePegState = new State("turnToFacePegState") {
+            addState("turnToFacePeg", new Coordinator() {
                 // TODO: Fill me in!
-            };
+            });
 
-            final State driveToPegState = new TimedDriveState("driveToPegState") {
+            addState("driveToPeg", new TimedDriveMacro(robot) {
                 @Override
                 protected double getLeftPower () { return robot.dashboard.sideAutonDriveToPegLeftPower.get(); }
                 @Override
                 protected double getRightPower () { return robot.dashboard.sideAutonDriveToPegRightPower.get(); }
-                @Override protected double getTime () { return robot.dashboard.sideAutonDriveToPegTime.get(); }
                 @Override
-                protected State getNextState () { return null; }
-            };
-
-            setInitialState(driveForwardState);
+                protected double getTime () { return robot.dashboard.sideAutonDriveToPegTime.get(); }
+            });
         }
 
         protected abstract double getDriveForwardClicks ();
         protected abstract double getTurnToFacePegAngle ();
     }
-
-    private abstract class TimedDriveState extends StatefulController.State {
-        private final Drive.TankDrive driveForward = robot.drive.new TankDrive();
-        private final SmartTimer timer = new SmartTimer();
-
-        public TimedDriveState (String name) {
-            super(name);
-        }
-
-        protected abstract double getLeftPower ();
-        protected abstract double getRightPower ();
-        protected abstract double getTime ();
-        protected abstract StatefulController.State getNextState ();
-
-        @Override
-        protected void begin () {
-            timer.start();
-        }
-
-        @Override
-        protected StatefulController.State run () {
-            return timer.runUntil(getTime(), getNextState(), () -> {
-                driveForward.leftPower.set(getLeftPower());
-                driveForward.rightPower.set(getRightPower());
-                driveForward.activate();
-                return this;
-            });
-        }
-
-        @Override
-        protected void end () {
-            timer.stopAndReset();
-        }
-    };
 }
