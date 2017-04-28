@@ -26,10 +26,12 @@ public class SmartTimer extends Timer {
         return get() >= time;
     }
 
-    public void runUntil (double time, Runnable runnable) {
+    public boolean runUntil (double time, Runnable runnable) {
         if (!hasReachedTime(time)) {
             runnable.run();
+            return true;
         }
+        return false;
     }
 
     public <T> T runUntil (double time, T defaultValue, Supplier<T> supplier) {
@@ -43,10 +45,12 @@ public class SmartTimer extends Timer {
         return runUntil(time, null, supplier);
     }
 
-    public void runAfter (double time, Runnable runnable) {
+    public boolean runAfter (double time, Runnable runnable) {
         if (hasReachedTime(time)) {
             runnable.run();
+            return true;
         }
+        return false;
     }
 
     public <T> T runAfter (double time, T defaultValue, Supplier<T> supplier) {
@@ -60,11 +64,13 @@ public class SmartTimer extends Timer {
         return runAfter(time, null, supplier);
     }
 
-    public void runEvery (double time, Runnable runnable) {
+    public boolean runEvery (double time, Runnable runnable) {
         if (hasReachedTime(time)) {
             runnable.run();
             reset();
+            return true;
         }
+        return false;
     }
 
     public <T> T runEvery (double time, T defaultValue, Supplier<T> supplier) {
