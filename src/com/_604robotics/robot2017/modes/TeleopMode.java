@@ -106,7 +106,7 @@ public class TeleopMode extends Coordinator {
                     }
                     break;
             }
-            
+
             // Set appropriate drive mode depending on dashboard option
             switch (currentDrive) {
                 case IDLE:
@@ -169,15 +169,15 @@ public class TeleopMode extends Coordinator {
             }
 
             switch (intakeState) {
+                // TODO: Check that I bound the right enum state to the right action
                 case FORWARD:
-                    // TODO: Fill me in!
+                    robot.intake.spit.activate();
                     break;
                 case REVERSE:
-                    // TODO: Fill me in!
+                    robot.intake.suck.activate();
                     break;
                 case IDLE:
-                    break;
-                default:
+                    robot.intake.idle.activate();
                     break;
             }
         }
