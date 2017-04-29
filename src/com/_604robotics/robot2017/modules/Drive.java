@@ -24,7 +24,7 @@ public class Drive extends Module {
     public final Output<Integer> leftClicks = addOutput("leftClicks", encoderLeft::get);
     public final Output<Integer> rightClicks = addOutput("rightClicks", encoderRight::get);
 
-    private class Idle extends Action {
+    public class Idle extends Action {
         public Idle () {
             super(Drive.this, Idle.class);
         }

@@ -28,8 +28,17 @@ public class Dashboard extends DashboardModule {
         RED_LEFT,
         RED_RIGHT
     }
+    
+    public enum DriveMode {
+        OFF,
+        ARCADE,
+        TANK,
+        DYNAMIC
+    }
 
     public final Output<AutonMode> autonMode = addDashboardOutput("autonMode", AutonMode.OFF, AutonMode.class);
+    
+    public final Output<DriveMode> driveMode = addDashboardOutput("driveMode", DriveMode.DYNAMIC, DriveMode.class);
 
     public final Output<Double> intakePower = addDashboardOutput("intakePower", Calibration.INTAKE_POWER);
 
