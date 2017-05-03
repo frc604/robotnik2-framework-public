@@ -4,7 +4,6 @@ import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
 import com._604robotics.robotnik.Coordinator;
-import com._604robotics.robotnik.Output;
 import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
 import com._604robotics.robotnik.prefabs.flow.Toggle;
 
@@ -78,7 +77,7 @@ public class TeleopMode extends Coordinator {
             double rightY=driver.rightStick.y.get();
             // Flip values if xbox inverted
             inverted.update(driver.buttons.rb.get());
-            if (inverted.get()) {
+            if (inverted.isInOnState()) {
                 leftY*=-1;
                 rightY*=-1;
             }
@@ -132,7 +131,7 @@ public class TeleopMode extends Coordinator {
 
         public void run () {
             lightToggle.update(driver.buttons.rt.get());
-            if (lightToggle.get()) {
+            if (lightToggle.isInOnState()) {
                 robot.signalLight.on.activate();
             }
         }

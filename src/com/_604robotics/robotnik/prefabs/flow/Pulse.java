@@ -6,6 +6,14 @@ public class Pulse {
     private boolean risingEdge = false;
     private boolean fallingEdge = false;
 
+    public boolean isHigh () {
+        return lastInput;
+    }
+
+    public boolean isLow () {
+        return !lastInput;
+    }
+
     public boolean isRisingEdge () {
         return risingEdge;
     }
