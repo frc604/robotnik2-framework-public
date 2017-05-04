@@ -14,6 +14,7 @@ public class Robot2017 extends Robot {
     public final SignalLight signalLight = addModule(new SignalLight());
     public final FlipFlop flipFlop = addModule(new FlipFlop());
     public final Intake intake = addModule(new Intake());
+    public final Shooter shooter = addModule(new Shooter());
 
     public Robot2017 () {
         setAutonomousMode(new AutonomousMode(this));

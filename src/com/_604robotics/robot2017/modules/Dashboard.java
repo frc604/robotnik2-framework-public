@@ -78,6 +78,14 @@ public class Dashboard extends DashboardModule {
             addDashboardOutput("redRightAutonDriveForwardClicks", Calibration.RED_RIGHT_AUTON_DRIVE_FORWARD_CLICKS);
     public final Output<Double> redRightAutonTurnToFacePegAngle =
             addDashboardOutput("redRightAutonTurnToFacePegAngle", Calibration.RED_RIGHT_AUTON_TURN_TO_FACE_PEG_ANGLE);
+    
+    // THEORETICAL
+    public final Output<Double> shooterTarget =
+            addDashboardOutput("Shooter Target Speed", Calibration.SHOOTER_TARGET);
+    public final Input<Double> shooterSpeed =
+            addDashboardInput("Shooter Speed", 0);
+    public final Input<Double> shooterPower =
+            addDashboardInput("Shooter Calc Power", 0);
 
     public Dashboard () {
         super(Dashboard.class);

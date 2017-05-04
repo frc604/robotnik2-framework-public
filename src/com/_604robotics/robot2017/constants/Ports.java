@@ -7,6 +7,8 @@ public class Ports {
     public static final int CLIMBER_MOTOR = 0;
     public static final int INTAKE_LEFT_MOTOR = 1;
     public static final int INTAKE_RIGHT_MOTOR = 6;
+    // THEORETICAL
+    public static final int SHOOTER_MOTOR = 8;
 
     // Relays
     public static final int SIGNAL_LIGHT_RELAY = 0;
@@ -24,4 +26,8 @@ public class Ports {
     public static final int ENCODER_LEFT_B = 2;
     public static final int ENCODER_RIGHT_A = 3;
     public static final int ENCODER_RIGHT_B = 4;
+    
+    // THEORETICAL
+    public static final int ENCODER_SHOOTER_A = 6;
+    public static final int ENCODER_SHOOTER_B = 7;
 }

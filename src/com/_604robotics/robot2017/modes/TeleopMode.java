@@ -3,6 +3,7 @@ package com._604robotics.robot2017.modes;
 import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
+import com._604robotics.robot2017.modules.Shooter;
 import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
 import com._604robotics.robotnik.prefabs.flow.Toggle;
@@ -16,6 +17,7 @@ public class TeleopMode extends Coordinator {
     private final SignalLightManager signalLightManager;
     private final PickupManager pickupManager;
     private final DriveManager driveManager;
+    private final ShooterManager shootManager;
 
     public TeleopMode (Robot2017 robot) {
         this.robot = robot;
@@ -24,6 +26,7 @@ public class TeleopMode extends Coordinator {
         signalLightManager = new SignalLightManager();
         pickupManager = new PickupManager();
         driveManager = new DriveManager();
+        shootManager = new ShooterManager();
     }
 
     @Override
@@ -32,6 +35,7 @@ public class TeleopMode extends Coordinator {
         signalLightManager.run();
         pickupManager.run();
         driveManager.run();
+        shootManager.run();
         return true;
     }
 
@@ -46,6 +50,22 @@ public class TeleopMode extends Coordinator {
             if (driver.buttons.lt.get()) {
                 climb.power.set(driver.triggers.left.get());
                 climb.activate();
+            }
+        }
+    }
+
+
+    private class ShooterManager {
+        private final Shooter.ShootAction shoot;
+
+        public ShooterManager () {
+            shoot = robot.shooter.new ShootAction();
+        }
+
+        public void run () {
+            // TODO: REBIND
+            if (false) {
+                shoot.activate();
             }
         }
     }
