@@ -10,7 +10,12 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 public class Drive extends Module {
-    private final RobotDrive robotDrive = new RobotDrive(1, 2);
+    // WARNING: CONFLICTS WITH Climber!
+    private final RobotDrive robotDrive = new RobotDrive(
+            Ports.DRIVE_FRONT_LEFT_MOTOR,
+            Ports.DRIVE_REAR_LEFT_MOTOR,
+            Ports.DRIVE_FRONT_RIGHT_MOTOR,
+            Ports.DRIVE_REAR_RIGHT_MOTOR);
 
     private final Encoder encoderLeft = new Encoder(Ports.ENCODER_LEFT_A,
             Ports.ENCODER_LEFT_B,
