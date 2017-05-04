@@ -19,6 +19,7 @@ public class Shooter extends Module {
     private final Idle idle = new Idle();
     private final ShootAction shootAct = new ShootAction();
     public Input<Double> threshold;
+    public Input<Double> rawPower;
     public Output<Double> calcPower = addOutput("Calculated Power", () -> shootAct.currentPower);
     public Output<Double> encoderRate = addOutput("Flywheel Speed", () -> encoder.getRate());
 
@@ -70,6 +71,28 @@ public class Shooter extends Module {
             } else {
                 motor.stopMotor();
             }
+        }
+
+        @Override
+        protected void end () {
+            motor.stopMotor();
+        }
+    }
+
+    public class RawShootAction extends Action {
+
+        public RawShootAction() {
+            this(0);
+        }
+
+        public RawShootAction (double defaultPower) {
+            super(Shooter.this, ShootAction.class);
+            rawPower=addInput("Raw Power", defaultPower);
+        }
+
+        @Override
+        protected void run () {
+            motor.set(rawPower.get());
         }
 
         @Override

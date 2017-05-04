@@ -4,6 +4,7 @@ import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
 import com._604robotics.robot2017.modules.Shooter;
+import com._604robotics.robot2017.modules.Shooter.RawShootAction;
 import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
 import com._604robotics.robotnik.prefabs.flow.Toggle;
@@ -57,15 +58,21 @@ public class TeleopMode extends Coordinator {
 
     private class ShooterManager {
         private final Shooter.ShootAction shoot;
+        private RawShootAction rawShoot;
 
         public ShooterManager () {
             shoot = robot.shooter.new ShootAction();
+            rawShoot = robot.shooter.new RawShootAction();
         }
 
         public void run () {
             // TODO: REBIND
             if (false) {
                 shoot.activate();
+            } else if (false) {
+                // TODO: bind to an Xbox controller value
+                robot.shooter.rawPower.set(0D);
+                rawShoot.activate();
             }
         }
     }
