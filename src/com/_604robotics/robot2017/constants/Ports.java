@@ -36,4 +36,5 @@ public class Ports {
     // THEORETICAL
     public static final int ENCODER_SHOOTER_A = 6;
     public static final int ENCODER_SHOOTER_B = 7;
+    public static final int PDP_MODULE = 0;
 }

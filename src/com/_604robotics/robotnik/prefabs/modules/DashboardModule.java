@@ -5,7 +5,7 @@ import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import javafx.util.Pair;
+import com._604robotics.robotnik.prefabs.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.EnumSet;

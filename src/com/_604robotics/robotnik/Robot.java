@@ -3,7 +3,7 @@ package com._604robotics.robotnik;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
-import javafx.util.Pair;
+import com._604robotics.robotnik.prefabs.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.Base64;

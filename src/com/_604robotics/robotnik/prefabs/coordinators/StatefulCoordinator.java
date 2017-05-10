@@ -2,7 +2,7 @@ package com._604robotics.robotnik.prefabs.coordinators;
 
 import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.Logger;
-import javafx.util.Pair;
+import com._604robotics.robotnik.prefabs.utils.Java;
 
 import java.util.ArrayList;
 import java.util.List;
