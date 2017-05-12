@@ -82,6 +82,8 @@ public class Dashboard extends DashboardModule {
     // THEORETICAL
     public final Output<Double> shooterTarget =
             addDashboardOutput("Shooter Target Speed", Calibration.SHOOTER_TARGET);
+    public final Output<Boolean> sharp =
+            addDashboardOutput("Sharp Algorithm", false);
     public final Input<Double> shooterSpeed =
             addDashboardInput("Shooter Speed", 0);
     public final Input<Double> shooterPower =

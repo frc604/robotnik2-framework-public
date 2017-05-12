@@ -19,6 +19,7 @@ public class Shooter extends Module {
     private final Idle idle = new Idle();
     private final ShootAction shootAct = new ShootAction();
     public Input<Double> threshold;
+    public Input<Boolean> sharpAlgorithm;
     public Input<Double> rawPower;
     public Output<Double> calcPower = addOutput("Calculated Power", () -> shootAct.currentPower);
     public Output<Double> encoderRate = addOutput("Flywheel Speed", () -> encoder.getRate());
@@ -42,10 +43,11 @@ public class Shooter extends Module {
             this(Calibration.SHOOTER_TARGET,false);
         }
 
-        public ShootAction (double defaultThreshold, boolean sharp) {
+        public ShootAction (double defaultThreshold, boolean defaultSharp) {
             super(Shooter.this, ShootAction.class);
-            this.sharp=sharp;
+            this.sharp=defaultSharp;
             threshold=addInput("Speed Threshold", defaultThreshold);
+            sharpAlgorithm=addInput("Sharp Algorithm", defaultSharp);
         }
 
         private static final double FACTOR_MULT = 1.14499756464; //calc=0.25
@@ -61,6 +63,7 @@ public class Shooter extends Module {
 
         @Override
         protected void run () {
+            sharp=sharpAlgorithm.get();
             if (sharp) {
                 currentPower = 1;
             } else {
