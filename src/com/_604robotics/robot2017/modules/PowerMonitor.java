@@ -66,7 +66,7 @@ public class PowerMonitor extends Module {
         public void run() {
             for (int i=0;i<currents.length;i++) {
                 if (currents[i].get() > currentLimit[i]) {
-                    theLogger.log("WARN", "Too much current through PDP Port "+i+"!");
+                    theLogger.log("WARN", "Excess current of "+currents[i].get()+" through PDP Port "+i+"!");
                 }
             }
         }
