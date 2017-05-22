@@ -155,6 +155,8 @@ public class TeleopMode extends Coordinator {
 
             if (extend) {
                 robot.flipFlop.extend.activate();
+            } else {
+                robot.flipFlop.retract.activate();
             }
 
             if (driver.buttons.y.get()) {
@@ -168,7 +170,6 @@ public class TeleopMode extends Coordinator {
             }
 
             switch (intakeState) {
-                // TODO: Check that I bound the right enum state to the right action
                 case FORWARD:
                     robot.intake.spit.activate();
                     break;
