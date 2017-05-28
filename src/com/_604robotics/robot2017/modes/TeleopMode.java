@@ -67,7 +67,7 @@ public class TeleopMode extends Coordinator {
 
         public void run () {
             // TODO: REBIND
-            if (false) {
+            if (driver.buttons.back.get()) {
                 shoot.activate();
             } else if (false) {
                 // TODO: bind to an Xbox controller value
