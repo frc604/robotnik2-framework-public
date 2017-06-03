@@ -5,6 +5,7 @@ import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
 import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
+import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 import com._604robotics.robotnik.prefabs.flow.Toggle;
 
 public class TeleopMode extends Coordinator {
@@ -138,12 +139,14 @@ public class TeleopMode extends Coordinator {
     }
 
     private enum IntakeState {
-        IDLE, FORWARD, REVERSE
+        IDLE, FORWARD_SPIT, REVERSE_SUCK
     }
 
     private class PickupManager {
         private boolean extend = false;
         private IntakeState intakeState = IntakeState.IDLE;
+        private IntakeState prevState = IntakeState.IDLE;
+        private SmartTimer retractSpinTimer = new SmartTimer();
 
         public void run () {
             if (driver.buttons.y.get()) {
@@ -153,33 +156,41 @@ public class TeleopMode extends Coordinator {
                 extend = true;
             }
 
-            if (extend) {
-                robot.flipFlop.extend.activate();
-            } else {
-                robot.flipFlop.retract.activate();
-            }
-
             if (driver.buttons.y.get()) {
                 intakeState = IntakeState.IDLE;
             }
             if (driver.buttons.x.get()) {
-                intakeState = IntakeState.FORWARD;
+                intakeState = IntakeState.REVERSE_SUCK;
             }
             if (driver.buttons.b.get()) {
-                intakeState = IntakeState.REVERSE;
+                intakeState = IntakeState.FORWARD_SPIT;
+            }
+
+            if (extend) {
+                robot.flipFlop.extend.activate();
+            } else {
+                robot.flipFlop.retract.activate();
+//                if (intakeState == IntakeState.IDLE && prevState != IntakeState.IDLE) {
+//                    retractSpinTimer.stopAndReset();
+//                    retractSpinTimer.start();
+//                }
+//                if (!retractSpinTimer.hasPeriodPassed(1)) {
+//                    intakeState = IntakeState.REVERSE_SUCK;
+//                }
             }
 
             switch (intakeState) {
-                case FORWARD:
+                case FORWARD_SPIT:
                     robot.intake.spit.activate();
                     break;
-                case REVERSE:
+                case REVERSE_SUCK:
                     robot.intake.suck.activate();
                     break;
                 case IDLE:
                     robot.intake.idle.activate();
                     break;
             }
+            prevState = intakeState;
         }
     }
 }
