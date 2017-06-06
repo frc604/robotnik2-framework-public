@@ -10,7 +10,10 @@ class OutputProxy<T> implements Output<T> {
         if (name.contains(",")) {
             throw new IllegalArgumentException("Output names may not contain commas");
         }
-
+        if( source == null )
+        	System.out.println("Source is null.");
+        else
+        	System.out.println("Source isn't null.\nName is " + name);
         this.name = name;
         this.source = source;
     }
