@@ -63,6 +63,7 @@ public class DashboardModule extends Module {
 
     protected <E extends Enum<E>> Output<E> addDashboardOutput (String name, E defaultValue, Class<E> klass) {
         final SendableChooser<E> chooser = new SendableChooser<>();
+        SmartDashboard.putData(name,chooser);
         for (E option : EnumSet.allOf(klass)) {
             if (option == defaultValue) {
                 chooser.addDefault(option.toString(), option);
