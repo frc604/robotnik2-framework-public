@@ -81,10 +81,6 @@ public abstract class Module {
     }
 
     protected <T> Output<T> addOutput (String name, Output<T> output) {
-    	if( output == null )
-    		System.out.println("Output is null.");
-    	else
-    		System.out.println("Output isn't null.");
         final OutputProxy<T> proxy = new OutputProxy<>(name, output);
         outputs.add(proxy);
         outputsTableIndex.add("Output", name);

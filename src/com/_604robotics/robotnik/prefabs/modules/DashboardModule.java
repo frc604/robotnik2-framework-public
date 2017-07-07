@@ -63,28 +63,12 @@ public class DashboardModule extends Module {
 
     protected <E extends Enum<E>> Output<E> addDashboardOutput (String name, E defaultValue, Class<E> klass) {
         final SendableChooser<E> chooser = new SendableChooser<>();
-        // ERROR FOUND: initTable not called!!
-        int f = 0;
         for (E option : EnumSet.allOf(klass)) {
-        	System.out.println((f+1) + "/" + EnumSet.allOf(klass).size()); // not zero indexed
-        	if (option == null) {
-        		System.out.println("Option is null");
-        	} else {
-        		System.out.println("Option is "+option.toString());
-        	}
             if (option == defaultValue) {
                 chooser.addDefault(option.toString(), option);
             } else {
                 chooser.addObject(option.toString(), option);
             }
-            System.out.println("Cycle complete");
-            f++;
-        }
-        System.out.println("Exited loop");
-        if (chooser.getTable() == null) {
-        	System.out.println("Chooser.getTable() is null");
-        } else {
-        	System.out.println("Chooser.getTable() is not null");
         }
         return addOutput(name, chooser::getSelected);
     }
@@ -103,19 +87,15 @@ public class DashboardModule extends Module {
             if (input.getKey().isFresh()) {
                 switch (input.getValue()) {
                     case BOOLEAN:
-                    	System.out.println("SmartDashboard put Boolean");
                         SmartDashboard.putBoolean(input.getKey().getName(), (Boolean) input.getKey().get());
                         break;
                     case NUMBER:
-                    	System.out.println("SmartDashboard put Number");
                         SmartDashboard.putNumber(input.getKey().getName(), (Double) input.getKey().get());
                         break;
                     case STRING:
-                    	System.out.println("SmartDashboard put String");
                         SmartDashboard.putString(input.getKey().getName(), (String) input.getKey().get());
                         break;
                     case ENUM:
-                    	System.out.println("SmartDashboard put Enum");
                         SmartDashboard.putString(input.getKey().getName(), input.getKey().get().toString());
                         break;
                 }

@@ -43,7 +43,6 @@ public class Logger {
                 "]\t[" + name +
                 "]\t" + message +
                 "\n");
-        System.out.flush();
     }
 
     public void info (String message) {
