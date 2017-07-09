@@ -99,12 +99,14 @@ public abstract class Module {
                     "Error updating output " + output.getName() + " of module " + getName());
             // Error here due to output.get coming from enum
             // Must be one of Boolean Number String byte[] boolean[] double[] Boolean[] Number[] String[]
-            //System.out.println("Would have put key:"+output.getName()+" value:"+output.get());
+            //System.out.println("Put key:"+output.getName()+" value:"+output.get());
             if (output.isEnum()) {
                 // Following sequence is designed to never appear in valid unicode
-                String enumMarker="\ud8a0\uc0ff\u0000";
+                String enumMarker="\ud8a0\uc0ff\u00ff";
+                outputsTable.putString(output.getName(), enumMarker+"Class is:"+(output.get().getClass().getName()));
+            } else {
+                outputsTable.putValue(output.getName(), output.get());
             }
-            outputsTable.putValue(output.getName(), output.get());
         }
 
         if (runningAction != null) {
