@@ -18,10 +18,10 @@ class OutputProxy<T> implements Output<T> {
 
         this.name = name;
         this.source = source;
-        System.out.println("OutputProxy:");
-        System.out.println("The class contained is:"+source.get().getClass().getName());
+        //System.out.println("OutputProxy:");
+        //System.out.println("The class contained is:"+source.get().getClass().getName());
         isEnum=!(Pattern.matches(javaLang, source.get().getClass().getName()));
-        System.out.println("Contains enum="+isEnum);
+        //System.out.println("Contains enum="+isEnum);
     }
 
     public boolean isEnum() {

@@ -18,10 +18,10 @@ public class Input<T> {
         this.parent = parent;
         this.name = name;
         this.defaultValue = defaultValue;
-        System.out.println("Input:");
-        System.out.println("The class contained is:"+defaultValue.getClass().getName());
+        //System.out.println("Input:");
+        //System.out.println("The class contained is:"+defaultValue.getClass().getName());
         isEnum=!(Pattern.matches(javaLang, defaultValue.getClass().getName()));
-        System.out.println("Contains enum="+isEnum);
+        //System.out.println("Contains enum="+isEnum);
     }
 
     public String getName () {
