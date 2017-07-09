@@ -105,6 +105,9 @@ public class TeleopMode extends Coordinator {
                         }
                     }
                     break;
+                default:
+                    System.out.println("This should never happen!");
+                    System.out.println("Current value is:"+robot.dashboard.driveMode.get());
             }
 
             // Set appropriate drive mode depending on dashboard option
