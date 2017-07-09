@@ -28,6 +28,9 @@ public class Drive extends Module {
 
     public final Output<Integer> leftClicks = addOutput("leftClicks", encoderLeft::get);
     public final Output<Integer> rightClicks = addOutput("rightClicks", encoderRight::get);
+    
+    public final Output<Double> leftClickRate = addOutput("leftClickRate", encoderLeft::getRate);
+    public final Output<Double> rightClickRate = addOutput("rightClickRate", encoderRight::getRate);
 
     public class Idle extends Action {
         public Idle () {

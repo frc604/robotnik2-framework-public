@@ -14,6 +14,9 @@ public class DashboardSystem extends Coordinator {
     public boolean run () {
         robot.intake.power.set(robot.dashboard.intakePower.get());
         robot.flipFlop.transitionTime.set(robot.dashboard.flipFlopTransitionTime.get());
+        robot.dashboard.leftDriveClicks.set(robot.drive.leftClicks.get());
+        robot.dashboard.rightDriveClicks.set(robot.drive.rightClicks.get());
+        
         return true;
     }
 }

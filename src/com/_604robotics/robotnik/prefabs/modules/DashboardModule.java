@@ -31,6 +31,13 @@ public class DashboardModule extends Module {
         inputs.add(new Pair<>(input, InputType.NUMBER));
         return input;
     }
+    
+    protected Input<Integer> addDashboardInput (String name, int initialValue) {
+        SmartDashboard.putNumber(name, initialValue);
+        final Input<Integer> input = addInput(name, initialValue);
+        inputs.add(new Pair<>(input, InputType.NUMBER));
+        return input;
+    }
 
     protected Input<String> addDashboardInput (String name, String initialValue) {
         SmartDashboard.putString(name, initialValue);
