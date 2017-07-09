@@ -63,6 +63,10 @@ public class DashboardModule extends Module {
 
     protected <E extends Enum<E>> Output<E> addDashboardOutput (String name, E defaultValue, Class<E> klass) {
         final SendableChooser<E> chooser = new SendableChooser<>();
+        System.err.println("Names supplied for enums will be silently ignored!");
+        System.out.println("Add Dashboard Output with simpleName of "+klass.getSimpleName());
+        System.out.println("Add Dashboard Output with Name of "+klass.getName());
+        //System.out.println("Add Dashboard Output with CanonicalName of "+klass.getCanonicalName());
         SmartDashboard.putData(name,chooser);
         for (E option : EnumSet.allOf(klass)) {
             if (option == defaultValue) {
