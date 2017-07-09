@@ -70,7 +70,7 @@ public abstract class Robot extends SampleRobot {
 
     @Override
     protected void robotInit () {
-        printBanner();
+        //printBanner();
     }
 
     @Override
