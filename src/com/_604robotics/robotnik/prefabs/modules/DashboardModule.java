@@ -66,7 +66,6 @@ public class DashboardModule extends Module {
         System.err.println("Names supplied for enums will be silently ignored!");
         System.out.println("Add Dashboard Output with simpleName of "+klass.getSimpleName());
         System.out.println("Add Dashboard Output with Name of "+klass.getName());
-        //System.out.println("Add Dashboard Output with CanonicalName of "+klass.getCanonicalName());
         SmartDashboard.putData(name,chooser);
         for (E option : EnumSet.allOf(klass)) {
             if (option == defaultValue) {

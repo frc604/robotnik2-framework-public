@@ -24,7 +24,11 @@ class OutputProxy<T> implements Output<T> {
         System.out.println("Contains enum="+isEnum);
     }
 
-    public String getName () {
+    public boolean isEnum() {
+		return isEnum;
+	}
+
+	public String getName () {
         return name;
     }
 
