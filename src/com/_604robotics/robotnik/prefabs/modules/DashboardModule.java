@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DashboardModule extends Module {
     private enum InputType {
-        BOOLEAN, NUMBER, STRING, ENUM
+        BOOLEAN, DOUBLE, INTEGER, STRING, ENUM
     }
 
     private final List<Pair<Input, InputType>> inputs = new ArrayList<>();
@@ -28,14 +28,14 @@ public class DashboardModule extends Module {
     protected Input<Double> addDashboardInput (String name, double initialValue) {
         SmartDashboard.putNumber(name, initialValue);
         final Input<Double> input = addInput(name, initialValue);
-        inputs.add(new Pair<>(input, InputType.NUMBER));
+        inputs.add(new Pair<>(input, InputType.DOUBLE));
         return input;
     }
     
     protected Input<Integer> addDashboardInput (String name, int initialValue) {
         SmartDashboard.putNumber(name, initialValue);
         final Input<Integer> input = addInput(name, initialValue);
-        inputs.add(new Pair<>(input, InputType.NUMBER));
+        inputs.add(new Pair<>(input, InputType.INTEGER));
         return input;
     }
 
@@ -70,10 +70,7 @@ public class DashboardModule extends Module {
 
     protected <E extends Enum<E>> Output<E> addDashboardOutput (String name, E defaultValue, Class<E> klass) {
         final SendableChooser<E> chooser = new SendableChooser<>();
-        System.err.println("Names supplied for enums will be silently ignored!");
-        System.out.println("Add Dashboard Output with simpleName of "+klass.getSimpleName());
-        System.out.println("Add Dashboard Output with Name of "+klass.getName());
-        SmartDashboard.putData(klass.getSimpleName(),chooser);
+        SmartDashboard.putData(name,chooser);
         for (E option : EnumSet.allOf(klass)) {
             if (option == defaultValue) {
                 chooser.addDefault(option.toString(), option);
@@ -100,8 +97,11 @@ public class DashboardModule extends Module {
                     case BOOLEAN:
                         SmartDashboard.putBoolean(input.getKey().getName(), (Boolean) input.getKey().get());
                         break;
-                    case NUMBER:
+                    case DOUBLE:
                         SmartDashboard.putNumber(input.getKey().getName(), (Double) input.getKey().get());
+                        break;
+                    case INTEGER:
+                        SmartDashboard.putNumber(input.getKey().getName(), ((Integer) input.getKey().get()).doubleValue());
                         break;
                     case STRING:
                         SmartDashboard.putString(input.getKey().getName(), (String) input.getKey().get());
