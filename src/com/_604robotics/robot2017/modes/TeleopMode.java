@@ -1,6 +1,7 @@
 package com._604robotics.robot2017.modes;
 
 import com._604robotics.robot2017.Robot2017;
+import com._604robotics.robot2017.constants.Calibration;
 import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
 import com._604robotics.robotnik.Coordinator;
@@ -19,6 +20,18 @@ public class TeleopMode extends Coordinator {
     private final DriveManager driveManager;
 
     public TeleopMode (Robot2017 robot) {
+        driver.leftStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
+        driver.leftStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
+
+        driver.leftStick.x.setFactor(Calibration.TELEOP_FACTOR);
+        driver.leftStick.y.setFactor(Calibration.TELEOP_FACTOR);
+
+        driver.rightStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
+        driver.rightStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
+
+        driver.rightStick.x.setFactor(Calibration.TELEOP_FACTOR);
+        driver.rightStick.y.setFactor(Calibration.TELEOP_FACTOR);
+
         this.robot = robot;
 
         climberManager = new ClimberManager();
