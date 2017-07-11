@@ -9,14 +9,16 @@ public class Dashboard extends DashboardModule {
     public final Input<Integer> leftDriveClicks = addDashboardInput("leftDriveClicks", 0);
     public final Input<Integer> rightDriveClicks = addDashboardInput("rightDriveClicks", 0);
 
-    public final Input<Integer> leftDriveRate = addDashboardInput("leftDriveRate", 0);
-    public final Input<Integer> rightDriveRate = addDashboardInput("rightDriveRate", 0);
+    public final Input<Double> leftDriveRate = addDashboardInput("leftDriveRate", 0.0);
+    public final Input<Double> rightDriveRate = addDashboardInput("rightDriveRate", 0.0);
 
     public final Input<Boolean> gyroCalibrated = addDashboardInput("gyroCalibrated", false);
     public final Input<Double> horizontalGyroAngle = addDashboardInput("horizontalGyroAngle", 0D);
 
     public final Input<Boolean> flipFlopExtending = addDashboardInput("flipFlopExtended", false);
     public final Input<Boolean> intakeRunning = addDashboardInput("intakeRunning", false);
+    
+    public final Input<Double> gyroAngle = addDashboardInput("gyroAngle",0.0);
 
     public final Output<Boolean> driveOn = addDashboardOutput("driveOn", true);
 
