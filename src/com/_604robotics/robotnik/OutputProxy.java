@@ -5,10 +5,6 @@ import java.util.regex.Pattern;
 class OutputProxy<T> implements Output<T> {
     private final String name;
     private final Output<T> source;
-
-    private static final String javaLang = "java\\.lang\\..+";
-    private final boolean isEnum;
-
     private T value;
 
     public OutputProxy (String name, Output<T> source) {
@@ -18,15 +14,7 @@ class OutputProxy<T> implements Output<T> {
 
         this.name = name;
         this.source = source;
-        //System.out.println("OutputProxy:");
-        //System.out.println("The class contained is:"+source.get().getClass().getName());
-        isEnum=!(Pattern.matches(javaLang, source.get().getClass().getName()));
-        //System.out.println("Contains enum="+isEnum);
     }
-
-    public boolean isEnum() {
-		return isEnum;
-	}
 
 	public String getName () {
         return name;
