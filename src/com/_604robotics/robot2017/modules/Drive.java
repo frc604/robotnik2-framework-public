@@ -5,6 +5,8 @@ import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
+
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -25,7 +27,10 @@ public class Drive extends Module {
             Ports.ENCODER_RIGHT_B,
             true,
             CounterBase.EncodingType.k4X);
+    
+    private final AnalogGyro horizGyro=new AnalogGyro(Ports.HORIZGYRO);
 
+    public final Output<Double> gyroAngle = addOutput("gyroAngle",horizGyro::getAngle);
     public final Output<Integer> leftClicks = addOutput("leftClicks", encoderLeft::get);
     public final Output<Integer> rightClicks = addOutput("rightClicks", encoderRight::get);
     
@@ -87,6 +92,7 @@ public class Drive extends Module {
 
     public Drive () {
         super(Drive.class);
+        horizGyro.calibrate();
         setDefaultAction(idle);
     }
 }
