@@ -1,8 +1,12 @@
 package com._604robotics.robot2017.constants;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+
 public class Ports {
     private Ports () {}
 
+	public static final int HORIZGYRO = 0;
+    
     // Motors
     public static final int CLIMBER_MOTOR = 0;
     public static final int INTAKE_LEFT_MOTOR = 1;
@@ -27,7 +31,7 @@ public class Ports {
 
     // Encoders
     public static final int ENCODER_LEFT_A = 1;
-    public static final int ENCODER_LEFT_B = 2;
-    public static final int ENCODER_RIGHT_A = 3;
-    public static final int ENCODER_RIGHT_B = 4;
+    public static final int ENCODER_LEFT_B = 0;
+    public static final int ENCODER_RIGHT_A = 2;
+    public static final int ENCODER_RIGHT_B = 3;
 }
