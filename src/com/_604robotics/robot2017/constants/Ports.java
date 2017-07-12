@@ -22,6 +22,8 @@ public class Ports {
     public static final int SIGNAL_LIGHT_RELAY = 0;
 
     // Solenoids
+	public static final int SHIFTER_FORWARD = 0;
+	public static final int SHIFTER_REVERSE = 1;
     public static final int FLIP_FLOP_EXTEND_SOLENOID = 6;
     public static final int FLIP_FLOP_RETRACT_SOLENOID = 7;
 

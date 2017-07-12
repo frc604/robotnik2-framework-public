@@ -74,6 +74,7 @@ public class TeleopMode extends Coordinator {
         private final Drive.Idle idle;
         private CurrentDrive currentDrive;
         private Toggle inverted;
+		private Toggle gearState;
 
         public DriveManager () {
             idle=robot.drive.new Idle();
@@ -83,9 +84,18 @@ public class TeleopMode extends Coordinator {
             currentDrive=CurrentDrive.IDLE;
             // TODO: Expose on dashboard
             inverted=new Toggle(false);
+            gearState=new Toggle(false);
         }
 
         public void run() {
+        	// Set gears
+        	gearState.update(driver.buttons.lb.get());
+        	if (gearState.isInOnState()) {
+        		robot.shifter.highGear.activate();
+        	} else if (gearState.isInOffState()) {
+        		robot.shifter.lowGear.activate();
+        	}
+        	// Get Xbox data
             double leftY=driver.leftStick.y.get();
             double rightX=driver.rightStick.x.get();
             double rightY=driver.rightStick.y.get();

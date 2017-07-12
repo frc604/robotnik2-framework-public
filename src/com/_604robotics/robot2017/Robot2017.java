@@ -1,11 +1,13 @@
 package com._604robotics.robot2017;
 
+import com._604robotics.robot2017.constants.Ports;
 import com._604robotics.robot2017.modes.AutonomousMode;
 import com._604robotics.robot2017.modes.TeleopMode;
 import com._604robotics.robot2017.modules.*;
 import com._604robotics.robot2017.systems.DashboardSystem;
 import com._604robotics.robot2017.systems.PickupSystem;
 import com._604robotics.robotnik.Robot;
+import com._604robotics.robotnik.prefabs.modules.Shifter;
 
 public class Robot2017 extends Robot {
     public final Dashboard dashboard = addModule(new Dashboard());
@@ -14,6 +16,7 @@ public class Robot2017 extends Robot {
     public final SignalLight signalLight = addModule(new SignalLight());
     public final FlipFlop flipFlop = addModule(new FlipFlop());
     public final Intake intake = addModule(new Intake());
+    public final Shifter shifter = addModule(new Shifter(Ports.SHIFTER_FORWARD, Ports.SHIFTER_REVERSE));
 
     public Robot2017 () {
         setAutonomousMode(new AutonomousMode(this));
