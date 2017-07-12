@@ -90,9 +90,9 @@ public class TeleopMode extends Coordinator {
         public void run() {
         	// Set gears
         	gearState.update(driver.buttons.lb.get());
-        	if (gearState.isInOnState()) {
+        	if (gearState.isEnteringOnState()) {
         		robot.shifter.highGear.activate();
-        	} else if (gearState.isInOffState()) {
+        	} else if (gearState.isEnteringOffState()) {
         		robot.shifter.lowGear.activate();
         	}
         	// Get Xbox data
