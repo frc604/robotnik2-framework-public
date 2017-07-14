@@ -15,10 +15,17 @@ public class Shifter extends Module {
 	public Shifter(int forwardSolenoid, int reverseSolenoid) {
 		super(Shifter.class);
 		this.solenoid=new DoubleSolenoid(forwardSolenoid,reverseSolenoid);
-		setDefaultAction(lowGear);
+		setDefaultAction(idle);
 	}
 	
-	
+	private class Idle extends Action {
+		public Idle() {
+			super(Shifter.this,Idle.class);
+		}
+		public void run() {
+			solenoid.set(Value.kOff);
+		}
+	}
 	private class SetGear extends Action {
 		private Value currentState;
 		public SetGear(Value initState) {
@@ -31,6 +38,7 @@ public class Shifter extends Module {
 		}
 	}
 	
+	public final Action idle = new Idle();
 	public final Action lowGear=new SetGear(Value.kReverse);
 	public final Action highGear=new SetGear(Value.kForward);
 }
