@@ -81,7 +81,7 @@ public class TeleopMode extends Coordinator {
             arcade=robot.drive.new ArcadeDrive();
             tank=robot.drive.new TankDrive();
             // TODO: Expose on dashboard
-            currentDrive=CurrentDrive.IDLE;
+            currentDrive=CurrentDrive.ARCADE;
             // TODO: Expose on dashboard
             inverted=new Toggle(false);
             gearState=new Toggle(false);
@@ -90,9 +90,9 @@ public class TeleopMode extends Coordinator {
         public void run() {
         	// Set gears
         	gearState.update(driver.buttons.lb.get());
-        	if (gearState.isEnteringOnState()) {
+        	if (gearState.isInOnState()) {
         		robot.shifter.highGear.activate();
-        	} else if (gearState.isEnteringOffState()) {
+        	} else if (gearState.isInOffState()) {
         		robot.shifter.lowGear.activate();
         	}
         	// Get Xbox data
