@@ -19,6 +19,7 @@ public class Dashboard extends DashboardModule {
     public final Input<Boolean> intakeRunning = addDashboardInput("intakeRunning", false);
     
     public final Input<Double> gyroAngle = addDashboardInput("gyroAngle",0.0);
+    public final Input<Double> totalCurrent = addDashboardInput("Current Drawn",0.0);
 
     public final Output<Boolean> driveOn = addDashboardOutput("driveOn", true);
 
@@ -80,6 +81,16 @@ public class Dashboard extends DashboardModule {
             addDashboardOutput("redRightAutonDriveForwardClicks", Calibration.RED_RIGHT_AUTON_DRIVE_FORWARD_CLICKS);
     public final Output<Double> redRightAutonTurnToFacePegAngle =
             addDashboardOutput("redRightAutonTurnToFacePegAngle", Calibration.RED_RIGHT_AUTON_TURN_TO_FACE_PEG_ANGLE);
+    
+    // THEORETICAL
+    public final Output<Double> shooterTarget =
+            addDashboardOutput("Shooter Target Speed", Calibration.SHOOTER_TARGET);
+    public final Output<Boolean> sharp =
+            addDashboardOutput("Sharp Algorithm", false);
+    public final Input<Double> shooterSpeed =
+            addDashboardInput("Shooter Speed", 0.0);
+    public final Input<Double> shooterPower =
+            addDashboardInput("Shooter Calc Power", 0.0);
 
     public Dashboard () {
         super(Dashboard.class);

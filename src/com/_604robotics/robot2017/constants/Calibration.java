@@ -28,4 +28,7 @@ public class Calibration {
 
     public static final double RED_RIGHT_AUTON_DRIVE_FORWARD_CLICKS = 2000;
     public static final double RED_RIGHT_AUTON_TURN_TO_FACE_PEG_ANGLE = 0; // TODO: Calibrate!
+    
+    // THEORETICAL
+    public static final double SHOOTER_TARGET = 5000;
 }

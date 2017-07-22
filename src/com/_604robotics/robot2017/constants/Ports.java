@@ -1,7 +1,5 @@
 package com._604robotics.robot2017.constants;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-
 public class Ports {
     private Ports () {}
 
@@ -17,6 +15,8 @@ public class Ports {
     public static final int DRIVE_REAR_RIGHT_MOTOR = 5;
 
     public static final int INTAKE_RIGHT_MOTOR = 6;
+    // THEORETICAL
+    public static final int SHOOTER_MOTOR = 8;
 
     // Relays
     public static final int SIGNAL_LIGHT_RELAY = 0;
@@ -36,4 +36,10 @@ public class Ports {
     public static final int ENCODER_LEFT_B = 1;
     public static final int ENCODER_RIGHT_A = 2;
     public static final int ENCODER_RIGHT_B = 3;
+    // THEORETICAL
+    public static final int ENCODER_SHOOTER_A = 4;
+    public static final int ENCODER_SHOOTER_B = 5;
+    
+    // Misc
+    public static final int PDP_MODULE = 0;
 }

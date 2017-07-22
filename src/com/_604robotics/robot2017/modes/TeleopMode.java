@@ -4,6 +4,8 @@ import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robot2017.constants.Calibration;
 import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
+import com._604robotics.robot2017.modules.Shooter;
+import com._604robotics.robot2017.modules.Shooter.RawShootAction;
 import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
 import com._604robotics.robotnik.prefabs.flow.SmartTimer;
@@ -18,6 +20,7 @@ public class TeleopMode extends Coordinator {
     private final SignalLightManager signalLightManager;
     private final PickupManager pickupManager;
     private final DriveManager driveManager;
+    //private final ShooterManager shootManager;
 
     public TeleopMode (Robot2017 robot) {
         driver.leftStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
@@ -38,6 +41,7 @@ public class TeleopMode extends Coordinator {
         signalLightManager = new SignalLightManager();
         pickupManager = new PickupManager();
         driveManager = new DriveManager();
+        //shootManager = new ShooterManager();
     }
 
     @Override
@@ -46,6 +50,7 @@ public class TeleopMode extends Coordinator {
         signalLightManager.run();
         pickupManager.run();
         driveManager.run();
+        //shootManager.run();
         return true;
     }
 
@@ -60,6 +65,28 @@ public class TeleopMode extends Coordinator {
             if (driver.buttons.lt.get()) {
                 climb.power.set(driver.triggers.left.get());
                 climb.activate();
+            }
+        }
+    }
+
+
+    private class ShooterManager {
+        private final Shooter.ShootAction shoot;
+        private RawShootAction rawShoot;
+
+        public ShooterManager () {
+            shoot = robot.shooter.new ShootAction();
+            rawShoot = robot.shooter.new RawShootAction();
+        }
+
+        public void run () {
+            // TODO: REBIND
+            if (driver.buttons.back.get()) {
+                shoot.activate();
+            } else if (false) {
+                // TODO: bind to an Xbox controller value
+                robot.shooter.rawPower.set(0D);
+                rawShoot.activate();
             }
         }
     }
