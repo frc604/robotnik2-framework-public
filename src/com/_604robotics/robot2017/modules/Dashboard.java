@@ -19,6 +19,7 @@ public class Dashboard extends DashboardModule {
     public final Input<Boolean> intakeRunning = addDashboardInput("intakeRunning", false);
     
     public final Input<Double> gyroAngle = addDashboardInput("gyroAngle",0.0);
+    public final Input<Double> totalCurrent = addDashboardInput("Current Drawn",0.0);
 
     public final Output<Boolean> driveOn = addDashboardOutput("driveOn", true);
 

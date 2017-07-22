@@ -10,18 +10,14 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class PowerMonitor extends Module {
 
-    private class emptyOutput implements Output<Double> {
-        @Override
-        public Double get() {
-            return 0D;
-        }
-    }
-
     private static final PowerDistributionPanel panel = new PowerDistributionPanel(Ports.PDP_MODULE);
     public static Output<Double> totalCurrent;
     public static Output<Double> batteryVoltage;
 
-    public static Output<Double> [] currents = new emptyOutput[16];
+    // Specifying <Double> results in an error
+    // Creating a special EmptyOutput class causes ArrayStoreExceptions
+    @SuppressWarnings("unchecked")
+	public static Output<Double> [] currents = new Output[16];
     public static double [] currentLimit = {40, 40, 40, 40,
                                      20, 20, 20, 20,
                                      20, 20, 20, 20,
@@ -40,10 +36,14 @@ public class PowerMonitor extends Module {
         super(PowerMonitor.class);
         totalCurrent=addOutput("Total Current", () -> panel.getTotalCurrent());
         batteryVoltage=addOutput("Battery Voltage", () -> panel.getVoltage());
-        /*for (int port=0;port<=15;port++) {
-            currents[port]=addOutput("Current "+port, () -> panel.getCurrent(port));
-        }*/
+        for (int port=0;port<=15;port++) {
+        	int proxy=port;
+            Output<Double> tempOutput = addOutput("Current "+port, () -> panel.getCurrent(proxy));
+            currents[proxy]=tempOutput;
+            
+        }
         // Repetition in code *WHILE* the loop above doesn't work
+        /*
         currents[0]=addOutput("Current 0", () -> panel.getCurrent(0));
         currents[1]=addOutput("Current 1", () -> panel.getCurrent(1));
         currents[2]=addOutput("Current 2", () -> panel.getCurrent(2));
@@ -59,7 +59,7 @@ public class PowerMonitor extends Module {
         currents[12]=addOutput("Current 12", () -> panel.getCurrent(12));
         currents[13]=addOutput("Current 13", () -> panel.getCurrent(13));
         currents[14]=addOutput("Current 14", () -> panel.getCurrent(14));
-        currents[15]=addOutput("Current 15", () -> panel.getCurrent(15));
+        currents[15]=addOutput("Current 15", () -> panel.getCurrent(15));*/
     }
     
     private Runnable checkCurrent = new Runnable() {
