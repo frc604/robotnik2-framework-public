@@ -32,8 +32,8 @@ public class Ports {
     public static final int INTAKE_RIGHT_SENSOR_DIGITAL_INPUT = 9;
 
     // Encoders
-    public static final int ENCODER_LEFT_A = 1;
-    public static final int ENCODER_LEFT_B = 0;
+    public static final int ENCODER_LEFT_A = 0;
+    public static final int ENCODER_LEFT_B = 1;
     public static final int ENCODER_RIGHT_A = 2;
     public static final int ENCODER_RIGHT_B = 3;
 }
