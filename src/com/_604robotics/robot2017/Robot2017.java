@@ -7,6 +7,7 @@ import com._604robotics.robot2017.modules.*;
 import com._604robotics.robot2017.systems.DashboardSystem;
 import com._604robotics.robot2017.systems.PickupSystem;
 import com._604robotics.robotnik.Robot;
+import com._604robotics.robotnik.prefabs.modules.PowerMonitor;
 import com._604robotics.robotnik.prefabs.modules.Shifter;
 
 public class Robot2017 extends Robot {

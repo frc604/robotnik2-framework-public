@@ -1,8 +1,8 @@
 package com._604robotics.robot2017.systems;
 
 import com._604robotics.robot2017.Robot2017;
-import com._604robotics.robot2017.modules.PowerMonitor;
 import com._604robotics.robotnik.Coordinator;
+import com._604robotics.robotnik.prefabs.modules.PowerMonitor;
 
 public class DashboardSystem extends Coordinator {
     private final Robot2017 robot;
