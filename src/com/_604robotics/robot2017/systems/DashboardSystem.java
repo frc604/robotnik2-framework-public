@@ -15,6 +15,11 @@ public class DashboardSystem extends Coordinator {
         robot.intake.power.set(robot.dashboard.intakePower.get());
         robot.flipFlop.transitionTime.set(robot.dashboard.flipFlopTransitionTime.get());
         robot.shooter.threshold.set(robot.dashboard.shooterTarget.get());
+        robot.dashboard.leftDriveClicks.set(robot.drive.leftClicks.get());
+        robot.dashboard.rightDriveClicks.set(robot.drive.rightClicks.get());
+        robot.dashboard.leftDriveRate.set(robot.drive.leftClickRate.get());
+        robot.dashboard.rightDriveRate.set(robot.drive.rightClickRate.get());
+        robot.dashboard.gyroAngle.set(robot.drive.gyroAngle.get());
         return true;
     }
 }

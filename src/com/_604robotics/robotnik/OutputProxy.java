@@ -1,9 +1,10 @@
 package com._604robotics.robotnik;
 
+import java.util.regex.Pattern;
+
 class OutputProxy<T> implements Output<T> {
     private final String name;
     private final Output<T> source;
-
     private T value;
 
     public OutputProxy (String name, Output<T> source) {
@@ -15,9 +16,10 @@ class OutputProxy<T> implements Output<T> {
         this.source = source;
     }
 
-    public String getName () {
+	public String getName () {
         return name;
     }
+
 
     @Override
     public T get () {

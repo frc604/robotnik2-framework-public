@@ -1,6 +1,7 @@
 package com._604robotics.robot2017.modes;
 
 import com._604robotics.robot2017.Robot2017;
+import com._604robotics.robot2017.constants.Calibration;
 import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
 import com._604robotics.robot2017.modules.Shooter;
@@ -22,6 +23,18 @@ public class TeleopMode extends Coordinator {
     //private final ShooterManager shootManager;
 
     public TeleopMode (Robot2017 robot) {
+        driver.leftStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
+        driver.leftStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
+
+        driver.leftStick.x.setFactor(Calibration.TELEOP_FACTOR);
+        driver.leftStick.y.setFactor(Calibration.TELEOP_FACTOR);
+
+        driver.rightStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
+        driver.rightStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
+
+        driver.rightStick.x.setFactor(Calibration.TELEOP_FACTOR);
+        driver.rightStick.y.setFactor(Calibration.TELEOP_FACTOR);
+
         this.robot = robot;
 
         climberManager = new ClimberManager();
@@ -88,18 +101,28 @@ public class TeleopMode extends Coordinator {
         private final Drive.Idle idle;
         private CurrentDrive currentDrive;
         private Toggle inverted;
+		private Toggle gearState;
 
         public DriveManager () {
             idle=robot.drive.new Idle();
             arcade=robot.drive.new ArcadeDrive();
             tank=robot.drive.new TankDrive();
             // TODO: Expose on dashboard
-            currentDrive=CurrentDrive.IDLE;
+            currentDrive=CurrentDrive.ARCADE;
             // TODO: Expose on dashboard
             inverted=new Toggle(false);
+            gearState=new Toggle(false);
         }
 
         public void run() {
+        	// Set gears
+        	gearState.update(driver.buttons.lb.get());
+        	if (gearState.isInOnState()) {
+        		robot.shifter.highGear.activate();
+        	} else if (gearState.isInOffState()) {
+        		robot.shifter.lowGear.activate();
+        	}
+        	// Get Xbox data
             double leftY=driver.leftStick.y.get();
             double rightX=driver.rightStick.x.get();
             double rightY=driver.rightStick.y.get();
@@ -132,6 +155,9 @@ public class TeleopMode extends Coordinator {
                         }
                     }
                     break;
+                default:
+                    System.out.println("This should never happen!");
+                    System.out.println("Current value is:"+robot.dashboard.driveMode.get());
             }
 
             // Set appropriate drive mode depending on dashboard option

@@ -1,6 +1,9 @@
 package com._604robotics.robotnik;
 
+import java.util.regex.Pattern;
+
 public class Input<T> {
+
     private final Module parent;
 
     private final String name;

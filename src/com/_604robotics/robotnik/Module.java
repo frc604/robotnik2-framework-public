@@ -97,7 +97,14 @@ public abstract class Module {
         for (@SuppressWarnings("rawtypes") OutputProxy output : outputs) {
             Reliability.swallowThrowables(output::update,
                     "Error updating output " + output.getName() + " of module " + getName());
-            outputsTable.putValue(output.getName(), output.get());
+            // Error here due to output.get coming from enum
+            // Must be one of Boolean Number String byte[] boolean[] double[] Boolean[] Number[] String[]
+            //System.out.println("Put key:"+output.getName()+" value:"+output.get());
+            if (output.get()==null) {
+                outputsTable.putString(output.getName(), "null");
+            } else {
+                outputsTable.putString(output.getName(), output.get().toString());
+            }
         }
 
         if (runningAction != null) {
