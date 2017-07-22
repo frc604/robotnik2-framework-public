@@ -87,9 +87,9 @@ public class Dashboard extends DashboardModule {
     public final Output<Boolean> sharp =
             addDashboardOutput("Sharp Algorithm", false);
     public final Input<Double> shooterSpeed =
-            addDashboardInput("Shooter Speed", 0);
+            addDashboardInput("Shooter Speed", 0.0);
     public final Input<Double> shooterPower =
-            addDashboardInput("Shooter Calc Power", 0);
+            addDashboardInput("Shooter Calc Power", 0.0);
 
     public Dashboard () {
         super(Dashboard.class);
