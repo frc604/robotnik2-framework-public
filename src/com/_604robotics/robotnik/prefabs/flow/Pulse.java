@@ -1,5 +1,10 @@
 package com._604robotics.robotnik.prefabs.flow;
 
+/**
+ * A Pulse class that functions like a boolean
+ * 
+ * This class also provides methods for detecting rsing and falling edges.
+ */
 public class Pulse {
     private boolean lastInput = false;
 

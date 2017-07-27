@@ -1,5 +1,8 @@
 package com._604robotics.robotnik.prefabs.flow;
 
+/**
+ * A utility class that provides toggle functionality
+ */
 public class Toggle {
     private final Pulse pulse = new Pulse();
     private boolean state;

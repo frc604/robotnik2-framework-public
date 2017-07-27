@@ -3,7 +3,11 @@ package com._604robotics.robotnik.prefabs.devices;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
+/**
+ * A PIDSource wrapper that takes a PIDSource and acts as the negative of the PIDSource.
+ */
 public class InvertPIDSource implements PIDSource {
+
     private final PIDSource wrappedSource;
 
     public InvertPIDSource(PIDSource Source) {
