@@ -41,5 +41,5 @@ public class Ports {
     public static final int ENCODER_SHOOTER_B = 5;
     
     // Misc
-    public static final int PDP_MODULE = 0;
+    public static final int PDP_MODULE = 1;
 }
