@@ -1,9 +1,18 @@
 package com._604robotics.robotnik.prefabs.utils;
 
+/**
+ * Utility class to perform Array arithmetic.
+ * @see java.util.Array
+ */
 public class ArrayMath
 {
     private ArrayMath() {}
     
+    /**
+     * Finds the maximum element of an array.
+     * @param array the array
+     * @return the maximum value
+     */
     public static double ArrayMax(double[] array)
     {
         double max=Double.NEGATIVE_INFINITY;
@@ -17,6 +26,11 @@ public class ArrayMath
         return max;
     }
     
+    /**
+     * Finds the minimum element of an array.
+     * @param array the array
+     * @return the minimum value
+     */
     public static double ArrayMin(double[] array)
     {
         double max=Double.POSITIVE_INFINITY;
@@ -30,6 +44,11 @@ public class ArrayMath
         return max;
     }
     
+    /**
+     * Finds the average value of an array.
+     * @param array the array
+     * @return the average value
+     */
     public static double ArrayAverage(double[] array) {
         double sum = 0;
         for (double element:array) {

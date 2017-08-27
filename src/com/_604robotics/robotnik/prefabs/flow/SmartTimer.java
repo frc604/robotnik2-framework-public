@@ -33,7 +33,7 @@ public class SmartTimer extends Timer {
 
     /**
      * Method that determines whether the timer has passed a certain time.
-     * @param time
+     * @param time the desired time to reach
      * @return whether the given time has elapsed or not.
      */
     public boolean hasReachedTime (double time) {
