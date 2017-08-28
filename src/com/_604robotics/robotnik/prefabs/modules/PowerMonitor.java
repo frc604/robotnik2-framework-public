@@ -6,18 +6,22 @@ import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
 import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class PowerMonitor extends Module {
 
-    private static final PowerDistributionPanel panel = new PowerDistributionPanel(Ports.PDP_MODULE);
+    private final PowerDistributionPanel panel;
+    private final Compressor compressor;
+    public static Output<Double> totalPortCurrent;
     public static Output<Double> totalCurrent;
     public static Output<Double> batteryVoltage;
 
     // Specifying <Double> results in an error
     // Creating a special EmptyOutput class causes ArrayStoreExceptions
     @SuppressWarnings("unchecked")
-	public static Output<Double> [] currents = new Output[16];
+    public static Output<Double> [] currents = new Output[16];
+    public static Output<Double> compCurrent;
     public static double [] currentLimit = {40, 40, 40, 40,
                                      20, 20, 20, 20,
                                      20, 20, 20, 20,
@@ -32,15 +36,18 @@ public class PowerMonitor extends Module {
     private static final Logger theLogger = new Logger(PowerMonitor.class);
     private final SmartTimer iterTimer = new SmartTimer();
 
-    public PowerMonitor() {
+    public PowerMonitor(int PDPPortID, int compressorID) {
         super(PowerMonitor.class);
-        totalCurrent=addOutput("Total Current", () -> panel.getTotalCurrent());
+        panel = new PowerDistributionPanel(PDPPortID);
+        compressor = new Compressor(compressorID);
+        compCurrent = addOutput("Compressor Current", () -> compressor.getCompressorCurrent());
+        totalPortCurrent=addOutput("Total Port Current", () -> panel.getTotalCurrent());
+        totalCurrent=addOutput("Total Current", () -> panel.getTotalCurrent()+compressor.getCompressorCurrent());
         batteryVoltage=addOutput("Battery Voltage", () -> panel.getVoltage());
         for (int port=0;port<=15;port++) {
-        	int proxy=port;
-            Output<Double> tempOutput = addOutput("Current "+port, () -> panel.getCurrent(proxy));
+            int proxy=port;
+            Output<Double> tempOutput = addOutput("Port "+port+" Current", () -> panel.getCurrent(proxy));
             currents[proxy]=tempOutput;
-            
         }
     }
     

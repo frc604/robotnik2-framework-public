@@ -18,7 +18,7 @@ public class Robot2017 extends Robot {
     public final FlipFlop flipFlop = addModule(new FlipFlop());
     public final Intake intake = addModule(new Intake());
     public final Shooter shooter = addModule(new Shooter());
-    public final PowerMonitor powerMonitor = addModule(new PowerMonitor());
+    public final PowerMonitor powerMonitor = addModule(new PowerMonitor(Ports.PDP_MODULE,Ports.COMPRESSOR));
     public final Shifter shifter = addModule(new Shifter(Ports.SHIFTER_FORWARD, Ports.SHIFTER_REVERSE));
 
     public Robot2017 () {
