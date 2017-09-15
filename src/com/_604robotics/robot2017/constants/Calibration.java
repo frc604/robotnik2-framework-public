@@ -30,7 +30,7 @@ public class Calibration {
     
     
     public static final AutonMovement.DriveTrainProperties DRIVE_PROPERTIES
-    = new AutonMovement.DriveTrainProperties(490, 29.5, 2, 20.767, 8.323);
+    = new AutonMovement.DriveTrainProperties(490, 29.5, 2, 20.767, 8.323); // second to last = coefficient second value = offset
     public static final double DRIVE_ROTATE_LEFT_TARGET
     = AutonMovement.degreesToClicks(DRIVE_PROPERTIES, 360);
     public static final double DRIVE_ROTATE_RIGHT_TARGET

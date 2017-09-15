@@ -45,6 +45,7 @@ public class Dashboard extends DashboardModule {
         ROTATE_LEFT_FULL,
         FORWARD_TEST,
         SHOOTER_DEMO
+        // AZ STEP THREE ADD NAME
     }
     
     public enum DriveMode {

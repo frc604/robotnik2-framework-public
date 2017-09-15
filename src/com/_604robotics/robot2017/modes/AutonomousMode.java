@@ -122,6 +122,7 @@ public class AutonomousMode extends Coordinator {
             case BACKWARD_6:
                 selectedModeMacro = backwardStateMacro;
                 break;
+            // AZ STEP TWO: COPY PASTE AND REPLACE NAMES
             case DEMO_NEW_AUTON:
                 selectedModeMacro = new DemoStateMacro();
                 break;
@@ -394,6 +395,25 @@ public class AutonomousMode extends Coordinator {
     		addState("Shooter", new ShooterCoordinator(Calibration.AUTON_SHOOTER_TIME));
     	}
     }
+    
+    // AZ STEP ONE: CREATE METHOD
+    /*
+    private class AZAutonModeMiddle extends StatefulCoordinator {
+    // Remname to fit whatever, fix constructors class name
+    	public AZAutonModeMiddle() {
+    		super(AZAutonModeMiddle.class);
+    		// USE THESE 4
+    		// COPY PASTE
+    		// inches
+    		// degrees
+    		addState("Forward 12 feet", new ArcadePIDCoordinator(AutonMovement.empericalInchesToClicks(Calibration.DRIVE_PROPERTIES, 12*12), 0));
+    		addState("Sleep 0.5 seconds", new SleepCoordinator(0.5));
+    		addState("Rotate 180 right", new ArcadePIDCoordinator(0,AutonMovement.degreesToClicks(Calibration.DRIVE_PROPERTIES, 180)));
+    		addState("Shooter", new ShooterCoordinator(Calibration.AUTON_SHOOTER_TIME));
+
+    	}
+    }
+    */
     
     private class MiddleAutonModeMacro extends StatefulCoordinator {
         public MiddleAutonModeMacro () {
