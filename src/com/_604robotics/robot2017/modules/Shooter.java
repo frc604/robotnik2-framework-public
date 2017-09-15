@@ -7,7 +7,9 @@ import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
 import com._604robotics.robotnik.prefabs.devices.MultiOutput;
+import com._604robotics.robotnik.prefabs.devices.TalonPWMEncoder;
 import com._604robotics.robotnik.prefabs.flow.Pulse;
+import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
@@ -18,19 +20,20 @@ public class Shooter extends Module {
 
 	private Pulse shooterReady = new Pulse();
 	
-	private final Victor wheelTopA = new Victor(Ports.WHEEL_TOP_A);
-	private final Victor wheelTopB = new Victor(Ports.WHEEL_TOP_B);
 	private final Victor wheelMid = new Victor(Ports.WHEEL_MID);
 
-	private final MultiOutput wheel_top = new MultiOutput(wheelTopA, wheelTopB);
+	private final CANTalon wheel_top_a = new CANTalon(Ports.WHEEL_TOP_A);
+	private final CANTalon wheel_top_b = new CANTalon(Ports.WHEEL_TOP_B);
+	
+	private final MultiOutput wheel_top = new MultiOutput(wheel_top_a, wheel_top_b);
 	private final MultiOutput wheel_mid = new MultiOutput(wheelMid);
 
-	private final Encoder encoder_top = new Encoder(Ports.ENCODER_SHOOTER_TOP_A, Ports.ENCODER_SHOOTER_TOP_B, false,
-			CounterBase.EncodingType.k4X);
+	private final TalonPWMEncoder encoder_top = new TalonPWMEncoder(wheel_top_b);
+
 	private final Encoder encoder_mid = new Encoder(Ports.ENCODER_SHOOTER_MID_A, Ports.ENCODER_SHOOTER_MID_B, false,
 			CounterBase.EncodingType.k4X);
 
-	public final Output<Double> topRate = addOutput("Top Rate", encoder_top::getRate);
+	public final Output<Double> topRate = addOutput("Top Rate", encoder_top::getVelocity);
 	public final Output<Double> midRate = addOutput("Mid Rate", encoder_mid::getRate);
 	public final Output<Boolean> isCharged = addOutput("Is Charged", shooterReady::isHigh);
 
@@ -131,15 +134,10 @@ public class Shooter extends Module {
 	// `synchronized` not quite necessary without PIDControllers
 	// Leaving this here in case switch to PID is necessary
 
-	public synchronized void resetSensors() {
-		encoder_top.reset();
-		encoder_mid.reset();
-	}
-
 	public Shooter() {
 		super(Shooter.class);
 		setDefaultAction(idle);
-		wheelTopA.setInverted(true);
+		wheel_top_a.setInverted(true);
 		wheelMid.setInverted(true);
 	}
 }
