@@ -6,107 +6,140 @@ import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
+import com._604robotics.robotnik.prefabs.devices.MultiOutput;
+import com._604robotics.robotnik.prefabs.flow.Pulse;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Victor;
 
 public class Shooter extends Module {
 
-    private final Victor motor = new Victor(Ports.SHOOTER_MOTOR);
-    private final Encoder encoder = new Encoder(Ports.ENCODER_SHOOTER_A,Ports.ENCODER_SHOOTER_B,
-           false,CounterBase.EncodingType.k4X);
-    private final Idle idle = new Idle();
-    private final ShootAction shootAct = new ShootAction();
-    public Input<Double> threshold;
-    public Input<Boolean> sharpAlgorithm;
-    public Input<Double> rawPower;
-    public Output<Double> calcPower = addOutput("Calculated Power", () -> shootAct.currentPower);
-    public Output<Double> encoderRate = addOutput("Flywheel Speed", () -> encoder.getRate());
+	private Pulse shooterReady = new Pulse();
+	
+	private final Victor wheelTopA = new Victor(Ports.WHEEL_TOP_A);
+	private final Victor wheelTopB = new Victor(Ports.WHEEL_TOP_B);
+	private final Victor wheelMid = new Victor(Ports.WHEEL_MID);
 
-    private class Idle extends Action {
-        public Idle () {
-            super(Shooter.this, Idle.class);
-        }
+	private final MultiOutput wheel_top = new MultiOutput(wheelTopA, wheelTopB);
+	private final MultiOutput wheel_mid = new MultiOutput(wheelMid);
 
-        @Override
-        protected void run () {
-            motor.stopMotor();
-        }
-    }
+	private final Encoder encoder_top = new Encoder(Ports.ENCODER_SHOOTER_TOP_A, Ports.ENCODER_SHOOTER_TOP_B, false,
+			CounterBase.EncodingType.k4X);
+	private final Encoder encoder_mid = new Encoder(Ports.ENCODER_SHOOTER_MID_A, Ports.ENCODER_SHOOTER_MID_B, false,
+			CounterBase.EncodingType.k4X);
 
-    public class ShootAction extends Action {
-        public boolean sharp;
-        public double currentPower;
+	public final Output<Double> topRate = addOutput("Top Rate", encoder_top::getRate);
+	public final Output<Double> midRate = addOutput("Mid Rate", encoder_mid::getRate);
+	public final Output<Boolean> isCharged = addOutput("Is Charged", shooterReady::isHigh);
 
-        public ShootAction() {
-            this(Calibration.SHOOTER_TARGET,false);
-        }
+	private final Timer chargeTimer = new Timer();
 
-        public ShootAction (double defaultThreshold, boolean defaultSharp) {
-            super(Shooter.this, ShootAction.class);
-            this.sharp=defaultSharp;
-            threshold=addInput("Speed Threshold", defaultThreshold);
-            sharpAlgorithm=addInput("Sharp Algorithm", defaultSharp);
-        }
+	public final Action idle = new Idle();
+	public final Action shooterStartup = new ShooterStartup();
 
-        private static final double FACTOR_MULT = 1.14499756464; //calc=0.25
+	public class Idle extends Action {
+		public Idle() {
+			super(Shooter.this, Idle.class);
+		}
 
-        public double calculate() {
-            double val=threshold.get();
-            double val_calc=val*FACTOR_MULT;
-            val_calc/=val;
-            val_calc++;
-            val_calc=Math.sqrt(val_calc);
-            return 1/val_calc;
-        }
+		@Override
+		public void run() {
+			wheel_top.stopMotor();
+			wheel_mid.stopMotor();
+		}
+	}
 
-        @Override
-        protected void run () {
-            sharp=sharpAlgorithm.get();
-            if (sharp) {
-                currentPower = 1;
-            } else {
-                currentPower = calculate();
-            }
-            if (encoder.getRate()<threshold.get()) {
-                motor.set(currentPower);
-            } else {
-                motor.stopMotor();
-            }
-        }
+	public class ShooterStartup extends Action {
+		public final Input<Double> motorSpeed;
+		public final Input<Boolean> maximumOverdrive;
 
-        @Override
-        protected void end () {
-            motor.stopMotor();
-        }
-    }
+		public ShooterStartup() {
+			this(0, false);
+		}
+		
+		public ShooterStartup(double motorSpeed) {
+			this(motorSpeed, false);
+		}
+		
+		public ShooterStartup(boolean maximumOverdrive) {
+			this(0, maximumOverdrive);
+		}
 
-    public class RawShootAction extends Action {
+		public ShooterStartup(double motorSpeed, boolean maximumOverdrive) {
+			super(Shooter.this, ShooterStartup.class);
+			this.motorSpeed = addInput("motorSpeed", motorSpeed, true);
+			this.maximumOverdrive = addInput("maximumOverdrive", maximumOverdrive, true);
+		}
 
-        public RawShootAction() {
-            this(0);
-        }
+		@Override
+		public void begin() {
+			chargeTimer.start();
+			shooterReady.update(false);
+		}
 
-        public RawShootAction (double defaultPower) {
-            super(Shooter.this, ShootAction.class);
-            rawPower=addInput("Raw Power", defaultPower);
-        }
+		@Override
+		public void run() {
+			if (Math.abs(Calibration.SHOOTER_TOP_RATE_TARGET
+					- encoder_top.getRate()) >= Calibration.SHOOTER_TOP_RATE_THRESHOLD) {
+				chargeTimer.reset();
+				shooterReady.update(false);
+			}
 
-        @Override
-        protected void run () {
-            motor.set(rawPower.get());
-        }
+			if (encoder_top.getRate() >= Calibration.SHOOTER_TOP_RATE_TARGET + Calibration.SHOOTER_TOP_RATE_THRESHOLD) {
+				wheel_top.stopMotor();
+			} else {
+				double speed = motorSpeed.get()*Calibration.TOP_WHEEL_SPEED_LIMITER;
+				if( maximumOverdrive.get() && motorSpeed.get() > 0 ) {
+					speed *= 10/7;
+				}
+				wheel_top.set(speed);
+			}
 
-        @Override
-        protected void end () {
-            motor.stopMotor();
-        }
-    }
+			if (Math.abs(Calibration.SHOOTER_MID_RATE_TARGET
+					- encoder_mid.getRate()) >= Calibration.SHOOTER_MID_RATE_THRESHOLD) {
+				chargeTimer.reset();
+				shooterReady.update(false);
+			}
 
-    public Shooter() {
-        super(Shooter.class);
-        setDefaultAction(idle);
-    }
+			if (encoder_mid.getRate() >= Calibration.SHOOTER_MID_RATE_TARGET + Calibration.SHOOTER_MID_RATE_THRESHOLD) {
+				wheel_mid.stopMotor();
+			} else {
+				double speed = motorSpeed.get()*Calibration.TOP_WHEEL_SPEED_LIMITER;
+				if( maximumOverdrive.get() && motorSpeed.get() > 0 ) {
+					speed *= 10/7;
+				}
+				wheel_mid.set(speed);
+			}
 
+			if (chargeTimer.get() >= Calibration.MIN_CHARGE_TIME) {
+				shooterReady.update(true);
+			}
+		}
+
+		@Override
+		public void end() {
+			chargeTimer.stop();
+			chargeTimer.reset();
+			wheel_top.stopMotor();
+			wheel_mid.stopMotor();
+			shooterReady.update(false);
+		}
+	}
+
+	// `synchronized` not quite necessary without PIDControllers
+	// Leaving this here in case switch to PID is necessary
+
+	public synchronized void resetSensors() {
+		encoder_top.reset();
+		encoder_mid.reset();
+	}
+
+	public Shooter() {
+		super(Shooter.class);
+		setDefaultAction(idle);
+		wheelTopA.setInverted(true);
+		wheelMid.setInverted(true);
+	}
 }

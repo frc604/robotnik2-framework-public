@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 public class Drive extends Module {
-    // WARNING: CONFLICTS WITH Climber!
     private final RobotDrive robotDrive = new RobotDrive(
             Ports.DRIVE_FRONT_LEFT_MOTOR,
             Ports.DRIVE_REAR_LEFT_MOTOR,
@@ -29,6 +28,12 @@ public class Drive extends Module {
             CounterBase.EncodingType.k4X);
     
     private final AnalogGyro horizGyro=new AnalogGyro(Ports.HORIZGYRO);
+    
+    public synchronized void resetSensors() {
+        encoderLeft.reset();
+        encoderRight.reset();
+        horizGyro.reset();
+    }
 
     public final Output<Double> gyroAngle = addOutput("gyroAngle",horizGyro::getAngle);
     public final Output<Integer> leftClicks = addOutput("leftClicks", encoderLeft::get);
@@ -53,40 +58,62 @@ public class Drive extends Module {
     public class TankDrive extends Action {
         public final Input<Double> leftPower;
         public final Input<Double> rightPower;
+        public final boolean squared;
 
         public TankDrive () {
-            this(0, 0);
+            this(0, 0, true);
+        }
+        
+        public TankDrive (boolean squared) {
+            this(0, 0, squared);
         }
 
         public TankDrive (double defaultLeftPower, double defaultRightPower) {
+            this(defaultLeftPower, defaultRightPower, true);
+        }
+
+        public TankDrive (double defaultLeftPower, double defaultRightPower, boolean squared) {
             super(Drive.this, TankDrive.class);
-            leftPower = addInput("leftPower", defaultLeftPower);
-            rightPower = addInput("rightPower", defaultRightPower);
+            // Make these inputs persistent for auton code
+            leftPower = addInput("leftPower", defaultLeftPower, true);
+            rightPower = addInput("rightPower", defaultRightPower, true);
+            this.squared = squared; 
         }
 
         @Override
         public void run () {
-            robotDrive.tankDrive(leftPower.get(), rightPower.get());
+            robotDrive.tankDrive(leftPower.get(), rightPower.get(), squared);
         }
     }
 
     public class ArcadeDrive extends Action {
         public final Input<Double> movePower;
         public final Input<Double> rotatePower;
+        public final boolean squared;
 
         public ArcadeDrive () {
-            this(0, 0);
+            this(0, 0, true);
+        }
+        
+        public ArcadeDrive (boolean squared) {
+            this(0, 0, squared);
         }
 
-        public ArcadeDrive (double defaultLeftPower, double defaultRightPower) {
+        public ArcadeDrive (double defaultMovePower, double defaultRotPower) {
+            this(defaultMovePower, defaultRotPower, true);
+        }
+
+        public ArcadeDrive (double defaultMovePower, double defaultRotPower, boolean squared) {
             super(Drive.this, ArcadeDrive.class);
-            movePower = addInput("movePower", 0d);
-            rotatePower = addInput("rotatePower", 0d);
+            // Make these inputs persistent for auton code
+            movePower = addInput("movePower", defaultMovePower, true);
+            rotatePower = addInput("rotatePower", defaultRotPower, true);
+            this.squared = squared;
         }
 
         @Override
         public void run () {
-            robotDrive.arcadeDrive(movePower.get(), rotatePower.get());
+            robotDrive.arcadeDrive(movePower.get(), rotatePower.get(), squared);
         }
     }
 

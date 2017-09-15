@@ -23,13 +23,28 @@ public class Dashboard extends DashboardModule {
 
     public final Output<Boolean> driveOn = addDashboardOutput("driveOn", true);
 
+    public final Input<Double> topRate = addDashboardInput("Top Rate", 0D);
+    public final Input<Double> midRate = addDashboardInput("Mid Rate", 0D);
+    public final Input<Boolean> isCharged = addDashboardInput("Is Charged", false);
+    
+    public final Output<Double> PIDMoveError = addDashboardOutput("PID Move Error",0.0);
+    public final Output<Double> PIDRotateError = addDashboardOutput("PID Rotate Error",0.0);
+    
     public enum AutonMode {
-        OFF,
+    	OFF,
         MIDDLE,
         BLUE_LEFT,
         BLUE_RIGHT,
         RED_LEFT,
-        RED_RIGHT
+        RED_RIGHT,
+        ROTATE_LEFT_360,
+        ROTATE_RIGHT_360,
+        FORWARD_6,
+        BACKWARD_6,
+        DEMO_NEW_AUTON,
+        ROTATE_LEFT_FULL,
+        FORWARD_TEST,
+        SHOOTER_DEMO
     }
     
     public enum DriveMode {
@@ -81,16 +96,6 @@ public class Dashboard extends DashboardModule {
             addDashboardOutput("redRightAutonDriveForwardClicks", Calibration.RED_RIGHT_AUTON_DRIVE_FORWARD_CLICKS);
     public final Output<Double> redRightAutonTurnToFacePegAngle =
             addDashboardOutput("redRightAutonTurnToFacePegAngle", Calibration.RED_RIGHT_AUTON_TURN_TO_FACE_PEG_ANGLE);
-    
-    // THEORETICAL
-    public final Output<Double> shooterTarget =
-            addDashboardOutput("Shooter Target Speed", Calibration.SHOOTER_TARGET);
-    public final Output<Boolean> sharp =
-            addDashboardOutput("Sharp Algorithm", false);
-    public final Input<Double> shooterSpeed =
-            addDashboardInput("Shooter Speed", 0.0);
-    public final Input<Double> shooterPower =
-            addDashboardInput("Shooter Calc Power", 0.0);
 
     public Dashboard () {
         super(Dashboard.class);

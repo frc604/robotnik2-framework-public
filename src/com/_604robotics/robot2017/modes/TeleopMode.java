@@ -4,8 +4,8 @@ import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robot2017.constants.Calibration;
 import com._604robotics.robot2017.modules.Climber;
 import com._604robotics.robot2017.modules.Drive;
+import com._604robotics.robot2017.modules.Loader;
 import com._604robotics.robot2017.modules.Shooter;
-import com._604robotics.robot2017.modules.Shooter.RawShootAction;
 import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
 import com._604robotics.robotnik.prefabs.flow.SmartTimer;
@@ -13,6 +13,7 @@ import com._604robotics.robotnik.prefabs.flow.Toggle;
 
 public class TeleopMode extends Coordinator {
     private final XboxController driver = new XboxController(0);
+    private final XboxController manip = new XboxController(1);
 
     private final Robot2017 robot;
 
@@ -20,8 +21,9 @@ public class TeleopMode extends Coordinator {
     private final SignalLightManager signalLightManager;
     private final PickupManager pickupManager;
     private final DriveManager driveManager;
-    //private final ShooterManager shootManager;
-
+    private final ShooterManager shooterManager;
+    private final LoaderManager loaderManager;
+    
     public TeleopMode (Robot2017 robot) {
         driver.leftStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
         driver.leftStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
@@ -35,13 +37,26 @@ public class TeleopMode extends Coordinator {
         driver.rightStick.x.setFactor(Calibration.TELEOP_FACTOR);
         driver.rightStick.y.setFactor(Calibration.TELEOP_FACTOR);
 
+        manip.leftStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
+        manip.leftStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
+
+        manip.leftStick.x.setFactor(Calibration.TELEOP_FACTOR);
+        manip.leftStick.y.setFactor(Calibration.TELEOP_FACTOR);
+
+        manip.rightStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
+        manip.rightStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
+
+        manip.rightStick.x.setFactor(Calibration.TELEOP_FACTOR);
+        manip.rightStick.y.setFactor(Calibration.TELEOP_FACTOR);
+        
         this.robot = robot;
 
         climberManager = new ClimberManager();
         signalLightManager = new SignalLightManager();
         pickupManager = new PickupManager();
         driveManager = new DriveManager();
-        //shootManager = new ShooterManager();
+        shooterManager = new ShooterManager();
+        loaderManager = new LoaderManager();
     }
 
     @Override
@@ -50,7 +65,8 @@ public class TeleopMode extends Coordinator {
         signalLightManager.run();
         pickupManager.run();
         driveManager.run();
-        //shootManager.run();
+        shooterManager.run();
+        loaderManager.run();
         return true;
     }
 
@@ -70,23 +86,46 @@ public class TeleopMode extends Coordinator {
     }
 
 
-    private class ShooterManager {
-        private final Shooter.ShootAction shoot;
-        private RawShootAction rawShoot;
-
-        public ShooterManager () {
-            shoot = robot.shooter.new ShootAction();
-            rawShoot = robot.shooter.new RawShootAction();
+    public class ShooterManager {
+    	private final Shooter.Idle shooterIdle;
+        private final Shooter.ShooterStartup shooterStartup;
+        
+        public ShooterManager() {
+        	shooterIdle = robot.shooter.new Idle();
+            shooterStartup = robot.shooter.new ShooterStartup();
         }
+        
+        public void run() {
+        	double manipLT = manip.triggers.left.get();      
+        	boolean manipLB = manip.buttons.lb.get();
+        	if( manipLT > 0 ) {
+                shooterStartup.motorSpeed.set(manipLT);
+                shooterStartup.maximumOverdrive.set(manipLB);
+                shooterStartup.activate();
+        	} else {
+        		shooterIdle.activate();
+        	}
+        }
+    }
+    
+    public class LoaderManager {
+    	private final Loader.Idle loaderIdle;
+        private final Loader.Load load;
+        
+        public LoaderManager() {
+        	loaderIdle = robot.loader.new Idle();
+            load = robot.loader.new Load();
+        }
+        
+        public void run() {
+            boolean manipRB = manip.buttons.rb.get();
 
-        public void run () {
-            // TODO: REBIND
-            if (driver.buttons.back.get()) {
-                shoot.activate();
-            } else if (false) {
-                // TODO: bind to an Xbox controller value
-                robot.shooter.rawPower.set(0D);
-                rawShoot.activate();
+            if( manipRB )
+            {
+            	load.on.set(manipRB);
+            	load.activate();
+            } else {
+            	loaderIdle.activate();
             }
         }
     }

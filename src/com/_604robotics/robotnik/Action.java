@@ -37,6 +37,10 @@ public abstract class Action {
     }
 
     protected <T> Input<T> addInput (String name, T defaultValue) {
+        // Only one synchronized method call: no need to synchronize this
+        return addInput(name, defaultValue, false);
+    }
+    synchronized protected <T> Input<T> addInput (String name, T defaultValue, boolean persistent) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Input names may not be empty");
         }
@@ -44,13 +48,13 @@ public abstract class Action {
             throw new IllegalArgumentException("Input names may not contain commas");
         }
 
-        final Input<T> input = new Input<>(parent, name, defaultValue);
+        final Input<T> input = new Input<>(parent, name, defaultValue, persistent);
         inputs.add(input);
         inputListValue = inputListValue.isEmpty() ? input.getName() : inputListValue + "," + input.getName();
         return input;
     }
 
-    protected <T> Output<T> addOutput (String name, Output<T> output) {
+    synchronized protected <T> Output<T> addOutput (String name, Output<T> output) {
         if (name.isEmpty()) {
             throw new IllegalArgumentException("Output names may not be empty");
         }
@@ -74,13 +78,19 @@ public abstract class Action {
         activeActionTable.putString("outputList", outputListValue);
     }
 
-    void updateInputs (ITable activeActionInputsTable) {
+    synchronized void updateInputs (ITable activeActionInputsTable) {
         for (@SuppressWarnings("rawtypes") Input input : inputs) {
-            activeActionInputsTable.putValue(input.getName(), input.get());
+            Object res=input.get();
+            if (res==null) {
+                System.err.println("Got null input.get!");
+                System.err.println("Input name is "+input.getName());
+            } else {
+                activeActionInputsTable.putValue(input.getName(), res);
+            }
         }
     }
 
-    void updateOutputs (ITable activeActionOutputsTable) {
+    synchronized void updateOutputs (ITable activeActionOutputsTable) {
         for (@SuppressWarnings("rawtypes") OutputProxy output : outputs) {
             Reliability.swallowThrowables(output::update,
                     "Error updating output " + output.getName() + " of action " + getName());
@@ -88,7 +98,7 @@ public abstract class Action {
         }
     }
 
-    void initiate () {
+    synchronized void initiate () {
         running = true;
         begin();
     }
