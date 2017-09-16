@@ -24,6 +24,8 @@ public class TeleopMode extends Coordinator {
     private final ShooterManager shooterManager;
     private final LoaderManager loaderManager;
     
+    
+    
     public TeleopMode (Robot2017 robot) {
         driver.leftStick.x.setDeadband(Calibration.TELEOP_DEADBAND);
         driver.leftStick.y.setDeadband(Calibration.TELEOP_DEADBAND);
@@ -167,6 +169,7 @@ public class TeleopMode extends Coordinator {
             double rightY=driver.rightStick.y.get();
             // Flip values if xbox inverted
             inverted.update(driver.buttons.rb.get());
+            robot.dashboard.XboxFlipped.set(inverted.isInOnState());
             if (inverted.isInOnState()) {
                 leftY*=-1;
                 rightY*=-1;

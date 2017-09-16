@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Victor;
 public class Loader extends Module {
 	
 	private final MultiOutput wheel_bot = new MultiOutput(new Victor(Ports.WHEEL_BOT));
-//	private final MultiOutput belt = new MultiOutput(new Victor(Ports.BELT));
+	private final MultiOutput belt = new MultiOutput(new Victor(Ports.BELT));
 	
 	private final Action idle = new Idle();
 	private final Action load = new Load();
@@ -25,7 +25,7 @@ public class Loader extends Module {
         @Override
         public void run () {
         	wheel_bot.stopMotor();
-//        	belt.stopMotor();
+        	belt.stopMotor();
         }
     }
 	
@@ -42,14 +42,16 @@ public class Loader extends Module {
 		
 		@Override
 		public void run() {
-			wheel_bot.set(Calibration.WHEEL_BOT_SPEED);
-//			belt.set(Calibration.BELT_SPEED);
+			if( on.get() ) {
+				wheel_bot.set(Calibration.WHEEL_BOT_SPEED);
+				belt.set(Calibration.BELT_SPEED);
+			}
 		}
 		
 		@Override
 		public void end() {
 			wheel_bot.stopMotor();
-//			belt.stopMotor();
+			belt.stopMotor();
 		}
 	}
 	

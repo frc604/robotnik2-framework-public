@@ -24,11 +24,12 @@ public class Dashboard extends DashboardModule {
     public final Output<Boolean> driveOn = addDashboardOutput("driveOn", true);
 
     public final Input<Double> topRate = addDashboardInput("Top Rate", 0D);
-    public final Input<Double> midRate = addDashboardInput("Mid Rate", 0D);
     public final Input<Boolean> isCharged = addDashboardInput("Is Charged", false);
     
     public final Output<Double> PIDMoveError = addDashboardOutput("PID Move Error",0.0);
     public final Output<Double> PIDRotateError = addDashboardOutput("PID Rotate Error",0.0);
+    
+    public final Input<Boolean> XboxFlipped = addDashboardInput("XboxFlipped", false);
     
     public enum AutonMode {
     	OFF,

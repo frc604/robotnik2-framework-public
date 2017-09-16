@@ -28,13 +28,9 @@ public class Shooter extends Module {
 	private final MultiOutput wheel_top = new MultiOutput(wheel_top_a, wheel_top_b);
 	private final MultiOutput wheel_mid = new MultiOutput(wheelMid);
 
-	private final TalonPWMEncoder encoder_top = new TalonPWMEncoder(wheel_top_b);
-
-	private final Encoder encoder_mid = new Encoder(Ports.ENCODER_SHOOTER_MID_A, Ports.ENCODER_SHOOTER_MID_B, false,
-			CounterBase.EncodingType.k4X);
+	private final TalonPWMEncoder encoder_top = new TalonPWMEncoder(wheel_top_a);
 
 	public final Output<Double> topRate = addOutput("Top Rate", encoder_top::getVelocity);
-	public final Output<Double> midRate = addOutput("Mid Rate", encoder_mid::getRate);
 	public final Output<Boolean> isCharged = addOutput("Is Charged", shooterReady::isHigh);
 
 	private final Timer chargeTimer = new Timer();
@@ -85,34 +81,20 @@ public class Shooter extends Module {
 		@Override
 		public void run() {
 			if (Math.abs(Calibration.SHOOTER_TOP_RATE_TARGET
-					- encoder_top.getRate()) >= Calibration.SHOOTER_TOP_RATE_THRESHOLD) {
+					- encoder_top.getVelocity()) >= Calibration.SHOOTER_TOP_RATE_THRESHOLD) {
 				chargeTimer.reset();
 				shooterReady.update(false);
 			}
 
-			if (encoder_top.getRate() >= Calibration.SHOOTER_TOP_RATE_TARGET + Calibration.SHOOTER_TOP_RATE_THRESHOLD) {
+			if (encoder_top.getVelocity() >= Calibration.SHOOTER_TOP_RATE_TARGET + Calibration.SHOOTER_TOP_RATE_THRESHOLD) {
 				wheel_top.stopMotor();
-			} else {
-				double speed = motorSpeed.get()*Calibration.TOP_WHEEL_SPEED_LIMITER;
-				if( maximumOverdrive.get() && motorSpeed.get() > 0 ) {
-					speed *= 10/7;
-				}
-				wheel_top.set(speed);
-			}
-
-			if (Math.abs(Calibration.SHOOTER_MID_RATE_TARGET
-					- encoder_mid.getRate()) >= Calibration.SHOOTER_MID_RATE_THRESHOLD) {
-				chargeTimer.reset();
-				shooterReady.update(false);
-			}
-
-			if (encoder_mid.getRate() >= Calibration.SHOOTER_MID_RATE_TARGET + Calibration.SHOOTER_MID_RATE_THRESHOLD) {
 				wheel_mid.stopMotor();
 			} else {
 				double speed = motorSpeed.get()*Calibration.TOP_WHEEL_SPEED_LIMITER;
 				if( maximumOverdrive.get() && motorSpeed.get() > 0 ) {
 					speed *= 10/7;
 				}
+				wheel_top.set(speed);
 				wheel_mid.set(speed);
 			}
 

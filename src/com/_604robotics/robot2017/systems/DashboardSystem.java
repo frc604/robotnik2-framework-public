@@ -22,8 +22,8 @@ public class DashboardSystem extends Coordinator {
         robot.dashboard.gyroAngle.set(robot.drive.gyroAngle.get());
         robot.dashboard.totalCurrent.set(PowerMonitor.totalPortCurrent.get());
         robot.dashboard.topRate.set(robot.shooter.topRate.get());
-        robot.dashboard.midRate.set(robot.shooter.midRate.get());
         robot.dashboard.isCharged.set(robot.shooter.isCharged.get());
+        
         return true;
     }
 }
