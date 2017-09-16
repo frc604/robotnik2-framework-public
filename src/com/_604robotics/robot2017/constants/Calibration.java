@@ -31,6 +31,10 @@ public class Calibration {
     
     public static final AutonMovement.DriveTrainProperties DRIVE_PROPERTIES
     = new AutonMovement.DriveTrainProperties(490, 29.5, 2, 20.767, 8.323); // second to last = coefficient second value = offset
+    static {
+    	System.out.println("Clicks over inches is "+DRIVE_PROPERTIES.getClicksOverInches());
+    	System.out.println("Clicks over degrees is "+DRIVE_PROPERTIES.getDegreesOverClicks());
+    }
     public static final double DRIVE_ROTATE_LEFT_TARGET
     = AutonMovement.degreesToClicks(DRIVE_PROPERTIES, 360);
     public static final double DRIVE_ROTATE_RIGHT_TARGET

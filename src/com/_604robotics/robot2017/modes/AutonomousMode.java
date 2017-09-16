@@ -419,37 +419,30 @@ public class AutonomousMode extends Coordinator {
         public MiddleAutonModeMacro () {
             super(MiddleAutonModeMacro.class);
 
-            addState("driveForward", new TimedDriveMacro(robot) {
-                @Override
-                protected double getLeftPower () { return robot.dashboard.middleAutonDriveForwardLeftPower.get(); }
-                @Override
-                protected double getRightPower () { return robot.dashboard.middleAutonDriveForwardRightPower.get(); }
-                @Override
-                protected double getTime () { return robot.dashboard.middleAutonDriveForwardTime.get(); }
-            });
+//            addState("driveForward", new TimedDriveMacro(robot) {
+//                @Override
+//                protected double getLeftPower () { return robot.dashboard.middleAutonDriveForwardLeftPower.get(); }
+//                @Override
+//                protected double getRightPower () { return robot.dashboard.middleAutonDriveForwardRightPower.get(); }
+//                @Override
+//                protected double getTime () { return robot.dashboard.middleAutonDriveForwardTime.get(); }
+//            });
+            // Continues forward to cross the baseline without crossing midline
+            addState("driveForward", new ArcadePIDCoordinator(AutonMovement.inchesToClicks(Calibration.DRIVE_PROPERTIES, 85),// was 12*8-3
+            		AutonMovement.degreesToClicks(Calibration.DRIVE_PROPERTIES, 2.5)));
         }
     }
 
     private abstract class SideAutonModeMacro extends StatefulCoordinator {
         public SideAutonModeMacro (String name) {
             super(name);
+            addState("Forward", new ArcadePIDCoordinator(AutonMovement.empericalInchesToClicks(Calibration.DRIVE_PROPERTIES, 12*12), 0));
+    		addState("Sleep 0.25 seconds", new SleepCoordinator(0.25));
+    		addState("Rotate Left", new ArcadePIDCoordinator(0,AutonMovement.degreesToClicks(Calibration.DRIVE_PROPERTIES, 60)));
+    		addState("Sleep 0.25 seconds again", new SleepCoordinator(0.25));
+    		addState("Forward Again", new ArcadePIDCoordinator(AutonMovement.empericalInchesToClicks(Calibration.DRIVE_PROPERTIES, 12*12), 0));
 
-            addState("driveForward", new Coordinator() {
-                // TODO: Fill me in!
-            });
-
-            addState("turnToFacePeg", new Coordinator() {
-                // TODO: Fill me in!
-            });
-
-            addState("driveToPeg", new TimedDriveMacro(robot) {
-                @Override
-                protected double getLeftPower () { return robot.dashboard.sideAutonDriveToPegLeftPower.get(); }
-                @Override
-                protected double getRightPower () { return robot.dashboard.sideAutonDriveToPegRightPower.get(); }
-                @Override
-                protected double getTime () { return robot.dashboard.sideAutonDriveToPegTime.get(); }
-            });
+            
         }
 
         protected abstract double getDriveForwardClicks ();
