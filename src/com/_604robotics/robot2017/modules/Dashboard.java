@@ -29,7 +29,8 @@ public class Dashboard extends DashboardModule {
     public final Output<Double> PIDMoveError = addDashboardOutput("PID Move Error",0.0);
     public final Output<Double> PIDRotateError = addDashboardOutput("PID Rotate Error",0.0);
     
-    public final Input<Boolean> XboxFlipped = addDashboardInput("XboxFlipped", false);
+    public final Input<Boolean> XboxFlipped = addDashboardInput("Xbox Flipped", false);
+    public final Input<Boolean> gearDetected = addDashboardInput("Gear Detected", false);
     
     public enum AutonMode {
     	OFF,

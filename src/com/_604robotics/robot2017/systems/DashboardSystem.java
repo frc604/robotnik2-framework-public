@@ -23,6 +23,7 @@ public class DashboardSystem extends Coordinator {
         robot.dashboard.totalCurrent.set(PowerMonitor.totalPortCurrent.get());
         robot.dashboard.topRate.set(robot.shooter.topRate.get());
         robot.dashboard.isCharged.set(robot.shooter.isCharged.get());
+        robot.dashboard.gearDetected.set(robot.intake.gearDetected.get());
         
         return true;
     }
