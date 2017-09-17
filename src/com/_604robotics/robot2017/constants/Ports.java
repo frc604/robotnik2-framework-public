@@ -9,21 +9,21 @@ public class Ports {
     public static final int DRIVE_REAR_LEFT_MOTOR = 5;
     public static final int DRIVE_FRONT_RIGHT_MOTOR = 0; // 0 OR 9 reverse
     public static final int DRIVE_REAR_RIGHT_MOTOR = 9; // 0 OR 9 reverse
-	public static final int CLIMBER_MOTOR = 8;
+	public static final int CLIMBER_MOTOR = 8;																																																																																				
     public static final int INTAKE_LEFT_MOTOR = 4;
-    public static final int INTAKE_RIGHT_MOTOR = 3;
+    public static final int INTAKE_RIGHT_MOTOR = 6;
   
     // Shooter
-    public static final int WHEEL_MID = 1;
-    public static final int WHEEL_BOT = 6;
-    public static final int BELT = 2; // not plugged in
+    public static final int WHEEL_MID = 2;
+    public static final int WHEEL_BOT = 3;
+    public static final int BELT = 1; // not plugged in
     
     // Relays
 	// AZ change these to real
     public static final int SIGNAL_LIGHT_RELAY = 2;
 
     // Solenoids
-    // check these: one of 7, 4
+    // check these: one of 0, 6
     public static final int SHIFTER_FORWARD = 0;
 	public static final int SHIFTER_REVERSE = 6;
 	// 4 and 7: may switch

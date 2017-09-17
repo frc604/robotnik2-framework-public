@@ -46,7 +46,8 @@ public class Intake extends Module {
 
         @Override
         protected void run () {
-            motors.set(power.get() * polarity);
+            motors.set(Calibration.INTAKE_POWER * polarity);
+            //System.out.println(Calibration.INTAKE_POWER*polarity);
         }
 
         @Override
@@ -60,5 +61,6 @@ public class Intake extends Module {
 
     public Intake () {
         super(Intake.class);
+        setDefaultAction(idle);
     }
 }

@@ -12,6 +12,8 @@ import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 import com._604robotics.robotnik.prefabs.flow.Toggle;
 
 public class TeleopMode extends Coordinator {
+	private boolean started = false;
+	
     private final XboxController driver = new XboxController(0);
     private final XboxController manip = new XboxController(1);
 
@@ -240,7 +242,6 @@ public class TeleopMode extends Coordinator {
     private class PickupManager {
         private boolean extend = false;
         private IntakeState intakeState = IntakeState.IDLE;
-        private IntakeState prevState = IntakeState.IDLE;
         private SmartTimer retractSpinTimer = new SmartTimer();
 
         public void run () {
@@ -260,18 +261,24 @@ public class TeleopMode extends Coordinator {
             if (driver.buttons.b.get()) {
                 intakeState = IntakeState.FORWARD_SPIT;
             }
-
+            if( !retractSpinTimer.isRunning() && !started ) {
+            	retractSpinTimer.start();
+            } else if( retractSpinTimer.hasPeriodPassed(1D) && !started ) {
+            	started = true;
+            }
             if (extend) {
                 robot.flipFlop.extend.activate();
+                retractSpinTimer.stopAndReset();
             } else {
                 robot.flipFlop.retract.activate();
-//                if (intakeState == IntakeState.IDLE && prevState != IntakeState.IDLE) {
-//                    retractSpinTimer.stopAndReset();
-//                    retractSpinTimer.start();
-//                }
-//                if (!retractSpinTimer.hasPeriodPassed(1)) {
-//                    intakeState = IntakeState.REVERSE_SUCK;
-//                }
+                intakeState = IntakeState.IDLE;
+                
+                if (!retractSpinTimer.isRunning() && started) {
+                	retractSpinTimer.start();
+                	intakeState = IntakeState.REVERSE_SUCK;
+                } else if( retractSpinTimer.hasPeriodPassed(1D) ) {
+                	intakeState = IntakeState.IDLE;
+                }
             }
 
             switch (intakeState) {
@@ -285,7 +292,6 @@ public class TeleopMode extends Coordinator {
                     robot.intake.idle.activate();
                     break;
             }
-            prevState = intakeState;
         }
     }
 }

@@ -28,15 +28,15 @@ public class Drive extends Module {
             false,
             CounterBase.EncodingType.k4X);
     
-    private final AnalogGyro horizGyro=new AnalogGyro(Ports.HORIZGYRO);
+    //private final AnalogGyro horizGyro=new AnalogGyro(Ports.HORIZGYRO);
     
     public synchronized void resetSensors() {
         encoderLeft.reset();
         encoderRight.reset();
-        horizGyro.reset();
+        //horizGyro.reset();
     }
 
-    public final Output<Double> gyroAngle = addOutput("gyroAngle",horizGyro::getAngle);
+    //public final Output<Double> gyroAngle = addOutput("gyroAngle",horizGyro::getAngle);
     public final Output<Integer> leftClicks = addOutput("leftClicks", encoderLeft::get);
     public final Output<Integer> rightClicks = addOutput("rightClicks", encoderRight::get);
     
@@ -120,7 +120,7 @@ public class Drive extends Module {
 
     public Drive () {
         super(Drive.class);
-        horizGyro.calibrate();
+        //horizGyro.calibrate();
         setDefaultAction(idle);
     }
 }

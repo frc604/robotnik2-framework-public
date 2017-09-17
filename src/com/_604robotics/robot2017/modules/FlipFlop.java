@@ -6,10 +6,16 @@ import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
+import com._604robotics.robotnik.prefabs.devices.MultiOutput;
 import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Victor;
 
 public class FlipFlop extends Module {
+	/*private final MultiOutput motors = new MultiOutput(
+            new Victor(Ports.INTAKE_LEFT_MOTOR),
+            new Victor(Ports.INTAKE_RIGHT_MOTOR){{setInverted(true);}});
+	*/
     private final DoubleSolenoid piston =
             new DoubleSolenoid(Ports.FLIP_FLOP_EXTEND_SOLENOID, Ports.FLIP_FLOP_RETRACT_SOLENOID);
 
@@ -31,8 +37,13 @@ public class FlipFlop extends Module {
         protected void begin () {
             timer.start();
             piston.set(DoubleSolenoid.Value.kReverse);
-        }
+        }/*
 
+        @Override
+        protected void run() {
+        	motors.stopMotor();
+        }*/
+        
         @Override
         protected void end () {
             timer.stopAndReset();
@@ -56,6 +67,11 @@ public class FlipFlop extends Module {
             timer.start();
             piston.set(DoubleSolenoid.Value.kForward);
         }
+/*
+        @Override
+        protected void run () {
+        	robo
+        }*/
 
         @Override
         protected void end () {
