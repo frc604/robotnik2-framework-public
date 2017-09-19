@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.prefabs.utils;
+package com._604robotics.robotnik.prefabs.coordinators;
 
 import com._604robotics.robotnik.Coordinator;
 import com._604robotics.robotnik.prefabs.flow.SmartTimer;
