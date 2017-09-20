@@ -1,7 +1,5 @@
 package com._604robotics.robotnik;
 
-import java.util.regex.Pattern;
-
 class OutputProxy<T> implements Output<T> {
     private final String name;
     private final Output<T> source;
@@ -22,11 +20,11 @@ class OutputProxy<T> implements Output<T> {
 
 
     @Override
-    public T get () {
+    public synchronized T get () {
         return value;
     }
 
-    void update () {
+    synchronized void update () {
         value = source.get();
     }
 }
