@@ -30,6 +30,15 @@ public class SmartTimer extends Timer {
         stop();
         reset();
     }
+    
+    /**
+     * Method that restarts the timer in one function call.
+     */
+    public void restart () {
+        stop();
+        reset();
+        start();
+    }
 
     /**
      * Method that determines whether the timer has passed a certain time.
