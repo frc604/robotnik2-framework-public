@@ -46,13 +46,15 @@ public class Logger {
      * @param message the message to log in $message above
      */
     public void log (String level, String message) {
-        System.out.println(
-                "* [Boot Time: " + bootTimer.get() +
-                "]\t[Match Time: " + DriverStation.getInstance().getMatchTime() +
-                "]\n- [" + level +
-                "]\t[" + name +
-                "]\t" + message +
-                "\n");
+        synchronized(System.out){
+            System.out.println(
+                    "* [Boot Time: " + bootTimer.get() +
+                    "]\t[Match Time: " + DriverStation.getInstance().getMatchTime() +
+                    "]\n- [" + level +
+                    "]\t[" + name +
+                    "]\t" + message +
+                    "\n");
+        }
     }
 
     /**
