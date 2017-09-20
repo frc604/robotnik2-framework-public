@@ -2,7 +2,6 @@ package com._604robotics.robot2017.systems;
 
 import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robotnik.Coordinator;
-import com._604robotics.robotnik.prefabs.modules.PowerMonitor;
 
 public class DashboardSystem extends Coordinator {
     private final Robot2017 robot;
@@ -20,7 +19,7 @@ public class DashboardSystem extends Coordinator {
         robot.dashboard.leftDriveRate.set(robot.drive.leftClickRate.get());
         robot.dashboard.rightDriveRate.set(robot.drive.rightClickRate.get());
         //robot.dashboard.gyroAngle.set(robot.drive.gyroAngle.get());
-        robot.dashboard.totalCurrent.set(PowerMonitor.totalPortCurrent.get());
+        robot.dashboard.totalCurrent.set(robot.powerMonitor.totalPortCurrent.get());
         robot.dashboard.topRate.set(robot.shooter.topRate.get());
         robot.dashboard.isCharged.set(robot.shooter.isCharged.get());
         robot.dashboard.gearDetected.set(robot.intake.gearDetected.get());
