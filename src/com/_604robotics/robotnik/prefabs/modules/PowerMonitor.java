@@ -83,9 +83,13 @@ public class PowerMonitor extends Module {
         iterTimer.stopAndReset();
         monThread.stopRun();
         try {
-            monThread.wait(25);
+            monThread.join(30);
         } catch (InterruptedException e) {
             // Do nothing
+        }
+        if (monThread.isAlive()) {
+            theLogger.log("WARN", "Power Monitor Thread did not finish in 30 ms. Terminating thread");
+            monThread.stop();
         }
     }
 
