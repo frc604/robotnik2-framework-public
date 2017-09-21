@@ -31,6 +31,8 @@ public class PowerMonitor extends Module {
                                            20, 20, 20, 20,
                                            40, 40, 40, 40};
 
+    public static double voltageLimit = 8;
+
     static {
         for (int i = 0; i < currentLimit.length; i++) {
             currentLimit[i] *= 0.8;
@@ -96,6 +98,8 @@ public class PowerMonitor extends Module {
     private class MonitorThread extends Thread {
         private boolean keepRunning=true;
         private SmartTimer [] timerArray = new SmartTimer[NUM_CURRENT_PORTS];
+        private SmartTimer voltageTimer = new SmartTimer();
+        private Pulse voltagePulse = new Pulse();
         private Pulse [] pulseArray = new Pulse[NUM_CURRENT_PORTS];
 
         public void stopRun() {
@@ -109,9 +113,13 @@ public class PowerMonitor extends Module {
             for (SmartTimer timer : timerArray) {
                 timer.stopAndReset();
             }
+            voltageTimer.stopAndReset();
             for (Pulse pulse : pulseArray) {
                 pulse.update(false);
             }
+            voltagePulse.update(false);
+            
+            // Main monitor loop
             while (keepRunning && !isInterrupted()) {
                 for (int i=0;i<NUM_CURRENT_PORTS;i++) {
                     if (timerArray[i].isRunning()) {
@@ -119,6 +127,12 @@ public class PowerMonitor extends Module {
                             theLogger.log("WARN", "Excess current of "+currents[i].get()+" through PDP Port "+i+"!");
                             theLogger.log("WARN", "Excess has continued for "+timerArray[i].get()+" seconds.");
                         }
+                    }
+                }
+                if (voltageTimer.isRunning()) {
+                    if ((voltageTimer.get()%0.5)<0.001 && (voltageTimer.get()>0.4)) {
+                        theLogger.log("WARN", "Low voltage of "+batteryVoltage.get()+"V!");
+                        theLogger.log("WARN", "Voltage drop has continued for "+voltageTimer.get()+" seconds.");
                     }
                 }
                 Thread.yield();
@@ -136,6 +150,19 @@ public class PowerMonitor extends Module {
                             theLogger.log("WARN", "Excess current ended through PDP Port "+i+" after "+timerArray[i].get()+" seconds.");
                         }
                         timerArray[i].reset();
+                    }
+                }
+                if (batteryVoltage.get()<voltageLimit) {
+                    voltagePulse.update(true);
+                    voltageTimer.start();
+                    if (voltagePulse.isRisingEdge()) {
+                        theLogger.log("WARN", "Voltage has dropped below "+voltageLimit+"V!");
+                    }
+                } else {
+                    voltagePulse.update(false);
+                    voltageTimer.stop();
+                    if (voltagePulse.isFallingEdge()) {
+                        theLogger.log("WARN", "Voltage has risen above "+voltageLimit+"V!");
                     }
                 }
                 Thread.yield();
