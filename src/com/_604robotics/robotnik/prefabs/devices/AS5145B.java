@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 /**
  * A MA3A10 encoder.
  */
-public class AS5145B implements PIDSource {
+public class AS5145B implements PIDSource, AbsoluteEncoder {
     private static final double MAX_VOLTAGE = 6;
 
     private final AnalogInput input;
