@@ -44,7 +44,8 @@ public class AutonMovement {
 		 * @param clicksPerRot Encoder clicks per full rotation of wheel
 		 * @param width Width of the robot in inches (may need empirical calibration of +- 0.3 in)
 		 * @param wheelRadius Radius of robot wheels in inches
-		 * @param offset Offset of clicks for the robot
+		 * @param clicksPerInches Empirical clicks per inches ratio
+		 * @param offset Empirical offset of clicks for the robot
 		 */
 		public DriveTrainProperties(double clicksPerRot, double width, double wheelRadius, double clicksPerInches, double offset) {
 			this.clicksPerRot=clicksPerRot;

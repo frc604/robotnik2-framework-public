@@ -2,7 +2,7 @@ package com._604robotics.robotnik.prefabs.utils;
 
 /**
  * Utility class to perform Array arithmetic.
- * @see java.util.Array
+ * Also look at java.util.Array functionality.
  */
 public class ArrayMath
 {
