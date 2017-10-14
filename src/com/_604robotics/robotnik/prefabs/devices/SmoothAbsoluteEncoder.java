@@ -16,6 +16,16 @@ public class SmoothAbsoluteEncoder implements PIDSource {
     public void resetOffset() {
         offset = 0;
     }
+    
+    public void setZero() {
+        resetOffset();
+        source.setZero();
+    }
+    
+    public void setZero(double angle) {
+        resetOffset();
+        source.setZeroAngle(angle);
+    }
 
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {
