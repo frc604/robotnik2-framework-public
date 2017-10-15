@@ -6,8 +6,8 @@ import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
-import com._604robotics.robotnik.prefabs.devices.MultiOutput;
 import com._604robotics.robotnik.prefabs.devices.TalonPWMEncoder;
+import com._604robotics.robotnik.prefabs.devices.wrappers.MultiOutput;
 import com._604robotics.robotnik.prefabs.flow.Pulse;
 import com.ctre.CANTalon;
 

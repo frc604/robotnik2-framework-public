@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.prefabs.controller;
+package com._604robotics.robotnik.prefabs.inputcontroller;
 
 import edu.wpi.first.wpilibj.Joystick;
 

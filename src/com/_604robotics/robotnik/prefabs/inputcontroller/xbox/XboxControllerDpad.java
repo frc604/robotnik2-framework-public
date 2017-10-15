@@ -1,7 +1,8 @@
-package com._604robotics.robotnik.prefabs.controller.xbox;
+package com._604robotics.robotnik.prefabs.inputcontroller.xbox;
 
-import com._604robotics.robotnik.prefabs.controller.ControllerPOV;
-import com._604robotics.robotnik.prefabs.controller.ControllerPOVButton;
+import com._604robotics.robotnik.prefabs.inputcontroller.ControllerPOV;
+import com._604robotics.robotnik.prefabs.inputcontroller.ControllerPOVButton;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 /**

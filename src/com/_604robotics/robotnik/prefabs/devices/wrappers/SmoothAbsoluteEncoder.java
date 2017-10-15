@@ -1,4 +1,6 @@
-package com._604robotics.robotnik.prefabs.devices;
+package com._604robotics.robotnik.prefabs.devices.wrappers;
+
+import com._604robotics.robotnik.prefabs.devices.AbsoluteEncoder;
 
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;

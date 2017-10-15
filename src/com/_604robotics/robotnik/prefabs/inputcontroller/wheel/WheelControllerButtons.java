@@ -1,6 +1,7 @@
-package com._604robotics.robotnik.prefabs.controller.wheel;
+package com._604robotics.robotnik.prefabs.inputcontroller.wheel;
 
-import com._604robotics.robotnik.prefabs.controller.ControllerButton;
+import com._604robotics.robotnik.prefabs.inputcontroller.ControllerButton;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
