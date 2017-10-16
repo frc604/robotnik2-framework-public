@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="javadoc">
     <target name="javadoc">
-        <javadoc access="private" author="true" classpath="C:\Users\Ryan\wpilib\java\current\lib\NetworkTables.jar;C:\Users\Ryan\wpilib\java\current\lib\WPILib.jar;C:\Users\Ryan\wpilib\java\current\lib\WPILib-sources.jar;C:\Users\Ryan\wpilib\java\current\lib\NetworkTables-sources.jar;C:\Users\Ryan\wpilib\java\current\lib\opencv.jar;C:\Users\Ryan\wpilib\java\current\lib\cscore.jar" destdir="doc" doctitle="Robotnik2 Framework Documentation" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com._604robotics.robotnik.prefabs.controller,com._604robotics.robotnik.prefabs.flow,com._604robotics.robotnik.prefabs.modules,com._604robotics.robotnik.prefabs.utils,com._604robotics.robotnik.prefabs.controller.joystick,com._604robotics.robotnik.prefabs.controller.xbox,com._604robotics.robotnik.prefabs.devices,com._604robotics.robotnik.prefabs.coordinators,com._604robotics.robotnik.prefabs.controller.wheel,com._604robotics.robotnik" source="1.8" sourcepath="src" splitindex="true" use="true" version="true">
+        <javadoc access="private" author="true" classpath="${user.home}\wpilib\java\current\lib\NetworkTables.jar;${user.home}\wpilib\user\java\lib\CTRLib.jar;${user.home}\wpilib\java\current\lib\WPILib.jar;${user.home}\wpilib\java\current\lib\WPILib-sources.jar;${user.home}\wpilib\java\current\lib\NetworkTables-sources.jar;${user.home}\wpilib\java\current\lib\opencv.jar;${user.home}\wpilib\java\current\lib\cscore.jar" destdir="doc" doctitle="Robotnik2 Framework Documentation" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com._604robotics.robotnik.*,com._604robotics.robotnik" source="1.8" sourcepath="src" splitindex="true" use="true" version="true">
             <link href="http://first.wpi.edu/FRC/roborio/release/docs/java/"/>
+            <link href="http://www.ctr-electronics.com/downloads/api/java/html/"/>
         </javadoc>
     </target>
 </project>
