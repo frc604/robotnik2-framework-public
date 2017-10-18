@@ -1,7 +1,6 @@
 package com._604robotics.robotnik.prefabs.devices;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.PIDSourceType;
 
 /**
  * A MA3A10 encoder.
