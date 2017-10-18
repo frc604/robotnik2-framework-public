@@ -2,7 +2,7 @@ package com._604robotics.robot2017.modes;
 
 import com._604robotics.robot2017.Robot2017;
 import com._604robotics.robot2017.constants.Calibration;
-import com._604robotics.robot2017.macros.TimedDriveMacro;
+import com._604robotics.robot2017.macros.TankTimedDriveMacro;
 import com._604robotics.robot2017.modules.Drive;
 import com._604robotics.robot2017.modules.Loader;
 import com._604robotics.robot2017.modules.Shooter;

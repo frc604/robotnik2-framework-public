@@ -9,7 +9,7 @@ public class Ports {
     public static final int DRIVE_REAR_LEFT_MOTOR = 5;
     public static final int DRIVE_FRONT_RIGHT_MOTOR = 0; // 0 OR 9 reverse
     public static final int DRIVE_REAR_RIGHT_MOTOR = 9; // 0 OR 9 reverse
-	public static final int CLIMBER_MOTOR = 8;																																																																																				
+	public static final int CLIMBER_MOTOR = 8;
     public static final int INTAKE_LEFT_MOTOR = 4;
     public static final int INTAKE_RIGHT_MOTOR = 6;
   
