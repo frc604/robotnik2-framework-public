@@ -5,6 +5,13 @@ import com._604robotics.robotnik.prefabs.devices.AbsoluteEncoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 
+// UNTESTED
+//             _            _           _
+// _   _ _ __ | |_ ___  ___| |_ ___  __| |
+//| | | | '_ \| __/ _ \/ __| __/ _ \/ _` |
+//| |_| | | | | ||  __/\__ \ ||  __/ (_| |
+// \__,_|_| |_|\__\___||___/\__\___|\__,_|
+
 /**
  * <p>Subclass of PIDController that has a feedforward for rotating arms.</p>
  * This subclass requires an AbsoluteEncoder as the PIDSource and uses only continuous error.
