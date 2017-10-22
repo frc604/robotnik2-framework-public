@@ -9,6 +9,12 @@ import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
+//UNTESTED
+//             _            _           _
+// _   _ _ __ | |_ ___  ___| |_ ___  __| |
+//| | | | '_ \| __/ _ \/ __| __/ _ \/ _` |
+//| |_| | | | | ||  __/\__ \ ||  __/ (_| |
+// \__,_|_| |_|\__\___||___/\__\___|\__,_|
 public class PowerMonitor extends Module {
 
     private final PowerDistributionPanel panel;
