@@ -3,9 +3,10 @@ package com._604robotics.robotnik.prefabs.modules;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
+import com._604robotics.robotnik.utils.Pair;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com._604robotics.robotnik.prefabs.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.EnumSet;

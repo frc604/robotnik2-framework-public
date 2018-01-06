@@ -1,6 +1,6 @@
 package com._604robotics.robotnik.prefabs.controller;
 
-import com._604robotics.robotnik.prefabs.utils.annotations.Untested;
+import com._604robotics.robotnik.utils.annotations.Untested;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;

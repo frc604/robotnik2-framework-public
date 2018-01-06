@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.prefabs.utils;
+package com._604robotics.robotnik.utils;
 
 import java.util.ArrayDeque;
 import java.util.Iterator;
