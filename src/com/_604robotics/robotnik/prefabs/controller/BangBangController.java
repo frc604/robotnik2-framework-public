@@ -3,6 +3,8 @@ package com._604robotics.robotnik.prefabs.controller;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com._604robotics.robotnik.prefabs.utils.annotations.Untested;
+
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
  * This implementation uses PIDSource and PIDOutput interfaces for
  * compatibility.
  */
+@Deprecated @Untested("Needs to be tested with actual spinning wheel")
 public class BangBangController {
     private double threshold;
     private final double power;

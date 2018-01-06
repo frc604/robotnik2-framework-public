@@ -1,6 +1,7 @@
 package com._604robotics.robotnik.prefabs.controller;
 
 import com._604robotics.robotnik.prefabs.devices.AbsoluteEncoder;
+import com._604robotics.robotnik.prefabs.utils.annotations.Untested;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
  * This subclass requires an AbsoluteEncoder as the PIDSource and uses only continuous error.
  * Zero is assumed to be horizontal. Users are responsible for properly zeroing the AbsoluteEncoder beforehand.
  */
+@Deprecated @Untested("Math needs to be checked by constructing an actual arm")
 public class RotatingArmPIDController extends PIDController {
 
     public RotatingArmPIDController(double Kp, double Ki, double Kd, AbsoluteEncoder source, PIDOutput output) {

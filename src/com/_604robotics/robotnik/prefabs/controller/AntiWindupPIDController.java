@@ -1,12 +1,14 @@
 package com._604robotics.robotnik.prefabs.controller;
 
+import com._604robotics.robotnik.prefabs.utils.annotations.Untested;
+
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Timer;
 
-//UNTESTED (algorithm used previously on 2014 but port INCOMPLETE) 
+//Untested (algorithm used previously on 2014 but port INCOMPLETE) 
 //             _            _           _
 // _   _ _ __ | |_ ___  ___| |_ ___  __| |
 //| | | | '_ \| __/ _ \/ __| __/ _ \/ _` |
@@ -22,6 +24,7 @@ import edu.wpi.first.wpilibj.Timer;
  * will decay exponentially.
  * This prevents the integral term from becoming too large.
  */
+@Deprecated @Untested("Incomplete port from 2014 codebase")
 public class AntiWindupPIDController extends PIDController {
     private double m_A = 1;
     private double m_C = 1000;
@@ -30,6 +33,7 @@ public class AntiWindupPIDController extends PIDController {
     /**
      * {@inheritDoc}
      */
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Kd, PIDSource source, PIDOutput output) {
         super(Kp, Ki, Kd, source, output);
     }
@@ -37,6 +41,7 @@ public class AntiWindupPIDController extends PIDController {
     /**
      * {@inheritDoc}
      */
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Kd, PIDSource source, PIDOutput output, double period) {
         super(Kp, Ki, Kd, source, output, period);
     }
@@ -44,6 +49,7 @@ public class AntiWindupPIDController extends PIDController {
     /**
      * {@inheritDoc}
      */
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Kd, double Kf, PIDSource source, PIDOutput output) {
         super(Kp, Ki, Kd, Kf, source, output);
     }
@@ -51,12 +57,14 @@ public class AntiWindupPIDController extends PIDController {
     /**
      * {@inheritDoc}
      */
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Kd, double Kf, PIDSource source, PIDOutput output,
             double period) {
         super(Kp, Ki, Kd, Kf, source, output, period);
     }
 
     // Ka and Kc constructors
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Ka, double Kc, double Kd, PIDSource source,
             PIDOutput output) {
         super(Kp, Ki, Kd, source, output);
@@ -70,6 +78,7 @@ public class AntiWindupPIDController extends PIDController {
         m_C = Kc;
     }
 
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Ka, double Kc, double Kd, PIDSource source,
             PIDOutput output, double period) {
         super(Kp, Ki, Kd, source, output, period);
@@ -83,6 +92,7 @@ public class AntiWindupPIDController extends PIDController {
         m_C = Kc;
     }
 
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Ka, double Kc, double Kd, double Kf, PIDSource source,
             PIDOutput output) {
         super(Kp, Ki, Kd, Kf, source, output);
@@ -96,6 +106,7 @@ public class AntiWindupPIDController extends PIDController {
         m_C = Kc;
     }
 
+    @Untested("Incomplete port from 2014 codebase")
     public AntiWindupPIDController(double Kp, double Ki, double Ka, double Kc, double Kd, double Kf, PIDSource source,
             PIDOutput output, double period) {
         super(Kp, Ki, Kd, Kf, source, output, period);
