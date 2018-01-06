@@ -1,4 +1,4 @@
-package com._604robotics.robotnik.prefabs.devices;
+package com._604robotics.robotnik.prefabs.devices.wrappers;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 

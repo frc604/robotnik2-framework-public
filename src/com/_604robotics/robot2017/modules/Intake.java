@@ -6,7 +6,8 @@ import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
 import com._604robotics.robotnik.Output;
-import com._604robotics.robotnik.prefabs.devices.MultiOutput;
+import com._604robotics.robotnik.prefabs.devices.wrappers.MultiOutput;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Victor;
 

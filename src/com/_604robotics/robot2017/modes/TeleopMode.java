@@ -7,9 +7,9 @@ import com._604robotics.robot2017.modules.Drive;
 import com._604robotics.robot2017.modules.Loader;
 import com._604robotics.robot2017.modules.Shooter;
 import com._604robotics.robotnik.Coordinator;
-import com._604robotics.robotnik.prefabs.controller.xbox.XboxController;
 import com._604robotics.robotnik.prefabs.flow.SmartTimer;
 import com._604robotics.robotnik.prefabs.flow.Toggle;
+import com._604robotics.robotnik.prefabs.inputcontroller.xbox.XboxController;
 
 public class TeleopMode extends Coordinator {
 	private boolean started = false;
