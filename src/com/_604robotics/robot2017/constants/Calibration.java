@@ -1,6 +1,6 @@
 package com._604robotics.robot2017.constants;
 
-import com._604robotics.robotnik.prefabs.utils.AutonMovement;
+import com._604robotics.robotnik.utils.AutonMovement;
 
 public class Calibration {
     private Calibration () {}

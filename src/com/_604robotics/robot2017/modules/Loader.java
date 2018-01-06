@@ -5,7 +5,7 @@ import com._604robotics.robot2017.constants.Ports;
 import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
-import com._604robotics.robotnik.prefabs.devices.MultiOutput;
+import com._604robotics.robotnik.prefabs.devices.wrappers.MultiOutput;
 
 import edu.wpi.first.wpilibj.Victor;
 
