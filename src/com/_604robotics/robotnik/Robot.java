@@ -3,7 +3,6 @@ package com._604robotics.robotnik;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
-import com._604robotics.robotnik.prefabs.utils.Pair;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,6 +14,8 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.zip.InflaterInputStream;
+
+import com._604robotics.robotnik.utils.Pair;
 
 public abstract class Robot extends SampleRobot {
     public static double DEFAULT_REPORT_INTERVAL = 5;

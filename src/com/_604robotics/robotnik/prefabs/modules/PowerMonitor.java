@@ -52,6 +52,7 @@ public class PowerMonitor extends Module {
     }
     
     private Runnable checkCurrent = new Runnable() {
+        @Override
         public void run() {
             for (int i=0;i<currents.length;i++) {
                 if (currents[i].get() > currentLimit[i]) {
@@ -61,15 +62,18 @@ public class PowerMonitor extends Module {
         }
     };
     
+    @Override
     protected void begin() {
         iterTimer.start();
     }
     
+    @Override
     protected void run() {
         // TODO: Find good time interval
         iterTimer.runEvery(0.5, checkCurrent);
     }
     
+    @Override
     protected void end() {
         iterTimer.stopAndReset();
     }
