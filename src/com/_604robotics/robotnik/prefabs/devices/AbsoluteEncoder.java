@@ -54,6 +54,9 @@ public abstract class AbsoluteEncoder implements PIDSource {
      */
     public abstract double getRawAngle();
 
+    /**
+     * Implementer of the pidGet interface. Make sure to return angles if overridden!
+     */
     @Override
     public double pidGet() {
         return getAngle();
