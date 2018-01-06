@@ -6,8 +6,6 @@ import com._604robotics.robotnik.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public abstract class StatefulCoordinator extends Coordinator {
     private final Logger logger;
