@@ -24,6 +24,7 @@ public class AS5145B extends AbsoluteEncoder {
     /**
      * Sets the zero of the encoder to its current value.
      */
+    @Override
     public void setZero() {
         this.setZero(this.getVoltage());
     }
@@ -34,6 +35,7 @@ public class AS5145B extends AbsoluteEncoder {
      * @param zero
      *            Zero value to set.
      */
+    @Override
     public void setZero(double zero) {
         this.zero = zero;
     }
@@ -44,6 +46,7 @@ public class AS5145B extends AbsoluteEncoder {
      * @param zeroAngle
      *            Zero angle to set.
      */
+    @Override
     public void setZeroAngle(double zeroAngle) {
         this.setZero(zeroAngle / 360 * MAX_VOLTAGE);
     }
@@ -53,6 +56,7 @@ public class AS5145B extends AbsoluteEncoder {
      * 
      * @return The (raw, non-zeroed) voltage value of the encoder.
      */
+    @Override
     public double getRawVoltage() {
         return this.input.getVoltage();
     }
@@ -62,6 +66,7 @@ public class AS5145B extends AbsoluteEncoder {
      * 
      * @return The (zeroed) voltage value of the encoder.
      */
+    @Override
     public double getVoltage() {
         double voltage = this.getRawVoltage() - this.zero;
         if (voltage < 0) {
@@ -75,6 +80,7 @@ public class AS5145B extends AbsoluteEncoder {
      * 
      * @return The (zeroed) angle of the encoder.
      */
+    @Override
     public double getAngle() {
         return this.getVoltage() / MAX_VOLTAGE * 360;
     }
@@ -84,6 +90,7 @@ public class AS5145B extends AbsoluteEncoder {
      * 
      * @return The (raw, non-zeroed) angle of the encoder.
      */
+    @Override
     public double getRawAngle() {
         return this.getRawVoltage() / MAX_VOLTAGE * 360;
     }

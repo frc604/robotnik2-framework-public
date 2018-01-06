@@ -20,7 +20,8 @@ public class Shifter extends Module {
 		public Idle() {
 			super(Shifter.this,Idle.class);
 		}
-		public void begin() {
+		@Override
+        public void begin() {
 			solenoid.set(Value.kOff);
 		}
 	}
@@ -31,7 +32,8 @@ public class Shifter extends Module {
 			currentState=initState;
 		}
 		
-		public void begin() {
+		@Override
+        public void begin() {
 			solenoid.set(currentState);
 		}
 	}

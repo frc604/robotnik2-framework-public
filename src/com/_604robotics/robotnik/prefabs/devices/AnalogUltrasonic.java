@@ -45,6 +45,7 @@ public class AnalogUltrasonic extends AnalogInput implements Ultrasonic {
      * Gets the current voltage of the sensor using 64 samples.
      * @return The current voltage of the sensor.
      */
+    @Override
     public double getVoltage () {
         return this.getVoltage(DEFAULT_SAMPLES);
     }

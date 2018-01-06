@@ -277,7 +277,8 @@ public class AutonomousMode extends Coordinator {
 			return rotController.getAvgError();
 		}
 
-		protected void begin() {
+		@Override
+        protected void begin() {
 		    // Activate arcadeDrive and reset encoder and gyro
 		    arcadeDrive.activate();
 		    robot.drive.resetSensors();
@@ -324,7 +325,8 @@ public class AutonomousMode extends Coordinator {
 		    PIDTargetPulse.update(true);
 		}
 
-		protected synchronized boolean run() {
+		@Override
+        protected synchronized boolean run() {
 		    arcadeDrive.activate();
 		    System.out.println("Move error is " + getMoveError() + ", Rot error is " + getRotError());
 		    return timeElapsed.runUntil(Calibration.DRIVE_PID_AFTER_TIMING, new Runnable() {
@@ -346,7 +348,8 @@ public class AutonomousMode extends Coordinator {
 		    });
 		}
 
-		protected void end() {
+		@Override
+        protected void end() {
 		    arcadePIDLog.log("INFO","Final Rotate error is "+rotController.getAvgError());
 		    arcadePIDLog.log("INFO","Final Move error is "+moveController.getAvgError());
 		    rotController.disable();
