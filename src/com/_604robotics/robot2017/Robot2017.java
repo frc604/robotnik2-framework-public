@@ -19,7 +19,7 @@ public class Robot2017 extends Robot {
     public final Intake intake = addModule(new Intake());
     public final PowerMonitor powerMonitor = addModule(new PowerMonitor(Ports.PDP_MODULE,Ports.COMPRESSOR));
     public final Shifter shifter = addModule(new Shifter(Ports.SHIFTER_FORWARD, Ports.SHIFTER_REVERSE));
-    public final Shooter shooter = addModule(new Shooter());
+    //public final Shooter shooter = addModule(new Shooter());
     public final Loader loader = addModule(new Loader());
     
     

@@ -9,7 +9,7 @@ import com._604robotics.robotnik.Output;
 import com._604robotics.robotnik.prefabs.devices.TalonPWMEncoder;
 import com._604robotics.robotnik.prefabs.devices.wrappers.MultiOutput;
 import com._604robotics.robotnik.prefabs.flow.Pulse;
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
@@ -22,8 +22,8 @@ public class Shooter extends Module {
 	
 	private final Victor wheelMid = new Victor(Ports.WHEEL_MID);
 
-	private final CANTalon wheel_top_a = new CANTalon(Ports.WHEEL_TOP_A);
-	private final CANTalon wheel_top_b = new CANTalon(Ports.WHEEL_TOP_B);
+	private final WPI_TalonSRX wheel_top_a = new WPI_TalonSRX(Ports.WHEEL_TOP_A);
+	private final WPI_TalonSRX wheel_top_b = new WPI_TalonSRX(Ports.WHEEL_TOP_B);
 	
 	private final MultiOutput wheel_top = new MultiOutput(wheel_top_a, wheel_top_b);
 	private final MultiOutput wheel_mid = new MultiOutput(wheelMid);

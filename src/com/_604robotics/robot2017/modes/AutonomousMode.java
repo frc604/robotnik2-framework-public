@@ -126,9 +126,9 @@ public class AutonomousMode extends Coordinator {
             case DEMO_NEW_AUTON:
                 selectedModeMacro = new DemoStateMacro();
                 break;
-            case SHOOTER_DEMO:
+            /*case SHOOTER_DEMO:
             	selectedModeMacro = new ShooterDemoMacro();
-            	break;
+            	break;*/
             default:
                 selectedModeMacro = null;
                 break;
@@ -155,7 +155,7 @@ public class AutonomousMode extends Coordinator {
         }
     }
     
-    protected final class ShooterCoordinator extends Coordinator {
+    /*protected final class ShooterCoordinator extends Coordinator {
     	private SmartTimer timeElapsed = new SmartTimer();
     	private Shooter.ShooterStartup shooterStartup = robot.shooter.new ShooterStartup();
     	private Loader.Load load = robot.loader.new Load();
@@ -199,7 +199,7 @@ public class AutonomousMode extends Coordinator {
     		load.on.set(false);
     		timeElapsed.stopAndReset();
     	}
-    }
+    }*/
     
     protected final class ArcadePIDCoordinator extends Coordinator {
 		private Logger arcadePIDLog=new Logger(ArcadePIDCoordinator.class);
@@ -391,13 +391,13 @@ public class AutonomousMode extends Coordinator {
     	}
     }
 
-    private class ShooterDemoMacro extends StatefulCoordinator {
+    /*private class ShooterDemoMacro extends StatefulCoordinator {
     	public ShooterDemoMacro () {
     		super(ShooterDemoMacro.class);
     		
     		addState("Shooter", new ShooterCoordinator(Calibration.AUTON_SHOOTER_TIME));
     	}
-    }
+    }*/
     
     // AZ STEP ONE: CREATE METHOD
     /*

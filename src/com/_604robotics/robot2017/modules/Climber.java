@@ -4,10 +4,12 @@ import com._604robotics.robot2017.constants.Ports;
 import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Input;
 import com._604robotics.robotnik.Module;
+
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Victor;
 
 public class Climber extends Module {
-    private final Victor motor = new Victor(Ports.CLIMBER_MOTOR);
+    private final Spark motor = new Spark(Ports.CLIMBER_MOTOR);
 
     private class Idle extends Action {
         public Idle () {
@@ -32,6 +34,7 @@ public class Climber extends Module {
         public Climb (double defaultPower) {
             super(Climber.this, Climb.class);
             power = addInput("power", defaultPower);
+            //motor.
         }
 
         @Override

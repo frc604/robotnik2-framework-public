@@ -23,7 +23,7 @@ public class TeleopMode extends Coordinator {
     private final SignalLightManager signalLightManager;
     private final PickupManager pickupManager;
     private final DriveManager driveManager;
-    private final ShooterManager shooterManager;
+    //private final ShooterManager shooterManager;
     private final LoaderManager loaderManager;
     
     
@@ -59,7 +59,7 @@ public class TeleopMode extends Coordinator {
         signalLightManager = new SignalLightManager();
         pickupManager = new PickupManager();
         driveManager = new DriveManager();
-        shooterManager = new ShooterManager();
+        //shooterManager = new ShooterManager();
         loaderManager = new LoaderManager();
     }
 
@@ -69,7 +69,7 @@ public class TeleopMode extends Coordinator {
         signalLightManager.run();
         pickupManager.run();
         driveManager.run();
-        shooterManager.run();
+        //shooterManager.run();
         loaderManager.run();
         return true;
     }
@@ -82,15 +82,22 @@ public class TeleopMode extends Coordinator {
         }
 
         public void run () {
-            if (driver.buttons.lt.get()) {
+            /*if (driver.buttons.lt.get()) {
                 climb.power.set(driver.triggers.left.get());
                 climb.activate();
-            }
+            }*/
+        	if (driver.buttons.start.get()) {
+        		climb.power.set(1.0);
+        		climb.activate();
+        	} else if (driver.buttons.back.get()) {
+        		climb.power.set(-1.0);
+        		climb.activate();
+        	}
         }
     }
 
 
-    public class ShooterManager {
+    /*public class ShooterManager {
     	private final Shooter.Idle shooterIdle;
         private final Shooter.ShooterStartup shooterStartup;
         
@@ -110,7 +117,7 @@ public class TeleopMode extends Coordinator {
         		shooterIdle.activate();
         	}
         }
-    }
+    }*/
     
     public class LoaderManager {
     	private final Loader.Idle loaderIdle;
