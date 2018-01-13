@@ -1,28 +1,29 @@
 package com._604robotics.robotnik.prefabs.devices;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class TalonPWMEncoder implements PIDSource {
-	private final CANTalon talon;
+	private final TalonSRX talon;
 	private PIDSourceType sourceType;
 
-	public TalonPWMEncoder (CANTalon talon) {
+	public TalonPWMEncoder (TalonSRX talon) {
 		this(talon, PIDSourceType.kDisplacement);
 	}
 
-	public TalonPWMEncoder (CANTalon talon, PIDSourceType sourceType) {
+	public TalonPWMEncoder (TalonSRX talon, PIDSourceType sourceType) {
 		this.talon = talon;
 		this.sourceType = sourceType;
 	}
 	
+	// Verify PulseWidth vs Quadrature
 	public double getPosition () {
-		return talon.getPulseWidthPosition();
+		return talon.getSensorCollection().getPulseWidthPosition();
 	}
 	
 	public double getVelocity () {
-		return talon.getPulseWidthVelocity();
+		return talon.getSensorCollection().getPulseWidthVelocity();
 	}
 
 	@Override
