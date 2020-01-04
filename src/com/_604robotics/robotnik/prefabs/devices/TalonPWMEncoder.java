@@ -1,50 +1,81 @@
 package com._604robotics.robotnik.prefabs.devices;
 
-import com.ctre.CANTalon;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class TalonPWMEncoder implements PIDSource {
-	private final CANTalon talon;
-	private PIDSourceType sourceType;
+public class TalonPWMEncoder implements Encoder {
+  // Use TalonSRX because WPI_TalonSRX extends this
+  private final TalonSRX talon;
 
-	public TalonPWMEncoder (CANTalon talon) {
-		this(talon, PIDSourceType.kDisplacement);
-	}
+  public enum EncoderType {
+    ABSOLUTE,
+    RELATIVE
+  }
 
-	public TalonPWMEncoder (CANTalon talon, PIDSourceType sourceType) {
-		this.talon = talon;
-		this.sourceType = sourceType;
-	}
-	
-	public double getPosition () {
-		return talon.getPulseWidthPosition();
-	}
-	
-	public double getVelocity () {
-		return talon.getPulseWidthVelocity();
-	}
+  private final EncoderType encoderType;
+  private boolean inverted;
+  private double offset = 0;
 
-	@Override
-	public double pidGet () {
-		if (sourceType.equals(PIDSourceType.kDisplacement)) {
-			return getPosition();
-		} else if (sourceType.equals(PIDSourceType.kRate)) {
-			return getVelocity();
-		} else {
-			throw new IllegalArgumentException();
-		}
-	}
-	
-	@Override
-	public PIDSourceType getPIDSourceType () {
-		return sourceType;
-	}
+  public TalonPWMEncoder(TalonSRX talon) {
+    this(talon, EncoderType.RELATIVE);
+  }
 
-	@Override
-	public void setPIDSourceType (PIDSourceType sourceType) {
-		this.sourceType = sourceType;
-	}
+  public TalonPWMEncoder(TalonSRX talon, EncoderType type) {
+    this.talon = talon;
+    this.encoderType = type;
+    this.inverted = false;
+  }
+
+  public boolean isInverted() {
+    return inverted;
+  }
+
+  public void setInverted(boolean inverted) {
+    this.inverted = inverted;
+  }
+
+  @Override
+  public double getValue() {
+    return getPosition();
+  }
+
+  // Use quadrature output for relative and pulse width output for absolute
+  public double getPosition() {
+    int multfactor = inverted ? -1 : 1;
+    if (encoderType == EncoderType.ABSOLUTE) {
+      return multfactor * (talon.getSensorCollection().getPulseWidthPosition() - offset);
+    } else {
+      return multfactor * talon.getSensorCollection().getQuadraturePosition();
+    }
+  }
+
+  // Use quadrature output for relative and pulse width output for absolute
+  public double getVelocity() {
+    int multfactor = inverted ? -1 : 1;
+    if (encoderType == EncoderType.ABSOLUTE) {
+      return multfactor * talon.getSensorCollection().getPulseWidthVelocity();
+    } else {
+      return multfactor * talon.getSensorCollection().getQuadratureVelocity();
+    }
+  }
+
+  public void zero() {
+    if (encoderType == EncoderType.ABSOLUTE) {
+      offset = (talon.getSensorCollection().getPulseWidthPosition());
+    }
+  }
+
+  public void zero(double value) {
+    if (encoderType == EncoderType.ABSOLUTE) {
+      int multfactor = inverted ? -1 : 1;
+      offset = talon.getSensorCollection().getPulseWidthPosition() - (multfactor * value);
+    }
+  }
+
+  public double getOffset() {
+    if (encoderType == EncoderType.ABSOLUTE) {
+      return offset;
+    } else {
+      return 0;
+    }
+  }
 }
-
-
