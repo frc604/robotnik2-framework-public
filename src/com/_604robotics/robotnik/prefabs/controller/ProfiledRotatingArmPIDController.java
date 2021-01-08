@@ -81,7 +81,7 @@ public class ProfiledRotatingArmPIDController extends ProfiledPIDController {
    * @return the feed forward value
    */
   @Override
-  protected double calculateFeedForward() {
+  protected double calculateFeedForward(double setpoint) {
     // Calculate cosine for torque factor
     double angle;
     m_thisMutex.lock();

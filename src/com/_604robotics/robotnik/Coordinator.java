@@ -1,5 +1,10 @@
 package com._604robotics.robotnik;
 
+import com._604robotics.robotnik.prefabs.coordinators.ParallelRaceCoordinator;
+import com._604robotics.robotnik.prefabs.coordinators.SleepCoordinator;
+import com._604robotics.robotnik.prefabs.coordinators.SleepUntilCoordinator;
+import java.util.function.BooleanSupplier;
+
 public abstract class Coordinator {
   private boolean running;
 
@@ -29,6 +34,14 @@ public abstract class Coordinator {
       running = false;
       end();
     }
+  }
+
+  public ParallelRaceCoordinator withTimeout(double seconds) {
+    return new ParallelRaceCoordinator(this.toString(), this, new SleepCoordinator(seconds));
+  }
+
+  public ParallelRaceCoordinator withInterrupt(BooleanSupplier condition) {
+    return new ParallelRaceCoordinator(this.toString(), this, new SleepUntilCoordinator(condition));
   }
 
   protected void begin() {}

@@ -7,11 +7,10 @@ import java.util.function.DoubleConsumer;
 import java.util.function.DoubleSupplier;
 
 /**
- * An extension of {@link com._604robotics.robotnik.prefabs.controller.NewExtendablePIDController}
- * that uses a WPILib trapezoidal profile {@link edu.wpi.first.wpilibj.trajectory.TrapezoidProfile}
- * in the output calculation.
+ * An extension of {@link ExtendablePIDController} that uses a WPILib trapezoidal profile {@link
+ * edu.wpi.first.wpilibj.trajectory.TrapezoidProfile} in the output calculation.
  */
-public class ProfiledPIDController extends NewExtendablePIDController {
+public class ProfiledPIDController extends ExtendablePIDController {
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
 
@@ -157,6 +156,19 @@ public class ProfiledPIDController extends NewExtendablePIDController {
     }
   }
 
+  public void setInitialState(TrapezoidProfile.State state) {
+    m_thisMutex.lock();
+    try {
+      m_setpoint = state;
+    } finally {
+      m_thisMutex.unlock();
+    }
+  }
+
+  public void setInitialSetpoint(double setpoint) {
+    setInitialState(new TrapezoidProfile.State(setpoint, 0.0));
+  }
+
   /**
    * Sets the constraints for the controller motion profile.
    *
@@ -267,7 +279,7 @@ public class ProfiledPIDController extends NewExtendablePIDController {
           calculateProportional(P, positionError)
               + calculateIntegral(I, totalError)
               + calculateDerivative(D, velocityError)
-              + calculateFeedForward();
+              + calculateFeedForward(setpoint.velocity);
 
       // Clamping the result
       result = MathUtil.clamp(result, minimumOutput, maximumOutput);

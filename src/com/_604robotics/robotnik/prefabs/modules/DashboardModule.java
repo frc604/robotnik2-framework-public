@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+@Deprecated
 public class DashboardModule extends Module {
   private enum InputType {
     BOOLEAN,

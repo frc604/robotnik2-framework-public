@@ -12,7 +12,7 @@ import java.util.function.DoubleSupplier;
  * internally, and requires a {@link edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward} with
  * Ks, Kv, and Ka coefficients.
  */
-public class FlyWheelPDController extends NewExtendablePIDController {
+public class FlyWheelPDController extends ExtendablePIDController {
   private final SimpleMotorFeedforward m_feedforward;
 
   /**
@@ -102,7 +102,7 @@ public class FlyWheelPDController extends NewExtendablePIDController {
    * @return the feed forward value
    */
   @Override
-  protected double calculateFeedForward() {
+  protected double calculateFeedForward(double setpoint) {
     double velSetpoint;
     double prevVel;
     double curVel;

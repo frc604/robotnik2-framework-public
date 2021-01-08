@@ -8,21 +8,20 @@
 /* controllers                                                                */
 /*----------------------------------------------------------------------------*/
 
-package robotnik.prefabs.controller;
+package com._604robotics.robotnik.prefabs.controller;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com._604robotics.robotnik.prefabs.controller.NewExtendablePIDController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class NewExtendablePIDControllerToleranceTest {
+class ExtendablePIDControllerToleranceTest {
   private static final double kSetpoint = 50.0;
   private static final double kTolerance = 10.0;
   private static final double kRange = 200;
 
-  private NewExtendablePIDController m_controller;
+  private ExtendablePIDController m_controller;
 
   private double m_measurement = 0.0;
 
@@ -32,7 +31,7 @@ class NewExtendablePIDControllerToleranceTest {
   @BeforeEach
   void setUp() {
     m_controller =
-        new NewExtendablePIDController(0, 0, 0, () -> m_measurement, (output) -> m_output = output);
+        new ExtendablePIDController(0, 0, 0, () -> m_measurement, (output) -> m_output = output);
   }
 
   @Test
@@ -53,8 +52,9 @@ class NewExtendablePIDControllerToleranceTest {
 
     m_measurement = 0.025;
     m_controller.setEnabled(true);
+    m_controller.m_controlLoop.cancel();
 
-    waitForCalculate(1);
+    m_controller.calculate();
 
     assertFalse(
         m_controller.atSetpoint(),
@@ -66,7 +66,7 @@ class NewExtendablePIDControllerToleranceTest {
     m_measurement = kSetpoint + kTolerance / 2;
     m_controller.setEnabled(true);
 
-    waitForCalculate(1);
+    m_controller.calculate();
 
     assertTrue(
         m_controller.atSetpoint(),
@@ -78,21 +78,12 @@ class NewExtendablePIDControllerToleranceTest {
     m_measurement = kSetpoint + 10 * kTolerance;
     m_controller.setEnabled(true);
 
-    waitForCalculate(1);
+    m_controller.calculate();
 
     assertFalse(
         m_controller.atSetpoint(),
         "Error was in tolerance when it should not have been. Error was "
             + m_controller.getPositionError());
     m_controller.setEnabled(false);
-  }
-
-  private void waitForCalculate(double periods) {
-    long period = 20 * (long) periods + 5;
-    try {
-      Thread.sleep(period);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
   }
 }

@@ -11,7 +11,7 @@ public class ParallelCoordinator extends Coordinator {
   private HashMap<Coordinator, Boolean> coordinators = new HashMap<Coordinator, Boolean>();
 
   public ParallelCoordinator(String name) {
-    logger = new Logger(StatefulCoordinator.class, name);
+    logger = new Logger(ParallelCoordinator.class, name);
   }
 
   public ParallelCoordinator(Class<?> klass) {
@@ -19,11 +19,15 @@ public class ParallelCoordinator extends Coordinator {
   }
 
   public ParallelCoordinator(String name, Coordinator... coordinators) {
-    logger = new Logger(StatefulCoordinator.class, name);
+    logger = new Logger(ParallelCoordinator.class, name);
+
+    addCoordinators(coordinators);
   }
 
   public ParallelCoordinator(Class<?> klass, Coordinator... coordinators) {
     this(klass.getSimpleName());
+
+    addCoordinators(coordinators);
   }
 
   public void addCoordinators(Coordinator... coordinators) {

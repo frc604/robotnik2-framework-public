@@ -4,8 +4,13 @@ plugins {
     id "eclipse"
     id "idea"
     id "com.diffplug.gradle.spotless" version "3.26.1"
-    id "edu.wpi.first.GradleRIO" version "2020.1.1-beta-4"
+    id "edu.wpi.first.GradleRIO" version "2020.1.2"
+    id "jacoco"
 }
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 4.
@@ -18,9 +23,8 @@ dependencies {
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
-    simulation wpi.deps.sim.gui(wpi.platforms.desktop, false)
-
-    testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    testImplementation 'org.knowm.xchart:xchart:3.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
 }
 
 sourceSets {
@@ -28,7 +32,7 @@ sourceSets {
         java {
             srcDirs = ["src"]
             exclude 'src/com/_604robotics/robotnik/Robot_Old.java'
-            exclude 'src/com/_604robotics/robotnik/prefabs/controller/BangBangController.java'\
+            exclude 'src/com/_604robotics/robotnik/prefabs/controller/BangBangController.java'
             exclude 'src/com/_604robotics/robotnik/prefabs/controller/ExtendablePIDController.java'
         }
     }
@@ -44,6 +48,13 @@ test {
     useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
+    }
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.enabled true
     }
 }
 

@@ -2,6 +2,7 @@ package com._604robotics.robotnik.prefabs.modules;
 
 import com._604robotics.robotnik.Action;
 import com._604robotics.robotnik.Module;
+import com._604robotics.robotnik.Output;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
@@ -9,10 +10,14 @@ public class Shifter extends Module {
 
   private final DoubleSolenoid solenoid;
 
+  public Output<Boolean> inHighGear;
+
   public Shifter(int forwardSolenoid, int reverseSolenoid) {
     super(Shifter.class);
     this.solenoid = new DoubleSolenoid(forwardSolenoid, reverseSolenoid);
     setDefaultAction(idle);
+
+    inHighGear = addOutput("In High Gear", highGear::isRunning);
   }
 
   private class Idle extends Action {
@@ -22,7 +27,7 @@ public class Shifter extends Module {
 
     @Override
     public void begin() {
-      solenoid.set(Value.kReverse);
+      solenoid.set(Value.kForward);
     }
   }
 

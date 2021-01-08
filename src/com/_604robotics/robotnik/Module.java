@@ -10,12 +10,6 @@ public abstract class Module {
 
   private final NetworkTable table;
 
-  private final NetworkTable inputsTable;
-  private final TableIndex inputsTableIndex;
-
-  private final NetworkTable outputsTable;
-  private final TableIndex outputsTableIndex;
-
   private final NetworkTable activeActionTable;
   private final NetworkTable activeActionInputsTable;
   private final NetworkTable activeActionOutputsTable;
@@ -46,12 +40,6 @@ public abstract class Module {
 
     table = network.getTable("robotnik").getSubTable("modules").getSubTable(name);
 
-    inputsTable = table.getSubTable("inputs");
-    inputsTableIndex = new TableIndex(table, "inputList");
-
-    outputsTable = table.getSubTable("outputs");
-    outputsTableIndex = new TableIndex(table, "outputList");
-
     activeActionTable = table.getSubTable("activeAction");
     activeActionTable.getEntry("name").setString("");
     activeActionTable.getEntry("inputList").setString("");
@@ -69,6 +57,16 @@ public abstract class Module {
     return name;
   }
 
+  @SuppressWarnings("rawtypes")
+  public List<Input> getInputs() {
+    return inputs;
+  }
+
+  @SuppressWarnings("rawtypes")
+  public List<OutputProxy> getOutputs() {
+    return outputs;
+  }
+
   public Action getRunningAction() {
     return runningAction;
   }
@@ -80,14 +78,12 @@ public abstract class Module {
   protected <T> Input<T> addInput(String name, T defaultValue) {
     final Input<T> input = new Input<T>(this, name, defaultValue);
     inputs.add(input);
-    inputsTableIndex.add("Input", input.getName());
     return input;
   }
 
   protected <T> Output<T> addOutput(String name, Output<T> output) {
     final OutputProxy<T> proxy = new OutputProxy<T>(name, output);
     outputs.add(proxy);
-    outputsTableIndex.add("Output", name);
     return proxy;
   }
 
@@ -104,13 +100,6 @@ public abstract class Module {
       // Error here due to output.get coming from enum
       // Must be one of Boolean Number String byte[] boolean[] double[] Boolean[] Number[] String[]
       // System.out.println("Put key:"+output.getName()+" value:"+output.get());
-      if (output.get() == null) {
-        outputsTable.getEntry(output.getName()).setString("null");
-      } else {
-        outputsTable
-            .getEntry(output.getName())
-            .setString(output.get().toString()); // Should this be toString(), or something else?ns
-      }
     }
 
     if (runningAction != null) {
@@ -124,11 +113,7 @@ public abstract class Module {
     activeAction = action;
   }
 
-  void update() {
-    for (@SuppressWarnings("rawtypes") Input input : inputs) {
-      inputsTable.getEntry(input.getName()).setValue(input.get());
-    }
-  }
+  void update() {}
 
   void execute() {
     if (activeAction != runningAction) {

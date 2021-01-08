@@ -9,7 +9,7 @@ import java.util.function.DoubleSupplier;
  * PIDSource as the PIDSource and uses only continuous error. Zero is assumed to be horizontal.
  * Users are responsible for properly zeroing the PIDSource beforehand.
  */
-public class RotatingArmPIDController extends NewExtendablePIDController {
+public class RotatingArmPIDController extends ExtendablePIDController {
   private ArmFeedforward m_feedforward;
   private double m_encoderPeriod = 360;
   private double m_zeroOffset = 0;
@@ -72,7 +72,7 @@ public class RotatingArmPIDController extends NewExtendablePIDController {
    * @return the feed forward value
    */
   @Override
-  protected double calculateFeedForward() {
+  protected double calculateFeedForward(double setpoint) {
     // Calculate cosine for torque factor
     double angle;
     m_thisMutex.lock();
